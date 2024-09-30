@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subjects', function (Blueprint $table) {
-            $table->id();
-            $table->string('subject_code');
+            $table->string('subject_id')->primary();
             $table->string('subject_name');
+            $table->string('department');
             $table->timestamps();
+
+            $table->foreign('department')->references('department_id')->on('departments')->onDelete('cascade');
         });
     }
 

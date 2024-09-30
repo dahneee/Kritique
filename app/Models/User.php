@@ -17,11 +17,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'id',
+        'username',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'user_type',
+        'block',
+        'department',
         'email',
         'password',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -44,4 +50,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
 }
