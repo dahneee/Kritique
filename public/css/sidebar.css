@@ -1,0 +1,93 @@
+body {
+    background-color: white;
+    font-family: 'Poppins', sans-serif; 
+}
+.sidebar {
+    width: 80px;
+    height: 100vh;
+    background-color: #8FBF66;
+    padding-top: 10px;
+    position: fixed;
+    transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0;
+}
+
+.sidebar a {
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 15px;
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.2s, border-radius 0.1s;
+}
+
+.sidebar a i {
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+}
+
+.sidebar a span {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s;
+}
+
+.sidebar:hover {
+    width: 230px;
+}
+
+.sidebar:hover a {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 20px;
+    margin: 15px;
+}
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.sidebar:hover a i {
+    margin-right: 20px;
+    margin-left: 5px;
+    margin-bottom: 0;
+}
+
+.sidebar:hover a span {
+    display: inline-block;
+    opacity: 1;
+    white-space: nowrap;
+    margin-left: 5px;
+}
+
+
+
+.sidebar img {
+    transition: width 0.3s;
+    width: 50px; 
+}
+
+.sidebar:hover img {
+    width: 100px;
+    border-radius: 20px;
+}
+
+.sidebar h3 {
+    opacity: 0;
+    font-weight: bold;
+    transition: opacity 0.3s;
+    color: white !important;
+    padding: 20px;
+}
+
+.sidebar:hover h3 {
+    opacity: 1;
+}

@@ -1,0 +1,81 @@
+
+
+.content {
+    margin-left: 80px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.sidebar:hover ~ .content {
+    margin-left: 250px;
+}
+
+.navbar {
+    background-color: white;
+    color: #A4D07B;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h3 {
+    color: #A4D07B;
+    font-weight: bold;
+}
+
+.create-btn {
+    background-color: rgb(255, 255, 255);
+    border: none;
+    color: #A4D07B;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.create-btn:hover {
+    background-color: #A4D07B;
+    color: white;
+}
+
+.create-btn:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: white;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card h4 {
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.metric-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #A4D07B;
+}
+
+.metric-small {
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
