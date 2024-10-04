@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'id' => 'John Doe',
+                'student_id' => '03-2021',
                 'first_name' => 'John',
                 'middle_name' => '',
                 'last_name' => 'Doe', 
@@ -22,7 +22,6 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password123'), 
             ],
             [
-                'id' => 'admin',
                 'first_name' => 'admin',
                 'middle_name' => '',
                 'last_name' => '', 
