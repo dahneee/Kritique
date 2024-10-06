@@ -1,5 +1,37 @@
-.ques-container {
-    margin-left: 80px;
+.content {
+    margin-left: 150px;
+    margin-right: 150px;
     padding: 20px;
     transition: margin-left 0.3s;
+}
+
+.sidebar:hover ~ .content {
+    margin-left: 250px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-select {
+    padding: 10px;
+}
+
+.btn-submit {
+    background-color: #8FBF66;
+    color: white;
+    width: 13%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    float: right;
+    cursor: pointer;
+    margin-top: 20px; 
+    font-size: 16px; 
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #407d0a;
 }

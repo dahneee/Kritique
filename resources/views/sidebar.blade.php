@@ -20,8 +20,18 @@
         <span>Questionnaire</span>
     </a>
     <a href="#" class="sidebar-link text-center" style="color: white !important;">
+        <i class="fas fa-user-graduate"></i>
+        <span>Students</span>
+    </a>
+
+    <a href="#" class="sidebar-link text-center" style="color: white !important;">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <span>Teachers</span>
+    </a>
+
+    <a href="#" class="sidebar-link text-center" style="color: white !important;">
         <i class="fas fa-chart-pie fa-2x"></i>
-        <span>Analytics</span>
+        <span>Results</span>
     </a>
     
     <div class="text-center mb-3">
