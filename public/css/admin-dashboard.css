@@ -9,22 +9,13 @@
     margin-left: 250px;
 }
 
-.navbar {
-    background-color: white;
-    color: #A4D07B;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar h3 {
-    color: #A4D07B;
-    font-weight: bold;
-}
 
 .create-btn {
     background-color: rgb(255, 255, 255);
     border: none;
     color: #A4D07B;
     font-weight: bold;
+    text-decoration: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -64,11 +55,15 @@
     color: #A4D07B;
 }
 
+.chart-container, .metric-small {
+    min-height: 300px; 
+}
+
 .metric-small {
-    border-radius: 10px;
+    background-color: white;
     padding: 20px;
     text-align: center;
-    background-color: white;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -78,3 +73,4 @@
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
+

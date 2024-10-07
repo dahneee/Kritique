@@ -9,22 +9,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/admin-dashboard.css">
+    <link rel="stylesheet" href="/css/nav.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 @include('sidebar')
 
-<div class="content">
-    <nav class="navbar navbar-light">
+<div class="content-admin">
+<nav class="navbar-admin navbar-light">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3 class="fs-5 mb-0">Hi, Z. Welcome back</h3>
-                <button class="create-btn">Create Questionnaire</button>
+                <a href="{{ route('questionnaire') }}" class="create-btn">Questionnaire</a>
+
             </div>
         </div>
     </nav>
+    </div>
 
+<div class="content">
     <div class="container mt-4">
     <div class="row">
     <div class="col-md-3">

@@ -19,15 +19,11 @@
         <i class="fas fa-question-circle fa-2x"></i> 
         <span>Questionnaire</span>
     </a>
-    <a href="#" class="sidebar-link text-center" style="color: white !important;">
-        <i class="fas fa-user-graduate"></i>
-        <span>Students</span>
-    </a>
+    <a href="{{ route('view-student') }}" class="sidebar-link text-center" style="color: white !important;">
+    <i class="fas fa-table"></i>
+    <span>Table</span>
+</a>
 
-    <a href="#" class="sidebar-link text-center" style="color: white !important;">
-        <i class="fas fa-chalkboard-teacher"></i>
-        <span>Teachers</span>
-    </a>
 
     <a href="#" class="sidebar-link text-center" style="color: white !important;">
         <i class="fas fa-chart-pie fa-2x"></i>
@@ -47,7 +43,7 @@
 
 <script>
     document.getElementById('logout-link').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default anchor click behavior
-        document.getElementById('logout-form').submit(); // Submit the form to log out
+        event.preventDefault(); 
+        document.getElementById('logout-form').submit(); 
     });
 </script>

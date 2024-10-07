@@ -1,0 +1,93 @@
+
+.content {
+    margin-left: 150px;
+    margin-right: 150px;
+    padding: -100px;
+    transition: margin-left 0.3s;
+
+}
+
+.sidebar:hover ~ .content {
+    margin-left: 250px;
+}
+.table-responsive {
+    max-width: 100%; 
+    margin: 20px auto;
+}
+
+.table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background-color: #6e6e07 !important; 
+    overflow: hidden !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.table thead {
+    background-color: #A8C686 !important; 
+    color: white !important;
+}
+
+.table thead th {
+    background-color: #A8C686 !important;
+    color: white !important; 
+    padding: 16px 20px !important;
+    text-align: left !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important; 
+    border-right: 1px solid #ddd !important; 
+}
+.table thead th:last-child {
+    border-right: none !important; 
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #eee !important;
+    transition: background-color 0.3s !important;
+}
+
+.table tbody tr:hover {
+    background-color: #E6EFDD !important; 
+}
+
+.table tbody td {
+    padding: 12px 15px !important;
+    color: #333 !important;
+    font-weight: 400 !important;
+}
+
+/* "Add New" Button */
+.btn-primary {
+    background-color: #A8C686 !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #8DAA6C !important; 
+    border-color: #8DAA6C !important;
+    color: white !important;
+}
+
+/* Pagination */
+.pagination {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.page-link {
+    color: #A8C686 !important; 
+    border: 1px solid #A8C686 !important;
+}
+
+.page-link:hover {
+    background-color: #A8C686 !important;
+    color: white !important;
+}
+
+.page-item.active .page-link {
+    background-color: #A8C686 !important;
+    border-color: #A8C686 !important;
+    color: white !important;
+}
+
