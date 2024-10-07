@@ -1,30 +1,7 @@
 .navbar {
     position: fixed;
     top: 0;
-    left: 80px; /* Adjusted to match the sidebar width */
-    right: 0;
-    z-index: 1;
-    transition: left 0.3s;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Space items evenly */
-    padding: 0 20px; /* Left and right padding */
-    margin-left: 0px;
-    background-color: white;
-    color: #A4D07B !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-.navbar-admin {
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    top: 0;
-    left: 80px; 
+    left: 80px;
     right: 0;
     z-index: 1;
     transition: left 0.3s;
@@ -32,22 +9,118 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: white; 
+    margin-left: 0px;
+    background-color: white;
+    color: #A4D07B !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.nav-link-students {
+    font-weight: bold;
+    background-color: transparent;
+    color: #A4D07B;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    margin-right: 0px;
+    padding: 8px 12px;
+}
+
+.nav-link-teachers {
+    font-weight: bold;
+    background-color: transparent;
+    color: #A4D07B;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding: 8px 12px;
+}
+
+.nav-link-students.active {
+    background-color: #A4D07B;
+    color: white !important;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+.nav-link-students:hover {
+    background-color: #a4d07b6e;
+    color: white !important;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+.nav-link-students.active:hover {
+    background-color: #A4D07B;
+    color: white !important;
+}
+
+.nav-link-teachers.active {
+    background-color: #A4D07B;
+    color: white !important;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+.nav-link-teachers:hover {
+    background-color: #a4d07b6e;
+    color: white !important;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+.nav-link-teachers.active:hover {
+    background-color: #A4D07B;
+    color: white !important;
+}
+
+.nav-link-students i {
+    margin: 3px;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.nav-link-teachers i {
+    margin: 3px;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.navbar-admin {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    top: 0;
+    left: 80px;
+    right: 0;
+    z-index: 1;
+    transition: left 0.3s;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
     margin-left: 20px;
 }
 
-.nav-item{
+.nav-item {
     color: #A4D07B !important;
 }
-
 
 .navbar-admin h3 {
     color: #A4D07B;
     font-weight: bold;
     margin-left: 30px;
 }
-
-
 
 .content-admin {
     transition: margin-left 0.3s;
@@ -61,6 +134,6 @@
     transition: margin-left 0.3s;
 }
 
-.sidebar:hover ~ .trans-content{
+.sidebar:hover ~ .trans-content {
     margin-left: 150px;
 }

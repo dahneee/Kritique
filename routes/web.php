@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/subjects', [SubjectController::class, 'index'])->name('admin.subjects');
     Route::get('/admin/questionnaire', [QuestionnaireController::class, 'questionnaire'])->name('questionnaire');
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
+    Route::get('/admin/teachers', [TeachersController::class, 'index'])->name('view-teachers');
 });
 
 

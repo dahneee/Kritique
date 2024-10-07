@@ -23,18 +23,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" style="color: #A4D07B !important;">
-                        <i class="fas fa-user-graduate"></i>
-                        Student
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: #A4D07B !important;">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                        Teachers
-                    </a>
-                </li>
+            <li class="nav-item">
+    <a class="nav-link-students active" aria-current="page" href="{{ route('view-student') }}">
+        <i class="fas fa-user-graduate"></i>
+        Student
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link-teachers" href="{{ route('view-teachers') }}">
+        <i class="fas fa-chalkboard-teacher"></i>
+        Teachers
+    </a>
+</li>
+
             </ul>
         </div>
     </div>
@@ -62,7 +63,7 @@
                                         @endforeach
                                     </select>
                                 </form>
-                                <button class="btn btn-add">Add New</button>
+                                <button class="btn btn-add">Add New Student</button>
                             </div>
                             <hr />
                             @if(Session::has('success'))
@@ -95,7 +96,7 @@
                                             <td>{{ $student->block }}</td>
                                             <td>{{ $student->department }}</td>
                                             <td>
-                                                <div class="btn-group btn-group-sm" role="group">
+                                                <div class="btn-group-student btn-group-sm" role="group">
                                                     <a href="#" class="btn btn-outline-secondary">Edit</a>
                                                     <a href="#" class="btn btn-outline-danger">Delete</a>
                                                 </div>
