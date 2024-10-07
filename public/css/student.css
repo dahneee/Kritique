@@ -1,13 +1,12 @@
 
-.content {
-    margin-left: 150px;
-    margin-right: 150px;
-    padding: -100px;
+.trans-content {
+    justify-content: center;
     transition: margin-left 0.3s;
-
+    width: 100%; 
+    margin-left: 40px;
 }
 
-.sidebar:hover ~ .content {
+.sidebar:hover ~ .trans-content {
     margin-left: 250px;
 }
 .table-responsive {
@@ -16,6 +15,7 @@
 }
 
 .table {
+
     width: 100% !important;
     border-collapse: separate !important;
     border-spacing: 0 !important;
