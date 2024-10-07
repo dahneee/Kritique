@@ -40,7 +40,7 @@
     </div>
 </nav>
 
-<div class="content" style="height: 100vh;">
+
     <div class="row justify-content-center">
         <div class="col-md-10" style="margin: 0 auto;"> 
             <div class="py-2" style="margin-top: 20px;"> 
@@ -115,7 +115,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <script>
 let originalStudentRows = [];
