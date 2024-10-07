@@ -62,7 +62,7 @@
                                         @endforeach
                                     </select>
                                 </form>
-                                <button class="btn btn-primary">Add New</button>
+                                <button class="btn btn-add">Add New</button>
                             </div>
                             <hr />
                             @if(Session::has('success'))

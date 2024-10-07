@@ -57,16 +57,18 @@
     font-weight: 400 !important;
 }
 
-/* "Add New" Button */
-.btn-primary {
-    background-color: #A8C686 !important;
-    color: white !important;
+
+.btn-add {
+    background-color: #8DAA6C !important;
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none;
+    border: 1px solid #dbdbdb !important;
+    
 }
 
-.btn-primary:hover {
-    background-color: #8DAA6C !important; 
-    border-color: #8DAA6C !important;
-    color: white !important;
+.btn-add:hover {
+    background-color: white !important; 
+    color: #8DAA6C !important;
 }
 
 /* Pagination */

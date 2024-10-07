@@ -19,10 +19,6 @@
 
 
 
-
-
-
-
 .navbar-admin {
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -45,12 +41,13 @@
 }
 
 
-
 .navbar-admin h3 {
     color: #A4D07B;
     font-weight: bold;
     margin-left: 30px;
 }
+
+
 
 .content-admin {
     transition: margin-left 0.3s;
