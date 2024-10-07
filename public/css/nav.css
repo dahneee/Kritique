@@ -59,3 +59,11 @@
 .sidebar:hover ~ .content-admin {
     margin-left: 150px;
 }
+
+.trans-content {
+    transition: margin-left 0.3s;
+}
+
+.sidebar:hover ~ .trans-content{
+    margin-left: 150px;
+}
