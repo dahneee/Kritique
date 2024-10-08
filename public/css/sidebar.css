@@ -1,13 +1,15 @@
+
 .sidebar {
-    width: 80px;
+    width: 100px;
     height: 100vh;
-    background-color: #8FBF66; 
+    margin-top: 30px;
+    margin-left: 60px;
     position: fixed;
-    transition: width 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 2;
+    padding-top: -0px;
 }
 
 .sidebar a {
@@ -25,25 +27,38 @@
 
 .sidebar a i {
     margin-bottom: 5px;
-    font-size: 1.5rem;
+    font-size: 2rem; 
+    color: #A4D07B;
+    padding: 20px;
+    border-radius: 50%;
+    width: 60px; 
+    height: 60px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+
+.sidebar a.active i {
+    background-color: #A4D07B; 
+    border-radius: 50%; 
+    transition: background-color 0.3s ease;
+    color: white;
+    width: 70px; 
+    height: 70px;
+}
+
+
+.sidebar a.active span {
+    color: #A67B5B; 
 }
 
 .sidebar a span {
-    opacity: 0;
-    display: none;
-    transition: opacity 0.3s;
-}
-
-.sidebar:hover {
-    width: 230px;
-}
-
-.sidebar:hover a {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 20px;
-    margin: 15px;
+    opacity: 1; 
+    display: inline-block;
+    white-space: nowrap;
+    margin-left: 5px;
 }
 
 .sidebar a:hover {
@@ -51,44 +66,11 @@
     transition: background-color 0.2s ease;
 }
 
-.sidebar:hover a i {
-    margin-right: 20px;
-    margin-left: 5px;
-    margin-bottom: 0;
-}
-
-.sidebar:hover a span {
-    display: inline-block;
-    opacity: 1;
-    white-space: nowrap;
-    margin-left: 5px;
-}
-
-.sidebar img {
-    transition: width 0.3s;
-    width: 50px;
-}
-
-.sidebar:hover img {
-    width: 100px;
-    border-radius: 20px;
-}
 
 .sidebar h3 {
-    opacity: 0;
     font-weight: bold;
-    transition: opacity 0.3s;
     color: white !important;
     padding: 20px;
-}
-
-.sidebar:hover h3 {
-    opacity: 1;
-}
-
-
-.sidebar:hover ~ .navbar {
-    left: 230px;
 }
 
 .main-content {
@@ -98,6 +80,27 @@
     transition: margin-left 0.3s;
 }
 
-.sidebar:hover ~ .main-content {
-    margin-left: 230px;
+
+.sidebar-logo {
+    width: 100px;
+    height: auto;
+}
+
+.icon-container {
+    position: relative;
+}
+
+
+.icon-underline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; 
+    height: 4px; 
+    background-color: white; 
+    border-radius: 2px; 
+    background-color: rgba(0, 0, 0, 0.308);
+    margin-left: 10px;
+    margin-bottom: 20px;
+    
 }

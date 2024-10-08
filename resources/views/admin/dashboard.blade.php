@@ -20,7 +20,7 @@
 <nav class="navbar-admin navbar-light">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center w-100">
-                <h3 class="fs-5 mb-0">Hi, Z. Welcome back</h3>
+                <h3 class="greet">Hello, <span class="name-greet">Zai</span>. <span class="space">How are you feeling today?</span></h3>
                 <a href="{{ route('questionnaire') }}" class="create-btn">Questionnaire</a>
 
             </div>
@@ -89,6 +89,7 @@
 </div>
 
 <script>
+    
     const chartU = document.getElementById('usersC').getContext('2d');
     const usersC = new Chart(chartU, {
         type: 'line',

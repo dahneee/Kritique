@@ -1,15 +1,27 @@
 
+
 .trans-content {
-    justify-content: center;
+    /* transition: margin-left 0.3s; */
+    margin-left: 50px;
+    width: 100%;
     transition: margin-left 0.3s;
-    width: 100%; 
-    margin-left: 40px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.sidebar:hover ~ .trans-content {
-    margin-left: 250px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
+
+/* .sidebar:hover ~ .trans-content {
+    margin-left: 150px;
+} */
 .table-responsive {
+    width: 100%; 
     max-width: 100%; 
     margin: 20px auto;
 }
@@ -19,20 +31,22 @@
     width: 100% !important;
     border-collapse: separate !important;
     border-spacing: 0 !important;
-    background-color: #6e6e07 !important; 
+    background-color: #A4D07B  !important; 
     overflow: hidden !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    font-size: 15px;
 }
 
 .table thead {
-    background-color: #A8C686 !important; 
+    background-color: #A4D07B  !important; 
     color: white !important;
 }
 
 .table thead th {
-    background-color: #A8C686 !important;
+    background-color: #A4D07B  !important;
     color: white !important; 
-    padding: 16px 20px !important;
+    padding: 18px 24px !important; 
+    font-size: 15px;
     text-align: left !important;
     font-weight: 600 !important;
     letter-spacing: 0.05em !important; 
@@ -52,23 +66,27 @@
 }
 
 .table tbody td {
-    padding: 12px 15px !important;
+    padding: 16px 20px !important;  
+    font-size: 18px;
     color: #333 !important;
     font-weight: 400 !important;
 }
 
 
 .btn-add {
-    background-color: #8DAA6C !important;
+    background-color: #A4D07B  !important;
     color: rgb(255, 255, 255) !important;
     text-decoration: none;
-    border: 1px solid #dbdbdb !important;
+    font-weight: 700 !important;
+    font-family: Poppins, sans-serif;
+    padding: 10px !important;
     
 }
 
 .btn-add:hover {
     background-color: white !important; 
-    color: #8DAA6C !important;
+    color: #A4D07B  !important;
+    border: 1px solid #dbdbdb !important;
 }
 
 .btn-group-student {

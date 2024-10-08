@@ -9,12 +9,67 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 0px;
+    margin-left: 120px;
+    margin-right: 190px;
     background-color: white;
     color: #A4D07B !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 30px!important;
 }
+
+.navbar-admin {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 35px;
+    top: 0;
+    left: 80px;
+    right: 0;
+    z-index: 1;
+    transition: left 0.3s;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #A4D07B ;
+    margin-left: 300px;
+    margin-right: 220px;
+    position: sticky;
+    
+}
+.greet {
+    font-size: 25px !important;
+    font-weight: 300 !important;
+    font-family: Poppins, sans-serif;
+    margin-top: 25px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.name-greet {
+    font-weight: 600;
+}
+
+.space {
+    margin-left: 10px;
+}
+
+
+
+
+
+
 
 .nav-link-students {
     font-weight: bold;
@@ -95,45 +150,12 @@
     vertical-align: middle;
 }
 
-.navbar-admin {
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    top: 0;
-    left: 80px;
-    right: 0;
-    z-index: 1;
-    transition: left 0.3s;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-    margin-left: 20px;
-}
+
 
 .nav-item {
     color: #A4D07B !important;
 }
 
-.navbar-admin h3 {
-    color: #A4D07B;
-    font-weight: bold;
-    margin-left: 30px;
-}
 
-.content-admin {
-    transition: margin-left 0.3s;
-}
 
-.sidebar:hover ~ .content-admin {
-    margin-left: 150px;
-}
 
-.trans-content {
-    transition: margin-left 0.3s;
-}
-
-.sidebar:hover ~ .trans-content {
-    margin-left: 150px;
-}

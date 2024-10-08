@@ -5,41 +5,38 @@
 
 <div class="sidebar d-flex flex-column align-items-center">
     <div class="text-center mb-3">
-        <h3 class="mt-2">Kritique</h3> 
+        <img src="/src/logow.png" alt="Logo" class="sidebar-logo">
     </div>
-    <div class="text-center mb-3">
-        <h5 class="mt-1" style="color: black !important; opacity: 0;">Zaisuki</h5>
-    </div>
-    <a href="{{ route('admin.dashboard') }}" class="sidebar-link text-center" style="color: white !important;">
-        <i class="fas fa-home fa-2x"></i>
-        <span>Dashboard</span>
+
+    <a href="{{ route('admin.dashboard') }}" class="sidebar-link text-center {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="color: white !important;">
+        <div class="icon-container">
+            <div class="icon-underline"></div>
+            <i class="fas fa-home fa-2x"></i>
+        </div>
     </a>
 
-    <a href="{{ route('questionnaire') }}" class="sidebar-link text-center" style="color:white !important;">
-        <i class="fas fa-question-circle fa-2x"></i> 
-        <span>Questionnaire</span>
+    <a href="{{ route('questionnaire') }}" class="sidebar-link text-center {{ request()->routeIs('questionnaire') ? 'active' : '' }}" style="color:white !important;">
+        <i class="fas fa-question-circle fa-2x"></i>
     </a>
-    <a href="{{ route('view-student') }}" class="sidebar-link text-center" style="color: white !important;">
-    <i class="fas fa-table"></i>
-    <span>Table</span>
-</a>
 
+    <a href="{{ route('view-student') }}" class="sidebar-link text-center {{ request()->routeIs('view-student') ? 'active' : '' }}" style="color: white !important;">
+        <i class="fas fa-table fa-2x"></i>
+    </a>
 
-    <a href="#" class="sidebar-link text-center" style="color: white !important;">
+    <a href="#" class="sidebar-link text-center {{ request()->is('results') ? 'active' : '' }}" style="color: white !important;">
         <i class="fas fa-chart-pie fa-2x"></i>
-        <span>Results</span>
     </a>
-    
+
     <div class="text-center mb-3">
-        <a href="#" class="sidebar-link text-center" id="logout-link" style="color: white !important;">
-            <i class="fas fa-sign-out-alt fa-2x"></i> 
-            <span>Logout</span>
+        <a href="#" class="sidebar-link text-center {{ request()->is('logout') ? 'active' : '' }}" id="logout-link" style="color: white !important;">
+            <i class="fas fa-sign-out-alt fa-2x"></i>
         </a>
         <form method="POST" action="{{ route('logout') }}" style="display: none;" id="logout-form">
             @csrf
         </form>
     </div>
 </div>
+
 
 <script>
     document.getElementById('logout-link').addEventListener('click', function(event) {

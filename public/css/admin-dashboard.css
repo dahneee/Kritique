@@ -1,31 +1,53 @@
 
+
 .content {
     margin-left: 80px;
     padding: 20px;
     transition: margin-left 0.3s;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.sidebar:hover ~ .content {
-    margin-left: 250px;
+.content-admin {
+    transition: margin-left 0.3s;
+    animation: fadeIn 0.5s ease-in-out;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* .sidebar:hover ~ .content {
+    margin-left: 250px;
+} */
+
+/* .sidebar:hover ~ .content-admin {
+    margin-left: 150px;
+} */
+
 
 
 .create-btn {
-    background-color: rgb(255, 255, 255);
-    border: none;
-    color: #A4D07B;
-    font-weight: bold;
+    background-color: #A4D07B  !important;
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none;
+    font-weight: 700 !important;
+    font-family: Poppins, sans-serif;
+    padding: 10px !important;
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .create-btn:hover {
-    background-color: #A4D07B;
-    color: white;
+    background-color: white !important; 
+    color: #A4D07B  !important;
+    border: 1px solid #dbdbdb !important;
 }
 
 .create-btn:focus {
