@@ -55,4 +55,8 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
+    public function block()
+    {
+        return $this->belongsTo(Block::class);
+    }
 }

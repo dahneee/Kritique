@@ -5,24 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Block extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'department_id',
-        'department_name',
-    ];
+    protected $fillable = 
+        ['block_id',
+        'name'];
 
-    // protected $primaryKey = 'department_id';
-    
     public function teachers()
     {
-        return $this->hasMany(Teacher::class);
+        return $this->belongsToMany(Teacher::class, 'teacher_block');
     }
 
     public function students()
     {
         return $this->hasMany(User::class);
     }
+
 }
