@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->string('teacher_name');
+            $table->string('department');
             $table->timestamps();
+
+            $table->foreign('department')->references('department_id')->on('departments')->onDelete('cascade');
         });
     }
 
@@ -23,6 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('teacher_subject');
+        Schema::dropIfExists('teacher_block');
         Schema::dropIfExists('teachers');
     }
 };
