@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/questionnaire.css">
     <link rel="stylesheet" href="/css/nav.css">
+    <style>
+        #newQuestionInput {
+            resize: none; 
+            overflow: hidden; 
+            box-sizing: border-box; 
+        }
+    </style>
 </head>
 <body>
     @include('sidebar')
@@ -15,7 +22,8 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3 class="greet">Questionnaire</h3>
-                <button type="button" class="add-ques" data-bs-toggle="modal" data-bs-target="#zaiModal">Add Question</button>
+                <button type="button" class="add-ques-one" data-bs-toggle="modal" data-bs-target="#zaiModal">Add Question</button>
+                
             </div>
         </div>
     </nav>
@@ -26,43 +34,20 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="zaiModelLabel">Choose your set of questions:</h5>
+                            <h5 class="modal-title" id="zaiModelLabel">Add Your Questions (Max 200):</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form>
-                               
-                                <div class="form-check question-item modal-question" data-value="I find that the professor explains concepts clearly and in an easy-to-understand manner.">
-                                    <span class="question-text">I find that the professor explains concepts clearly and in an easy-to-understand manner.</span>
+                                <div class="mb-3">
+                                    <textarea id="newQuestionInput" class="form-control" placeholder="Type your question here" maxlength="200" rows="1"></textarea>
                                 </div>
-                                <div class="form-check question-item modal-question" data-value="I feel that the professor effectively engages students during class sessions.">
-                                    <span class="question-text">I feel that the professor effectively engages students during class sessions.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I believe the professor uses teaching methods that suit my learning needs.">
-                                    <span class="question-text">I believe the professor uses teaching methods that suit my learning needs.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I find that the professor simplifies complex topics, making them easier for me to understand.">
-                                    <span class="question-text">I find that the professor simplifies complex topics, making them easier for me to understand.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I feel encouraged by the professor to participate and engage in class discussions.">
-                                    <span class="question-text">I feel encouraged by the professor to participate and engage in class discussions.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I think the professor’s lessons are well-organized and easy for me to follow.">
-                                    <span class="question-text">I think the professor’s lessons are well-organized and easy for me to follow.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I find that the professor effectively uses teaching materials (e.g., slides, readings) to enhance my learning.">
-                                    <span class="question-text">I find that the professor effectively uses teaching materials (e.g., slides, readings) to enhance my learning.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I feel motivated to learn and stay engaged with the subject due to the professor’s teaching style.">
-                                    <span class="question-text">I feel motivated to learn and stay engaged with the subject due to the professor’s teaching style.</span>
-                                </div>
-                                <div class="form-check question-item modal-question" data-value="I believe the professor provides constructive feedback that helps improve my understanding of the subject.">
-                                    <span class="question-text">I believe the professor provides constructive feedback that helps improve my understanding of the subject.</span>
-                                </div>
+                                <button type="button" class="add-ques-two" id="addQuestionBtn">Add Question</button>
+
+                                <div class="mt-3 ques-list" id="questionList"></div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="mfb-s " id="selectAllBtn">Select All</button>
                             <button type="button" class="mfb-sc" id="saveChangesBtn">Save changes</button>
                         </div>
                     </div>
@@ -80,54 +65,91 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-          document.querySelector('.mfb-s').addEventListener('click', function() {
-            this.classList.add('clicked'); 
-        });
         $(document).ready(function() {
-            $('.modal-question').on('click', function() {
-                $(this).toggleClass('selected');
-                const questionText = $(this).data('value');
-                if ($(this).hasClass('selected')) {
-                    $(this).attr('data-selected', true);
-                } else {
-                    $(this).removeAttr('data-selected');
-                }
-            });
-
-            $('#selectAllBtn').on('click', function() {
-                const allSelected = $('.modal-question[data-selected=true]').length === $('.modal-question').length;
-
-                if (allSelected) {
-                  
-                    $('.modal-question').removeClass('selected').removeAttr('data-selected');
-                    $(this).text('Select All').removeClass('btn-danger').addClass('btn-primary'); 
-                } else {
-                  
-                    $('.modal-question').addClass('selected').attr('data-selected', true);
-                    $(this).text('Deselect All').removeClass('btn-primary').addClass('btn-danger'); 
-                }
-            });
-
           
+            $('#newQuestionInput').on('input', function() {
+                this.style.height = 'auto'; 
+                this.style.height = this.scrollHeight + 'px';
+            });
+
+            let questionCount = 0;
+            const maxQuestions = 10;
+
+           
+            $('#addQuestionBtn').on('click', function() {
+                const newQuestion = $('#newQuestionInput').val().trim();
+
+                if (newQuestion !== '' && questionCount < maxQuestions) {
+                    questionCount++;
+                    const questionDiv = $('<div class="form-check question-item modal-question" data-value="' + newQuestion + '" data-selected="true"></div>');
+                    questionDiv.append('<span class="question-text">' + newQuestion + '</span>');
+                    $('#questionList').append(questionDiv);
+                    $('#newQuestionInput').val('');  
+                    $('#newQuestionInput').css('height', 'auto'); 
+                } else if (questionCount >= maxQuestions) {
+                    alert('You can only add up to 10 questions.');
+                }
+            });
+
+           
             $('#saveChangesBtn').on('click', function() {
-                $('#dynamicQuestions').empty(); 
-                $('.modal-question[data-selected=true]').each(function() {
+                $('#dynamicQuestions').empty();  
+                $('.modal-question').each(function(index) {
                     const questionText = $(this).data('value');
                     const questionDiv = $('<div class="question-item" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></div>');
-                    questionDiv.append('<label class="form-label">' + questionText + '</label>');
-                    const dropdown = `
-                        <select class="form-select" aria-label="Response to ${questionText}" style="width: 50%; font-family: 'Poppins', sans-serif;">
-                            <option selected>Choose an option</option>
-                            <option value="Strongly Disagree">Strongly Disagree</option>
-                            <option value="Disagree">Disagree</option>
-                            <option value="Agree">Agree</option>
-                            <option value="Strongly Agree">Strongly Agree</option>
-                        </select>
+                    questionDiv.append('<label class="form-label question-text">' + questionText + '</label>');
+                    
+                  
+                    
+                    const radioGroup = `
+                    <div class="radios">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="response${index}" id="response${index}1" value="Strongly Disagree">
+                            <label class="form-check-label" for="response${index}1">
+                                Strongly Disagree
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="response${index}" id="response${index}2" value="Disagree">
+                            <label class="form-check-label" for="response${index}2">
+                                Disagree
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="response${index}" id="response${index}3" value="Agree">
+                            <label class="form-check-label" for="response${index}3">
+                                Agree
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="response${index}" id="response${index}4" value="Strongly Agree">
+                            <label class="form-check-label" for="response${index}4">
+                                Strongly Agree
+                            </label>
+                        </div>
+                        </div>
                     `;
-                    questionDiv.append(dropdown);
+                    questionDiv.append(radioGroup);
                     $('#dynamicQuestions').append(questionDiv);
                 });
+
+            
+                if ($('#dynamicQuestions').children().length === 0) {
+                    $('#dynamicQuestions').html('<div class="shrug-icon">🤷</div>');
+                } else {
+                    $('#dynamicQuestions .shrug-icon').remove();
+                    
+                    
+                    const submitBtn = $('<button type="button" class="sub-save mt-3 float-end" id="submitBtn">Submit</button>');
+                    $('#dynamicQuestions').append(submitBtn); 
+                }
+
+
                 $('#zaiModal').modal('hide');
+            });
+
+            $(document).on('click', '#submitBtn', function() {
+                alert('Form submitted!');
             });
         });
     </script>

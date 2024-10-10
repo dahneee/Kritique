@@ -42,20 +42,8 @@ h1 {
     background-color: #407d0a;
 }
 
-.add-ques {
-    background-color: #A4D07B  !important;
-    color: rgb(255, 255, 255) !important;
-    text-decoration: none;
-    font-weight: 700 !important;
-    font-family: Poppins, sans-serif;
-    padding: 10px !important;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border: 0;
-}
+
+
 
 .quesques {
     padding: 40px;
@@ -76,21 +64,30 @@ h1 {
 .modal-content {
     padding: 20px;
 }
-.mfb-s, .mfb-sc{
+.mfb-s, 
+.mfb-sc, 
+.sub-save, 
+.add-ques-one, 
+.add-ques-two {
     background-color: #A4D07B;
-    border: 0;
-    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0); 
+    padding: 7px;
     color: white;
-    font-family: Poppins, sans serif;
-    margin-left: 5px !important;
+    font-family: 'Poppins', sans-serif; 
     border-radius: 10px;
-    border: 1px solid #00000000;
+    font-size: 14px;
 }
-.mfb-s, .mfb-sc:hover{
-    background-color: white !important;
+
+.mfb-s:hover, 
+.mfb-sc:hover, 
+.sub-save:hover, 
+.add-ques-one:hover, 
+.add-ques-two:hover {
+    background-color: white;
     color: #A4D07B;
-    border: 1px solid #0000002f;
+    border: 1px solid rgba(0, 0, 0, 0.18); 
 }
+
 .mfb-s.clicked {
     background-color: rgb(148, 1, 1) !important;
     color: white !important;
@@ -125,6 +122,10 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    cursor: copy;
+ }
+.radios{
+    padding: 40px;
 }
 
 .form-check-label {
@@ -142,8 +143,9 @@ h1 {
     margin: 10px 0;
     box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
     background-color: #ffffff!important;
-    cursor: pointer;
+    cursor:default;
     transition: background-color 0.3s;
+    
 }
 
 .question-item.selected {
@@ -152,6 +154,20 @@ h1 {
 
 .question-item {
     background-color: #407d0a;
+}
+.form-label{
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 20px;
+    padding: 10px;
+    resize: none;  
+    overflow: hidden; 
+    box-sizing: border-box; 
+    word-wrap: break-word;
+    word-break: break-all; 
+    white-space: pre-wrap; 
+    overflow-wrap: break-word;
+    height: auto;  
 }
 
 .form-select {
@@ -182,4 +198,61 @@ h1 {
     justify-content: center;
     margin-top: 90px;
     filter: grayscale(100%);
+}
+
+
+
+#newQuestionInput {
+    resize: none; 
+    overflow: hidden; 
+    box-sizing: border-box; 
+}
+.ques-list{
+    resize: none; 
+    overflow: hidden; 
+    box-sizing: border-box; 
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap; 
+    overflow-wrap: break-word;
+    resize: none; 
+    height: auto; 
+}
+
+.form-check-input {
+    display: none; 
+}
+
+.form-check-label {
+    position: relative;
+    padding-left: 30px; 
+    cursor: pointer;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+.form-check-label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px; 
+    height: 18px; 
+    border: 2px solid #025020;
+    border-radius: 50%; 
+    background-color: #fff; 
+    transition: background-color 0.3s ease, border-color 0.3s ease; 
+}
+
+
+.form-check-input:checked + .form-check-label:before {
+    background-color: #4a8315; 
+    border-color: #0056b3; 
+}
+
+
+.form-check-label:hover:before {
+    border-color: #0056b3; 
 }
