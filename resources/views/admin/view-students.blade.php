@@ -51,7 +51,13 @@
                         <div class="p-2 text-gray-900 fs-7">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <form class="d-flex align-items-center" id="filterForm">
-                                    <input class="form-control me-2" id="searchInput" type="search" placeholder="Search" aria-label="Search" oninput="filterStudents()">
+                                <div class="input-group">
+                                    <input class="form-control" id="searchInput" type="search" placeholder="Search" aria-label="Search" oninput="filterStudents()">
+                                     <span class="input-group-text" id="basic-addon1">
+                                      <i class="fas fa-search"></i>
+                                     </span>
+                                </div>
+
                                     <select class="form-select me-2" id="sortSelect" onchange="filterStudents()">
                                         <option value="student_id">Sort: Student ID</option>
                                         <option value="name">Sort: Name</option>
