@@ -9,11 +9,7 @@
     <link rel="stylesheet" href="/css/questionnaire.css">
     <link rel="stylesheet" href="/css/nav.css">
     <style>
-        #newQuestionInput {
-            resize: none; 
-            overflow: hidden; 
-            box-sizing: border-box; 
-        }
+        
     </style>
 </head>
 <body>
@@ -23,7 +19,6 @@
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3 class="greet">Questionnaire</h3>
                 <button type="button" class="add-ques-one" data-bs-toggle="modal" data-bs-target="#zaiModal">Add Question</button>
-                
             </div>
         </div>
     </nav>
@@ -66,7 +61,6 @@
 
     <script>
         $(document).ready(function() {
-          
             $('#newQuestionInput').on('input', function() {
                 this.style.height = 'auto'; 
                 this.style.height = this.scrollHeight + 'px';
@@ -75,7 +69,6 @@
             let questionCount = 0;
             const maxQuestions = 10;
 
-           
             $('#addQuestionBtn').on('click', function() {
                 const newQuestion = $('#newQuestionInput').val().trim();
 
@@ -83,6 +76,7 @@
                     questionCount++;
                     const questionDiv = $('<div class="form-check question-item modal-question" data-value="' + newQuestion + '" data-selected="true"></div>');
                     questionDiv.append('<span class="question-text">' + newQuestion + '</span>');
+                    questionDiv.append('<button class="remove-question"><i class="fas fa-times"></i></button>'); 
                     $('#questionList').append(questionDiv);
                     $('#newQuestionInput').val('');  
                     $('#newQuestionInput').css('height', 'auto'); 
@@ -91,61 +85,52 @@
                 }
             });
 
-           
             $('#saveChangesBtn').on('click', function() {
                 $('#dynamicQuestions').empty();  
                 $('.modal-question').each(function(index) {
                     const questionText = $(this).data('value');
                     const questionDiv = $('<div class="question-item" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></div>');
                     questionDiv.append('<label class="form-label question-text">' + questionText + '</label>');
-                    
-                  
-                    
+
                     const radioGroup = `
                     <div class="radios">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="response${index}" id="response${index}1" value="Strongly Disagree">
-                            <label class="form-check-label" for="response${index}1">
-                                Strongly Disagree
-                            </label>
+                            <label class="form-check-label" for="response${index}1">Strongly Disagree</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="response${index}" id="response${index}2" value="Disagree">
-                            <label class="form-check-label" for="response${index}2">
-                                Disagree
-                            </label>
+                            <label class="form-check-label" for="response${index}2">Disagree</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="response${index}" id="response${index}3" value="Agree">
-                            <label class="form-check-label" for="response${index}3">
-                                Agree
-                            </label>
+                            <label class="form-check-label" for="response${index}3">Agree</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="response${index}" id="response${index}4" value="Strongly Agree">
-                            <label class="form-check-label" for="response${index}4">
-                                Strongly Agree
-                            </label>
+                            <label class="form-check-label" for="response${index}4">Strongly Agree</label>
                         </div>
-                        </div>
+                    </div>
                     `;
                     questionDiv.append(radioGroup);
                     $('#dynamicQuestions').append(questionDiv);
                 });
 
-            
                 if ($('#dynamicQuestions').children().length === 0) {
                     $('#dynamicQuestions').html('<div class="shrug-icon">🤷</div>');
                 } else {
                     $('#dynamicQuestions .shrug-icon').remove();
-                    
-                    
                     const submitBtn = $('<button type="button" class="sub-save mt-3 float-end" id="submitBtn">Submit</button>');
                     $('#dynamicQuestions').append(submitBtn); 
                 }
 
-
                 $('#zaiModal').modal('hide');
+            });
+
+        
+            $(document).on('click', '.remove-question', function() {
+                $(this).closest('.modal-question').remove(); 
+                questionCount--; 
             });
 
             $(document).on('click', '#submitBtn', function() {

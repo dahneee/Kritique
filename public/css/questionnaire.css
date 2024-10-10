@@ -145,6 +145,7 @@ h1 {
     background-color: #ffffff!important;
     cursor:default;
     transition: background-color 0.3s;
+    position: relative;
     
 }
 
@@ -154,6 +155,16 @@ h1 {
 
 .question-item {
     background-color: #407d0a;
+}
+.remove-question {
+    position: absolute;
+    top: 5px; 
+    right: 5px; 
+    background: none;
+    border: none;
+    color: rgb(0, 0, 0); 
+    font-size: 15px;
+    cursor: pointer;
 }
 .form-label{
     margin-left: 45px;
