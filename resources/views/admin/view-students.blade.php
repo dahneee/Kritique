@@ -70,7 +70,7 @@
                                         @endforeach
                                     </select>
                                 </form>
-                                <button class="btn btn-add">Add New Student</button>
+                                <a href="{{ route('create-student') }}" class="btn btn-add">Add New Student</a>
                             </div>
                             <hr />
                             @if(Session::has('success'))
@@ -104,8 +104,8 @@
                                             <td>{{ $student->department }}</td>
                                             <td>
                                                 <div class="btn-group-student btn-group-sm" role="group">
-                                                    <a href="#" class="btn btn-outline-secondary">Edit</a>
-                                                    <a href="#" class="btn btn-outline-danger">Delete</a>
+                                                    <a href="{{ route('edit-student', ['id'=>$student->id]) }}" class="btn btn-outline-secondary">Edit</a>
+                                                    <a href="{{ route('delete-student', ['id'=>$student->id]) }}" class="btn btn-outline-danger">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>

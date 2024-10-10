@@ -27,7 +27,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/subjects', [SubjectController::class, 'index'])->name('admin.subjects');
     Route::get('/admin/questionnaire', [QuestionnaireController::class, 'questionnaire'])->name('questionnaire');
+
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
+    Route::get('/admin/students/create', [StudentController::class, 'create'])->name('create-student');
+    Route::post('/admin/students/save', [StudentController::class, 'save'])->name('save-student');
+    Route::get('/admin/students/edit/{id}', [StudentController::class, 'edit'])->name('edit-student');
+    Route::put('/admin/students/edit/{id}', [StudentController::class, 'update'])->name('update-student');
+    Route::get('/admin/students/delete/{id}', [StudentController::class, 'delete'])->name('delete-student');
+
     Route::get('/admin/teachers', [TeacherController::class, 'index'])->name('view-teachers');
 });
 
