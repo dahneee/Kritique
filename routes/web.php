@@ -36,6 +36,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/students/delete/{id}', [StudentController::class, 'delete'])->name('delete-student');
 
     Route::get('/admin/teachers', [TeacherController::class, 'index'])->name('view-teachers');
+    Route::get('/admin/teachers/create', [TeacherController::class, 'create'])->name('create-teacher');
+    Route::post('/admin/teachers/save', [TeacherController::class, 'save'])->name('save-teacher');
+    Route::get('/admin/teachers/edit/{id}', [TeacherController::class, 'edit'])->name('edit-teacher');
+    Route::put('/admin/teachers/edit/{id}', [TeacherController::class, 'update'])->name('update-teacher');
+    Route::get('/admin/teachers/delete/{id}', [TeacherController::class, 'delete'])->name('delete-teacher');
 });
 
 
