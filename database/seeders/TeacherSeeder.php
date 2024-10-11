@@ -21,6 +21,7 @@ class TeacherSeeder extends Seeder
 
         foreach (range(1, 15) as $index) {
             $teacher = Teacher::create([
+                'email' => $faker->email,
                 'teacher_first_name' => $faker->firstName,
                 'teacher_middle_name' => $faker->firstName,
                 'teacher_last_name' => $faker->lastName,
