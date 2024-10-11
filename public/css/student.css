@@ -117,4 +117,26 @@
   .input-group .input-group-text i {
     color: #00000093;
   }
-  
+
+.custom-modal .modal-body {
+    max-height: 400px; 
+    overflow-y: auto; 
+}
+
+
+.custom-modal .modal-body::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.custom-modal .modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.custom-modal .modal-body::-webkit-scrollbar-thumb {
+    background: #A4D07B; 
+    border-radius: 10px;
+}
+
+.custom-modal .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #88C7A2;
+}
