@@ -129,7 +129,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editStudentForm">
+                <form action="{{ route('update-student', ['id'=>$student->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editStudentID" name="id">
@@ -232,6 +232,7 @@
                     const studentBlock = this.getAttribute("data-student-block");
                     const studentDepartment = this.getAttribute("data-student-department");
 
+                
                     document.getElementById("editStudentID").value = studentId;
                     document.getElementById("editStudentEmail").value = studentEmail;
                     document.getElementById("editStudentFirstName").value = studentFirstName;
@@ -240,6 +241,7 @@
                     document.getElementById("editStudentBlock").value = studentBlock;
                     document.getElementById("editStudentDepartment").value = studentDepartment;
 
+            
                     const editStudentModal = new bootstrap.Modal(document.getElementById("editStudentModal"));
                     editStudentModal.show();
                 });
@@ -262,7 +264,7 @@
                 .then(data => {
                    
                     if (data.success) {
-                   
+                       
                         alert("Student updated successfully!");
                         location.reload(); 
                     } else {
