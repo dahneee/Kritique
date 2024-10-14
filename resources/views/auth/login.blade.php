@@ -1,47 +1,56 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+</head>
+<body>
+    <div class="login-container">
+        
+        <div class="login-left">
+            <div class="login-content">
+                <h2 class="login-title">LOGIN</h2>
+                <p class="login-subtitle">helo ebribadi</p>
+    
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+            
+                    <div class="input-group">
+                        <label for="email" class="block">Username</label>
+                            <div class="icon"> <i class="fa-solid fa-user"></i> </div>
+                        <input id="email" class="form-input" type="email" name="email" required autofocus autocomplete="username" />
+                    </div>
+    
+                    <div class="input-group">
+                        <label for="password" class="block">Password</label>
+                        <div class="icon">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                        <input id="password" class="form-input" type="password" name="password" required autocomplete="current-password" />
+                    </div>
+                    <div class="forgot-pass">
+                        <a href="#">Forgot password?</a>
+                    </div>
+    
+                    <div class="form-actions">
+                        <button type="submit" class="login-btn">Login Now</button>
+                    </div>
+                </form>
+    
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+            </div>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        <div class="login-right"></div>
+        
+    </div>
+</body>
+</html>
