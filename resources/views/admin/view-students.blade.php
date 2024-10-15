@@ -99,7 +99,7 @@
                                                 <td>{{ $student->department }}</td>
                                                 <td>
                                                     <div class="btn-group-student btn-group-sm" role="group">
-                                                        <button class="btn btn-outline-secondary edit-student" data-student-id="{{ $student->id }}" data-student-email="{{ $student->email }}" data-student-first-name="{{ $student->first_name }}" data-student-middle-name="{{ $student->middle_name }}" data-student-last-name="{{ $student->last_name }}" data-student-block="{{ $student->block }}" data-student-department="{{ $student->department }}">Edit</button>
+                                                        <button class="btn btn-outline-secondary edit-student" data-id="{{ $student->id }}" data-student-id="{{ $student->student_id }}" data-student-email="{{ $student->email }}" data-student-first-name="{{ $student->first_name }}" data-student-middle-name="{{ $student->middle_name }}" data-student-last-name="{{ $student->last_name }}" data-student-block="{{ $student->block }}" data-student-department="{{ $student->department }}">Edit</button>
                                                         <a href="{{ route('delete-student', ['id'=>$student->id]) }}" class="btn btn-outline-danger">Delete</a>
                                                     </div>
                                                 </td>
@@ -129,11 +129,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form action="{{ route('update-student', ['id'=>$student->id]) }}" method="POST">
+                <form id="editStudentForm" method="POST">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" id="editStudentID" name="id">
 
+                        <input type="hidden" id="editID" name="id">
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">User Type</label>
@@ -150,7 +150,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Student ID</label>
-                                <input type="text" id="editStudentID" name="student_id" class="form-control" placeholder="Student ID">
+                                <input type="text" id="editStudentID" name="student_id" class="form-control" placeholder="Student ID" readonly>
                                 @error('student_id')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -219,61 +219,60 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const editButtons = document.querySelectorAll(".edit-student");
+        document.querySelectorAll('.edit-student').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const studentId = this.getAttribute('data-student-id');
+                const email = this.getAttribute('data-student-email');
+                const firstName = this.getAttribute('data-student-first-name');
+                const middleName = this.getAttribute('data-student-middle-name');
+                const lastName = this.getAttribute('data-student-last-name');
+                const block = this.getAttribute('data-student-block');
+                const department = this.getAttribute('data-student-department');
 
-            editButtons.forEach(button => {
-                button.addEventListener("click", function() {
-                    const studentId = this.getAttribute("data-student-id");
-                    const studentEmail = this.getAttribute("data-student-email");
-                    const studentFirstName = this.getAttribute("data-student-first-name");
-                    const studentMiddleName = this.getAttribute("data-student-middle-name");
-                    const studentLastName = this.getAttribute("data-student-last-name");
-                    const studentBlock = this.getAttribute("data-student-block");
-                    const studentDepartment = this.getAttribute("data-student-department");
+                document.getElementById('editID').value = id;
+                document.getElementById('editStudentID').value = studentId;
+                document.getElementById('editStudentEmail').value = email;
+                document.getElementById('editStudentFirstName').value = firstName;
+                document.getElementById('editStudentMiddleName').value = middleName;
+                document.getElementById('editStudentLastName').value = lastName;
+                document.getElementById('editStudentBlock').value = block;
+                document.getElementById('editStudentDepartment').value = department;
 
-                
-                    document.getElementById("editStudentID").value = studentId;
-                    document.getElementById("editStudentEmail").value = studentEmail;
-                    document.getElementById("editStudentFirstName").value = studentFirstName;
-                    document.getElementById("editStudentMiddleName").value = studentMiddleName;
-                    document.getElementById("editStudentLastName").value = studentLastName;
-                    document.getElementById("editStudentBlock").value = studentBlock;
-                    document.getElementById("editStudentDepartment").value = studentDepartment;
-
-            
-                    const editStudentModal = new bootstrap.Modal(document.getElementById("editStudentModal"));
-                    editStudentModal.show();
-                });
+                const editModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
+                editModal.show();
             });
+        });
 
-            document.getElementById("editStudentForm").addEventListener("submit", function(e) {
-                e.preventDefault(); 
+        document.getElementById("editStudentForm").addEventListener("submit", function(e) {
+            e.preventDefault();
 
-                const formData = new FormData(this);
-                const studentId = document.getElementById("editStudentID").value;
+            const studentId = document.getElementById("editID").value;
 
-                fetch(`/update-student/${studentId}`, {
-                    method: "PUT",
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                    },
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                   
-                    if (data.success) {
-                       
-                        alert("Student updated successfully!");
-                        location.reload(); 
-                    } else {
-                        alert("Failed to update student.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
+            fetch(`/admin/students/update/${studentId}`, {
+    method: "PUT", 
+    headers: {
+        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(Object.fromEntries(new FormData(this))),
+})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert("Student updated successfully!");
+                    location.reload();
+                } else {
+                    alert("Failed to update student.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
             });
         });
     </script>

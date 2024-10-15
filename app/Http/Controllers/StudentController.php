@@ -61,8 +61,9 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         $students = User::findOrFail($id);
-
+    
         $validation = $request->validate([
             'student_id' => 'required|unique:users,student_id,' . $id, 
             'first_name' => 'required|string|max:255',
@@ -73,7 +74,7 @@ class StudentController extends Controller
             'department' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id, 
         ]);
-
+    
         $students->student_id = $validation['student_id'];
         $students->first_name = $validation['first_name'];
         $students->middle_name = $validation['middle_name'];
@@ -82,17 +83,16 @@ class StudentController extends Controller
         $students->block = $validation['block'];
         $students->department = $validation['department'];
         $students->email = $validation['email'];
-
+    
         $data = $students->save();
-
+    
         if ($data) {
-            session()->flash('success', 'User updated successfully');
-            return redirect(route('view-student'));
+            return response()->json(['success' => true, 'message' => 'User updated successfully']);
         } else {
-            session()->flash('error', 'Some problem occurred');
-            return redirect(route('update-student', $id));
+            return response()->json(['success' => false, 'message' => 'Some problem occurred']);
         }
     }
+    
 
     public function delete($id)
     {

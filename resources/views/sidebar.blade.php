@@ -23,7 +23,7 @@
         <i class="fas fa-table fa-2x"></i>
     </a>
 
-    <a href="#" class="sidebar-link text-center {{ request()->is('results') ? 'active' : '' }}" style="color: white !important;">
+    <a href="{{ route('report') }}" class="sidebar-link text-center {{ request()->is('results') ? 'active' : '' }}" style="color: white !important;">
         <i class="fas fa-chart-pie fa-2x"></i>
     </a>
 
