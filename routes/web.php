@@ -28,6 +28,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/subjects', [SubjectController::class, 'index'])->name('admin.subjects');
     Route::get('/admin/questionnaire', [QuestionnaireController::class, 'questionnaire'])->name('questionnaire');
+    Route::post('/admin/questionnaire/save', [QuestionnaireController::class, 'saveQuestions'])->name('saveQuestions');
+    Route::delete('/admin/questionnaire/{id}/delete', [QuestionnaireController::class, 'deleteQuestion'])->name('deleteQuestion');
+
     Route::get('/admin/report', [ReportController::class, 'report'])->name('report');
 
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');

@@ -65,7 +65,7 @@
                                             @endforeach
                                         </select>
                                     </form>
-                                    <a href="{{ route('create-student') }}" class="btn btn-add">Add New Student</a>
+                                    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New Student</button>
                                 </div>
                                 <hr />
                                 @if(Session::has('success'))
@@ -120,162 +120,108 @@
         </div>
     </div>
 
-    <!-- Edit Student Modal -->
-    <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+ 
+     <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                    <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form id="editStudentForm" method="POST">
+                    
+                    <form id="addStudentForm" action="{{ route('save-student') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
-
-                        <input type="hidden" id="editID" name="id">
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">User Type</label>
-                                <select name="user_type" class="form-control" id="editUserType">
-                                    <option value="student">Student</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                @error('user_type')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
+                        
+                        
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Student ID</label>
-                                <input type="text" id="editStudentID" name="student_id" class="form-control" placeholder="Student ID" readonly>
+                                <input type="text" id="newStudentID" name="student_id" class="form-control" placeholder="Student ID" value="{{ old('student_id') }}">
                                 @error('student_id')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Email</label>
-                                <input type="email" id="editStudentEmail" name="email" class="form-control" placeholder="Email">
-                                @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
+                   
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">First Name</label>
-                                <input type="text" id="editStudentFirstName" name="first_name" class="form-control" placeholder="First Name">
+                                <input type="text" id="newStudentFirstName" name="first_name" class="form-control" placeholder="First Name" value="{{ old('first_name') }}">
                                 @error('first_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label class="form-label">Middle Name</label>
-                                <input type="text" id="editStudentMiddleName" name="middle_name" class="form-control" placeholder="Middle Name">
+                                <input type="text" id="newStudentMiddleName" name="middle_name" class="form-control" placeholder="Middle Name" value="{{ old('middle_name') }}">
                                 @error('middle_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label class="form-label">Last Name</label>
-                                <input type="text" id="editStudentLastName" name="last_name" class="form-control" placeholder="Last Name">
+                                <input type="text" id="newStudentLastName" name="last_name" class="form-control" placeholder="Last Name" value="{{ old('last_name') }}">
                                 @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
+                   
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Block</label>
-                                <input type="text" id="editStudentBlock" name="block" class="form-control" placeholder="Block">
+                                <input type="text" id="newStudentBlock" name="block" class="form-control" placeholder="Block" value="{{ old('block') }}">
                                 @error('block')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
+
+                 
+                        <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Department</label>
-                                <input type="text" id="editStudentDepartment" name="department" class="form-control" placeholder="Department">
+                                <input type="text" id="newStudentDepartment" name="department" class="form-control" placeholder="Department" value="{{ old('department') }}">
                                 @error('department')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Update Student</button>
+                  
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Email</label>
+                                <input type="email" id="newStudentEmail" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+                                @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
+
+                   
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" placeholder="Password">
+                                @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                       
+                        <button type="submit" class="btn btn-primary">Add Student</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        document.querySelectorAll('.edit-student').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const studentId = this.getAttribute('data-student-id');
-                const email = this.getAttribute('data-student-email');
-                const firstName = this.getAttribute('data-student-first-name');
-                const middleName = this.getAttribute('data-student-middle-name');
-                const lastName = this.getAttribute('data-student-last-name');
-                const block = this.getAttribute('data-student-block');
-                const department = this.getAttribute('data-student-department');
-
-                document.getElementById('editID').value = id;
-                document.getElementById('editStudentID').value = studentId;
-                document.getElementById('editStudentEmail').value = email;
-                document.getElementById('editStudentFirstName').value = firstName;
-                document.getElementById('editStudentMiddleName').value = middleName;
-                document.getElementById('editStudentLastName').value = lastName;
-                document.getElementById('editStudentBlock').value = block;
-                document.getElementById('editStudentDepartment').value = department;
-
-                const editModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
-                editModal.show();
-            });
-        });
-
-        document.getElementById("editStudentForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            const studentId = document.getElementById("editID").value;
-
-            fetch(`/admin/students/update/${studentId}`, {
-    method: "PUT", 
-    headers: {
-        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(Object.fromEntries(new FormData(this))),
-})
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert("Student updated successfully!");
-                    location.reload();
-                } else {
-                    alert("Failed to update student.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/student.js"></script>
 </body>
 </html>
