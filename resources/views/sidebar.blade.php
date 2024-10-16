@@ -15,7 +15,7 @@
         </div>
     </a>
 
-    <a href="{{ route('questionnaire') }}" class="sidebar-link text-center {{ request()->routeIs('questionnaire') ? 'active' : '' }}" style="color:white !important;">
+    <a href="{{ route('show-questions') }}" class="sidebar-link text-center {{ request()->routeIs('questionnaire') ? 'active' : '' }}" style="color:white !important;">
         <i class="fas fa-question-circle fa-2x"></i>
     </a>
 
@@ -23,7 +23,7 @@
         <i class="fas fa-table fa-2x"></i>
     </a>
 
-    <a href="{{ route('report') }}" class="sidebar-link text-center {{ request()->is('results') ? 'active' : '' }}" style="color: white !important;">
+    <a href="{{ route('admin-reports') }}" class="sidebar-link text-center {{ request()->is('results') ? 'active' : '' }}" style="color: white !important;">
         <i class="fas fa-chart-pie fa-2x"></i>
     </a>
 
