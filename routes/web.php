@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\StudentController;
@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/subjects', [SubjectController::class, 'index'])->name('admin.subjects');
 
     Route::get('/admin/questionnaire', [QuestionController::class, 'index'])->name('show-questions');

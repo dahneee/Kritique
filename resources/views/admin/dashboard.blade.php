@@ -53,22 +53,22 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="metric-card">
-                    <button type="button" class="btn-icon" onclick="handleTotalTeachersClick()">
+                    <button type="button" class="btn-icon" onclick="window.location='{{ route('view-teachers') }}'">
                         <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
                      
                     </button>
                     <h4>Total Teachers</h4>
-                    <p>508</p>
+                    <p>{{ $totalTeachers }}</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="metric-card">
-                    <button type="button" class="btn-icon" onclick="handleTotalStudentsClick()">
+                    <button type="button" class="btn-icon" onclick="window.location='{{ route('view-student') }}'">
                         <div class="icon"><i class="fas fa-user-graduate"></i></div>
                         
                     </button>
                     <h4>Total Students</h4>
-                    <p>387</p>
+                    <p>{{ $totalStudents }}</p>
                 </div>
             </div>
             <div class="col-md-3">
@@ -90,7 +90,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="chart-container">
-                    <h5>Total Users</h5>
+                    <h5>Population</h5>
                     <canvas id="usersC" width="400" height="200"></canvas>
                 </div>
             </div>
@@ -100,10 +100,6 @@
                     <div class="col-md-12 mt-4">
                         <div class="metric-small">
                             <h5>Respondents</h5>
-                            <p>
-                                <span style="color: green;">Responded: 10%</span>  
-                                <span style="color: orange;">&#9650; Pending 1%</span>
-                            </p> 
                             <canvas id="projectsChart" width="200" height="100"></canvas>
                         </div>
                     </div>
@@ -170,46 +166,28 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    const chartU = document.getElementById('usersC').getContext('2d');
-    const usersC = new Chart(chartU, {
-        type: 'line',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            datasets: [{
-                label: 'Male',
-                data: [200, 250, 300, 150, 350, 220],
-                borderColor: 'rgba(255, 99, 132, 1)',
-                fill: false
-            }, {
-                label: 'Female',
-                data: [100, 150, 200, 100, 250, 150],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: false
-            }, {
-                label: 'Total',
-                data: [300, 400, 500, 250, 600, 370],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    
+    const departments = @json($departments);
+    const studentCounts = @json($studentCounts);
+    const teacherCounts = @json($teacherCounts);
 
     const chartP = document.getElementById('projectsChart').getContext('2d');
     const projectsChart = new Chart(chartP, {
         type: 'doughnut',
         data: {
-            labels: ['Responded', 'Pending'],
+            labels: departments,
             datasets: [{
-                label: 'Respondents',
-                data: [70, 30],
-                backgroundColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)']
+                label: 'Number of Students',
+                data: studentCounts,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 1)', // CAHS
+                    'rgba(255, 99, 132, 1)', // CAS
+                    'rgba(54, 162, 235, 1)', // CCJE
+                    'rgba(255, 206, 86, 1)', // CELA
+                    'rgba(75, 192, 192, 1)', // CEA
+                    'rgba(153, 102, 255, 1)', // CITE
+                    'rgba(255, 159, 64, 1)', // CMA
+                ]
             }]
         },
         options: {
@@ -222,59 +200,42 @@
         }
     });
 
-    function handleTotalTeachersClick() {
-        const teachers = [
-            { email: 'alice.johnson@example.com', teacher_first_name: 'Alice', teacher_middle_name: 'M', teacher_last_name: 'Johnson', department: 'Mathematics' },
-            { email: 'bob.brown@example.com', teacher_first_name: 'Bob', teacher_middle_name: 'T', teacher_last_name: 'Brown', department: 'Science' },
-        ];
-
-        const tableBody = document.getElementById('teacherTableBody');
-        tableBody.innerHTML = '';
-
-        teachers.forEach(teacher => {
-            const row = `
-                <tr>
-                    <td>${teacher.email}</td>
-                    <td>${teacher.teacher_first_name}</td>
-                    <td>${teacher.teacher_middle_name}</td>
-                    <td>${teacher.teacher_last_name}</td>
-                    <td>${teacher.department}</td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
-        });
-
-        const teacherModal = new bootstrap.Modal(document.getElementById('teacherModal'));
-        teacherModal.show();
-    }
-
-    function handleTotalStudentsClick() {
-        const students = [
-            { student_id: 'S001', email: 'jane.doe@example.com', first_name: 'Jane', middle_name: 'A', last_name: 'Doe', block: 'B1', department: 'Mathematics' },
-            { student_id: 'S002', email: 'john.smith@example.com', first_name: 'John', middle_name: 'B', last_name: 'Smith', block: 'B2', department: 'Science' },
-        ];
-
-        const tableBody = document.getElementById('studentTableBody');
-        tableBody.innerHTML = '';
-
-        students.forEach(student => {
-            const row = `
-                <tr>
-                    <td>${student.student_id}</td>
-                    <td>${student.email}</td>
-                    <td>${student.first_name}</td>
-                    <td>${student.middle_name}</td>
-                    <td>${student.last_name}</td>
-                    <td>${student.block}</td>
-                    <td>${student.department}</td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
-        });
-
-        const studentModal = new bootstrap.Modal(document.getElementById('studentModal'));
-        studentModal.show();
-    }
+    const ctx = document.getElementById('usersC').getContext('2d');
+    const combinedChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: departments,
+            datasets: [
+                {
+                    label: 'Students',
+                    data: studentCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Teachers',
+                    data: teacherCounts,
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 </script>
 </body>
 </html>
