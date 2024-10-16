@@ -4,34 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Teacher;
+use App\Models\Subject; 
+use App\Models\Questionnaire;
 
 class QuestionnaireController extends Controller
 {
-    public function questionnaire()
+    public function create()
     {
+        $teachers = Teacher::all();
         $questions = Question::all();
+        $subjects = Subject::all(); 
 
-        return view('questionnaire', compact('questions'));
+        return view('user-questionnaire', compact('teachers', 'questions', 'subjects')); 
     }
-    public function saveQuestions(Request $request)
+
+    public function store(Request $request)
     {
-        $validated = $request->validate([
-            'questions' => 'required|array|max:10',
-            'questions.*' => 'required|string|max:200',
+        dd($request->all());
+        // Validate the input
+        $validatedData = $request->validate([
+            'teacher_id' => 'required|exists:teachers,id',
+            'subject_id' => 'required|exists:subjects,subject_id',
+            'answers' => 'required|array',
+            'answers.*' => 'required|string|max:200',
         ]);
 
-        foreach ($validated['questions'] as $questionText) {
-            Question::create(['text' => $questionText]);
-        }
+        $questionnaireData = [
+            'student_id' => auth()->id(), 
+            'teacher_id' => $validatedData['teacher_id'],
+            'subject_id' => $validatedData['subject_id'],
+            'answers' => json_encode($validatedData['answers']),
+        ];
 
-        return redirect()->back()->with('success', 'Questions saved successfully!');
+        $questionnaire = Questionnaire::create($questionnaireData);
+
+        return redirect()->route('questionnaires-create')->with('success', 'Evaluation submitted successfully.');
     }
 
-    public function deleteQuestion($id)
-    {
-        $question = Question::findOrFail($id);
-        $question->delete();
 
-        return response()->json(['success' => 'Question deleted successfully.']);
-    }
+
 }
