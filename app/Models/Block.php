@@ -13,6 +13,9 @@ class Block extends Model
         ['block_id',
         'name'];
 
+    protected $primaryKey = 'block_id';
+    public $incrementing = false; 
+
     public function teachers()
     {
         return $this->belongsToMany(Teacher::class, 'teacher_block');

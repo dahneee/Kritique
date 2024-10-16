@@ -14,7 +14,8 @@ class Department extends Model
         'department_name',
     ];
 
-    // protected $primaryKey = 'department_id';
+    protected $primaryKey = 'department_id';
+    public $incrementing = false; 
     
     public function teachers()
     {

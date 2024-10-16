@@ -52,11 +52,11 @@ class User extends Authenticatable
 
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'department_id'); 
     }
 
     public function block()
     {
-        return $this->belongsTo(Block::class);
+        return $this->belongsTo(Block::class, 'block_id'); 
     }
 }
