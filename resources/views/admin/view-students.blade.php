@@ -66,6 +66,7 @@
                                         </select>
                                     </form>
                                     <a href="{{ route('create-student') }}" class="btn btn-add">Add New Student</a>
+                                    <a href="{{ route('export-users') }}" class="btn btn-add">Export Data</a>
                                 </div>
                                 <hr />
                                 @if(Session::has('success'))

@@ -50,6 +50,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/teachers/edit/{id}', [TeacherController::class, 'edit'])->name('edit-teacher');
     Route::put('/admin/teachers/edit/{id}', [TeacherController::class, 'update'])->name('update-teacher');
     Route::get('/admin/teachers/delete/{id}', [TeacherController::class, 'delete'])->name('delete-teacher');
+
+    Route::get('/export-users', [StudentController::class, 'exportToExcel'])->name('export-users');
 });
 
 Route::middleware(['auth'])->group(function () {

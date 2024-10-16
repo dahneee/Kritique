@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class StudentController extends Controller
 {
@@ -106,4 +108,40 @@ class StudentController extends Controller
         }
     }
 
+    public function exportToExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Student ID');
+        $sheet->setCellValue('B1', 'First Name');
+        $sheet->setCellValue('C1', 'Middle Name');
+        $sheet->setCellValue('D1', 'Last Name');
+        $sheet->setCellValue('E1', 'Block');
+        $sheet->setCellValue('F1', 'Department');
+        $sheet->setCellValue('G1', 'User Type');
+        $sheet->setCellValue('H1', 'Email');
+
+        $users = User::with(['department', 'block'])->get();
+        $row = 2; 
+
+        foreach ($users as $user) {
+            $sheet->setCellValue('A' . $row, $user->student_id);
+            $sheet->setCellValue('B' . $row, $user->first_name);
+            $sheet->setCellValue('C' . $row, $user->middle_name);
+            $sheet->setCellValue('D' . $row, $user->last_name);
+            $sheet->setCellValue('E' . $row, $user->block); 
+            $sheet->setCellValue('F' . $row, $user->department); 
+            $sheet->setCellValue('G' . $row, $user->user_type);
+            $sheet->setCellValue('H' . $row, $user->email);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'students.xlsx';
+        $writer->save($fileName);
+
+        return response()->download($fileName)->deleteFileAfterSend(true);
+    }
+    
 }
