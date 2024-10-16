@@ -6,6 +6,7 @@ use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,14 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/subjects', [SubjectController::class, 'index'])->name('admin.subjects');
-    Route::get('/admin/questionnaire', [QuestionnaireController::class, 'questionnaire'])->name('questionnaire');
-    Route::post('/admin/questionnaire/save', [QuestionnaireController::class, 'saveQuestions'])->name('saveQuestions');
-    Route::delete('/admin/questionnaire/{id}/delete', [QuestionnaireController::class, 'deleteQuestion'])->name('deleteQuestion');
 
-    Route::get('/admin/report', [ReportController::class, 'report'])->name('report');
+    Route::get('/admin/questionnaire', [QuestionController::class, 'index'])->name('show-questions');
+    Route::post('/admin/questionnaire/store', [QuestionController::class, 'store'])->name('save-questions');
+    Route::delete('/admin/questionnaire/{id}/delete', [QuestionController::class, 'delete'])->name('delete-question');
+    Route::put('/admin/questionnaire/{id}/update', [QuestionController::class, 'update'])->name('update-question');
+
+    Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin-reports');
+    Route::get('/admin/teacher/{id}/answers', [ReportController::class, 'showTeacherAnswers'])->name('admin-teacher-answers');
 
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
     Route::get('/admin/students/create', [StudentController::class, 'create'])->name('create-student');
@@ -48,28 +52,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/teachers/delete/{id}', [TeacherController::class, 'delete'])->name('delete-teacher');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/questionnaires/create', [QuestionnaireController::class, 'create'])->name('questionnaires-create');
+    Route::post('/questionnaires/store', [QuestionnaireController::class, 'store'])->name('questionnaires-store');
+});
+
 
 require __DIR__.'/auth.php';
 
 
-
-
-// <?php
-
-// use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\AdminController;
-// use App\Http\Controllers\QuestionnaireController;
-
-// Route::get('/', function () {
-//     return view('login');
-// });
-
-// Route::get('/admin/db', function () {
-//     return view('admin-db');
-// });
-// Route::get('/user/dashboard', function () {
-//     return view('user-dashboard');
-// });
-
-// Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-// Route::get('/questionnaire', [QuestionnaireController::class, 'questionnaire'])->name('questionnaire');
