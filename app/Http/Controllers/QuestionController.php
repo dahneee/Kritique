@@ -39,7 +39,6 @@ class QuestionController extends Controller
 
             return response()->json(['success' => true]); 
         } catch (\Exception $e) {
-            \Log::error('Failed to update question: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Failed to update the question.'], 500);  
         }
     }

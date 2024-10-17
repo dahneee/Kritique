@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    overflow: hidden; 
 }
 
 .login-container {
@@ -17,12 +18,29 @@ body {
     justify-content: center;
     align-items: center;
     background-color: white;
-    padding: 40px;
+    flex-direction: column; 
+}
+
+.logo-container {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.logo-img-container {
+    margin-right: 10px; 
+}
+
+.logo-img {
+    width: 100px; 
+    height: auto;
+    margin-top: -50px;
+    margin-left: 10px;
 }
 
 .login-content {
     width: 350px;
-    padding: 40px;
+    padding: 20px; 
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -30,23 +48,29 @@ body {
 }
 
 .login-right {
-    flex: 1;
-    background-color: #A4D07B;
+    flex: 1;                     
+    display: flex;               
+    justify-content: center;     
+    align-items: center;        
+    background-color: #b2de89;  
+}
+
+.right-image {
+    width: 80%;           
+    height: auto;               
 }
 
 .login-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: green;
-    text-align: center;
+    color: #96b975; 
 }
 
 .login-subtitle {
     font-size: 14px;
     color: #777;
     margin-bottom: 30px;
-    text-align: center;
 }
 
 .input-group {
@@ -56,10 +80,11 @@ body {
 }
 
 .form-input {
-    width: 85%;
-    margin-top: 3px;
-    padding: 12px;
+    width: 77.5%;
+    padding: 7px;
+    padding-top: 12px;
     padding-left: 40px;
+    padding-right: 40px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     background-color: #f4f4f4;
@@ -73,7 +98,7 @@ body {
 
 .login-btn {
     width: 40%;
-    padding: 12px;
+    padding: 10px;
     background-color: #A4D07B;
     color: white;
     border: none;
@@ -89,21 +114,57 @@ body {
 
 .icon {
     position: absolute;
-    top: 65%;
-    left: 15px;
+    top: 53%;
     transform: translateY(-50%);
     font-size: 18px;
     color: #888;
 }
 
-.forgot-pass{
-    margin-top: -10px;
+.icon-left {
+    left: 15px;
 }
 
-.forgot-pass a{
+.icon-right {
+    right: 15px;
+    cursor: pointer;
+}
+
+.remember-me-container {
+    display: flex;          /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between items */
+    align-items: center;    /* Align items vertically center */
+    margin-top: -10px;        /* Add margin for spacing */
+}
+
+.remember-me {
+    display: flex;               
+    align-items: center;
+    opacity: 0.6;     
+    margin-left: -3px;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 4.5px;   
+    margin-top: 1.5px;       
+    width: 16px;               
+    height: 15px;              
+}
+
+.remember-me label {
+    font-size: 13px;           
+    color: #333;              
+}
+
+.forgot-pass {
+    font-weight: bold;
+}
+
+.forgot-pass a {
     font-size: 15px;
-    text-align: left;
-    margin-right: 228px;
     text-decoration: none;
-    color:green;
+    color: #96b975;
+}
+
+.error-message {
+    margin-top: 20px;
 }
