@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/student.css">
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="icon" href="/src/logow.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>

@@ -6,7 +6,7 @@
     <title>Kritique</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="{{ asset('src/kritique.ico') }}">
+    <link rel="icon" href="/src/logow.png">
 </head>
 
 <body>
