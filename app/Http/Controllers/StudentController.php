@@ -113,27 +113,29 @@ class StudentController extends Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->setCellValue('A1', 'Student ID');
-        $sheet->setCellValue('B1', 'First Name');
-        $sheet->setCellValue('C1', 'Middle Name');
-        $sheet->setCellValue('D1', 'Last Name');
-        $sheet->setCellValue('E1', 'Block');
-        $sheet->setCellValue('F1', 'Department');
-        $sheet->setCellValue('G1', 'User Type');
-        $sheet->setCellValue('H1', 'Email');
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Student ID');
+        $sheet->setCellValue('C1', 'First Name');
+        $sheet->setCellValue('D1', 'Middle Name');
+        $sheet->setCellValue('E1', 'Last Name');
+        $sheet->setCellValue('F1', 'Block');
+        $sheet->setCellValue('G1', 'Department');
+        $sheet->setCellValue('H1', 'User Type');
+        $sheet->setCellValue('I1', 'Email');
 
         $users = User::with(['department', 'block'])->get();
         $row = 2; 
 
         foreach ($users as $user) {
-            $sheet->setCellValue('A' . $row, $user->student_id);
-            $sheet->setCellValue('B' . $row, $user->first_name);
-            $sheet->setCellValue('C' . $row, $user->middle_name);
-            $sheet->setCellValue('D' . $row, $user->last_name);
-            $sheet->setCellValue('E' . $row, $user->block); 
-            $sheet->setCellValue('F' . $row, $user->department); 
-            $sheet->setCellValue('G' . $row, $user->user_type);
-            $sheet->setCellValue('H' . $row, $user->email);
+            $sheet->setCellValue('A' . $row, $user->id);
+            $sheet->setCellValue('B' . $row, $user->student_id);
+            $sheet->setCellValue('C' . $row, $user->first_name);
+            $sheet->setCellValue('D' . $row, $user->middle_name);
+            $sheet->setCellValue('E' . $row, $user->last_name);
+            $sheet->setCellValue('F' . $row, $user->block); 
+            $sheet->setCellValue('G' . $row, $user->department); 
+            $sheet->setCellValue('H' . $row, $user->user_type);
+            $sheet->setCellValue('I' . $row, $user->email);
             $row++;
         }
 
