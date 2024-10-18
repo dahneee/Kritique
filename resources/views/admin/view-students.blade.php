@@ -65,7 +65,9 @@
                                             @endforeach
                                         </select>
                                     </form>
-                                    <a href="{{ route('create-student') }}" class="btn btn-add">Add New Student</a>
+                                   <a href="javascript:void(0)" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New Student</a>
+
+
                                     <a href="{{ route('export-users') }}" class="btn btn-add">Export Data</a>
                                 </div>
                                 <hr />
@@ -121,7 +123,7 @@
         </div>
     </div>
 
-    <!-- Edit Student Modal -->
+ 
     <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -219,7 +221,144 @@
         </div>
     </div>
 
+
+<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form id="addStudentForm" method="POST">
+                    @csrf
+                        @method('PUT')
+                    <input type="hidden" id="createID" name="id">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Student ID</label>
+                            <input type="text" name="student_id" class="form-control" placeholder="Student ID">
+                            @error('student_id')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email">
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                            @error('first_name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" name="middle_name" class="form-control" placeholder="Middle Name">
+                            @error('middle_name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+                            @error('last_name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Block</label>
+                            <input type="text" name="block" class="form-control" placeholder="Block">
+                            @error('block')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Department</label>
+                            <input type="text" name="department" class="form-control" placeholder="Department">
+                            @error('department')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
     <script>
+
+let originalStudentRows = [];
+document.addEventListener('DOMContentLoaded', function() {
+    const tableBody = document.getElementById('studentTableBody');
+    const rows = tableBody.querySelectorAll('tr');
+    originalStudentRows = Array.from(rows);
+    filterStudents();
+});
+function filterStudents() {
+    const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+    const sortOption = document.getElementById('sortSelect').value;
+    const selectedBlock = document.getElementById('blockSelect').value;
+    const tableBody = document.getElementById('studentTableBody');
+    let studentRows = [...originalStudentRows];
+    if (searchQuery !== '') {
+        studentRows = studentRows.filter(row => {
+            const cells = row.querySelectorAll('td');
+            const textContent = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+            return textContent.includes(searchQuery);
+        });
+    }
+    if (selectedBlock !== '') {
+        studentRows = studentRows.filter(row => {
+            const blockCell = row.querySelector('td:nth-child(6)').textContent;
+            return blockCell === selectedBlock;
+        });
+    }
+    studentRows.sort((a, b) => {
+        const aText = a.querySelector(`td:nth-child(${getSortColumnIndex(sortOption)})`).textContent.toLowerCase();
+        const bText = b.querySelector(`td:nth-child(${getSortColumnIndex(sortOption)})`).textContent.toLowerCase();
+        return aText.localeCompare(bText);
+    });
+    tableBody.innerHTML = '';
+    studentRows.forEach(row => tableBody.appendChild(row));
+}
+function getSortColumnIndex(sortOption) {
+    switch (sortOption) {
+        case 'student_id':
+            return 1;
+        case 'name':
+            return 3;
+        case 'department':
+            return 7;
+        default:
+            return 1;
+    }
+}
+
+
         document.querySelectorAll('.edit-student').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
@@ -251,13 +390,13 @@
             const studentId = document.getElementById("editID").value;
 
             fetch(`/admin/students/update/${studentId}`, {
-    method: "PUT", 
-    headers: {
-        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(Object.fromEntries(new FormData(this))),
-})
+             method: "PUT", 
+            headers: {
+             "X-CSRF-TOKEN": "{{ csrf_token() }}",
+              "Content-Type": "application/json",
+             },
+             body: JSON.stringify(Object.fromEntries(new FormData(this))),
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -276,6 +415,44 @@
                 console.error("Error:", error);
             });
         });
+
+        document.getElementById("addStudentForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const studentId = document.getElementById("createID").value;
+
+    fetch(`/admin/students/create/${studentId}`, {
+    method: "POST", 
+    headers: {
+        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(Object.fromEntries(new FormData(this))),
+})
+
+
+    .then(response => {
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert("Student added successfully!");
+            location.reload();
+        } else {
+            alert("Failed to add student.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+});
+
+
+       
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
