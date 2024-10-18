@@ -55,7 +55,6 @@
                 <div class="metric-card">
                     <button type="button" class="btn-icon" onclick="window.location='{{ route('view-teachers') }}'">
                         <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                     
                     </button>
                     <h4>Total Teachers</h4>
                     <p>{{ $totalTeachers }}</p>
@@ -65,7 +64,6 @@
                 <div class="metric-card">
                     <button type="button" class="btn-icon" onclick="window.location='{{ route('view-student') }}'">
                         <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                        
                     </button>
                     <h4>Total Students</h4>
                     <p>{{ $totalStudents }}</p>
@@ -74,15 +72,15 @@
             <div class="col-md-3">
                 <div class="metric-card">
                     <div class="icon"><i class="fas fa-users"></i></div>
-                    <h4>Total Respondents</h4>
-                    <p>161</p>
+                    <h4>Total Submissions</h4>
+                    <p>{{ $totalSubmissions }}</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="metric-card">
                     <div class="icon"><i class="fas fa-question-circle"></i></div>
-                    <h4>Questionnaires Created</h4>
-                    <p>231</p>
+                    <h4>Questions Created</h4>
+                    <p>{{ $totalQuestions }}</p>
                 </div>
             </div>
         </div>
@@ -109,67 +107,13 @@
     </div>
 </div>
 
-<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="studentModalLabel">Student List</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Block</th>
-                            <th>Department</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="teacherModal" tabindex="-1" aria-labelledby="teacherModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="teacherModalLabel">Teacher List</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Department</th>
-                        </tr>
-                    </thead>
-                    <tbody id="teacherTableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    
     const departments = @json($departments);
     const studentCounts = @json($studentCounts);
     const teacherCounts = @json($teacherCounts);
+    const studentsPerDepartment = @json($studentsPerDepartment);
 
     const chartP = document.getElementById('projectsChart').getContext('2d');
     const projectsChart = new Chart(chartP, {
@@ -177,17 +121,19 @@
         data: {
             labels: departments,
             datasets: [{
-                label: 'Number of Students',
+                label: 'Number of Students Who Answered',
                 data: studentCounts,
                 backgroundColor: [
-                    'rgba(75, 192, 192, 1)', // CAHS
-                    'rgba(255, 99, 132, 1)', // CAS
-                    'rgba(54, 162, 235, 1)', // CCJE
-                    'rgba(255, 206, 86, 1)', // CELA
-                    'rgba(75, 192, 192, 1)', // CEA
-                    'rgba(153, 102, 255, 1)', // CITE
-                    'rgba(255, 159, 64, 1)', // CMA
+                    'rgba(123, 199, 148, 1)', 
+                    'rgba(255, 192, 203, 1)', 
+                    'rgba(173, 216, 230, 1)', 
+                    'rgba(255, 239, 150, 1)', 
+                    'rgba(155, 233, 239, 1)', 
+                    'rgba(195, 160, 240, 1)',
+                    'rgba(255, 210, 128, 1)', 
                 ]
+
+
             }]
         },
         options: {
@@ -208,18 +154,18 @@
             datasets: [
                 {
                     label: 'Students',
-                    data: studentCounts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    data: studentsPerDepartment,
+                    backgroundColor: 'rgba(109, 207, 152, 0.7)', 
+                    borderColor: 'rgba(109, 207, 152, 1)', 
                     borderWidth: 1
                 },
                 {
                     label: 'Teachers',
                     data: teacherCounts,
-                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 182, 193, 0.7)', 
+                    borderColor: 'rgba(255, 182, 193, 1)', 
                     borderWidth: 1
-                }
+                },
             ]
         },
         options: {
