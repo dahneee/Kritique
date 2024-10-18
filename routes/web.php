@@ -34,8 +34,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/questionnaire/{id}/delete', [QuestionController::class, 'delete'])->name('delete-question');
     Route::put('/admin/questionnaire/{id}/update', [QuestionController::class, 'update'])->name('update-question');
 
-    Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin-reports');
-    Route::get('/admin/teacher/{id}/answers', [ReportController::class, 'showTeacherAnswers'])->name('admin-teacher-answers');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/teacher/{teacherId}', [ReportController::class, 'showTeacherEvaluations'])->name('reports.showTeacherEvaluations');
+    Route::get('/reports/student/{questionnaireId}', [ReportController::class, 'showStudentAnswers'])->name('reports.showStudentAnswers');
 
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
     Route::get('/admin/students/create', [StudentController::class, 'create'])->name('create-student');

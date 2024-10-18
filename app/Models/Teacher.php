@@ -30,4 +30,9 @@ class Teacher extends Model
     {
         return $this->belongsToMany(Block::class, 'teacher_block', 'teacher_id', 'block_id');
     }
+
+    public function questionnaires()
+    {
+        return $this->hasMany(Questionnaire::class);
+    }
 }

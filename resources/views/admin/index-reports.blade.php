@@ -49,32 +49,17 @@
 </div>
 
 <div class="content">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Reports') }}
-    </h2>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-semibold mb-4">List of Teachers</h3>
-
-                    @if($teachers->isEmpty())
-                        <p>No teachers available for evaluation.</p>
-                    @else
-                        <ul class="list-disc pl-5">
-                            @foreach($teachers as $teacher)
-                                <li>
-                                    <a href="{{ route('admin-teacher-answers', $teacher->id) }}" class="text-blue-500 hover:underline">
-                                        {{ $teacher->teacher_first_name }} {{ $teacher->teacher_last_name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
+<h1>Evaluation Reports</h1>
+    
+    <ul>
+        @foreach($teachers as $teacher)
+            <li>
+                <a href="{{ route('reports.showTeacherEvaluations', $teacher->id) }}">
+                    {{ $teacher->teacher_first_name }} {{ $teacher->teacher_last_name }}
+                </a>
+            </li>
+        @endforeach
+    </ul>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

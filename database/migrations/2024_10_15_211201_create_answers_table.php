@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('questionnaire_id');
             $table->unsignedBigInteger('question_id');
-            $table->string('subject_id');
             $table->text('answer');
             $table->timestamps();
 
-            $table->foreign('subject_id')->references('subject_id')->on('subjects')->onDelete('cascade');
             $table->foreign('questionnaire_id')->references('id')->on('questionnaires')->onDelete('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });

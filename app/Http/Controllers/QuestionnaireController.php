@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\Teacher;
 use App\Models\Subject; 
 use App\Models\Questionnaire;
+use App\Models\Answer; // Import the Answer model
 
 class QuestionnaireController extends Controller
 {
@@ -21,7 +22,6 @@ class QuestionnaireController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         // Validate the input
         $validatedData = $request->validate([
             'teacher_id' => 'required|exists:teachers,id',
@@ -30,18 +30,22 @@ class QuestionnaireController extends Controller
             'answers.*' => 'required|string|max:200',
         ]);
 
-        $questionnaireData = [
-            'student_id' => auth()->id(), 
+        // Create the questionnaire entry
+        $questionnaire = Questionnaire::create([
+            'student_id' => auth()->id(),
             'teacher_id' => $validatedData['teacher_id'],
             'subject_id' => $validatedData['subject_id'],
-            'answers' => json_encode($validatedData['answers']),
-        ];
+        ]);
 
-        $questionnaire = Questionnaire::create($questionnaireData);
+        // Store each answer in the answers table
+        foreach ($validatedData['answers'] as $question_id => $answerText) {
+            Answer::create([
+                'questionnaire_id' => $questionnaire->id,
+                'question_id' => $question_id,
+                'answer' => $answerText,
+            ]);
+        }
 
         return redirect()->route('questionnaires-create')->with('success', 'Evaluation submitted successfully.');
     }
-
-
-
 }

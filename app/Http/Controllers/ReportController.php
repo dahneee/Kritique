@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Questionnaire;
 use App\Models\Teacher;
+use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
     public function index()
     {
-        $teachers = Teacher::all(); 
-        return view('report', compact('teachers'));
+        $teachers = Teacher::has('questionnaires')->with('questionnaires')->get();
+
+        return view('admin.index-reports', compact('teachers'));
     }
 
-    public function showTeacherAnswers($id)
+    public function showTeacherEvaluations($teacherId)
     {
-        $answers = Questionnaire::where('teacher_id', $id)
-            ->with(['student', 'answers.question'])
-            ->get();
+        $teacher = Teacher::with('questionnaires.student')->findOrFail($teacherId);
 
-        return view('admin-teacher-answers', compact('answers'));
+        return view('admin.teacher-evaluations', compact('teacher'));
+    }
+
+    public function showStudentAnswers($questionnaireId)
+    {
+        $questionnaire = Questionnaire::with(['answers.question', 'student'])->findOrFail($questionnaireId);
+
+        return view('admin.student-answers', compact('questionnaire'));
     }
 }
