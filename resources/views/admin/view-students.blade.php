@@ -103,7 +103,10 @@
                                                 <td>
                                                     <div class="btn-group-student btn-group-sm" role="group">
                                                         <button class="btn btn-outline-secondary edit-student" data-id="{{ $student->id }}" data-student-id="{{ $student->student_id }}" data-student-email="{{ $student->email }}" data-student-first-name="{{ $student->first_name }}" data-student-middle-name="{{ $student->middle_name }}" data-student-last-name="{{ $student->last_name }}" data-student-block="{{ $student->block }}" data-student-department="{{ $student->department }}">Edit</button>
-                                                        <a href="{{ route('delete-student', ['id'=>$student->id]) }}" class="btn btn-outline-danger">Delete</a>
+                                                        <a href="{{ route('delete-student', ['id' => $student->id]) }}" 
+                                                        class="btn btn-outline-danger" 
+                                                        onclick="return confirmDeleteStudent()">Delete</a>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -114,6 +117,7 @@
                                             @endforelse
                                         </tbody>
                                     </table>
+                                    {{ $students->links('vendor.pagination.bootstrap-5') }}
                                 </div>
                             </div>
                         </div>
@@ -357,6 +361,10 @@ function getSortColumnIndex(sortOption) {
             return 1;
     }
 }
+
+function confirmDeleteStudent() {
+        return confirm("Are you sure you want to delete this student?");
+    }
 
 
         document.querySelectorAll('.edit-student').forEach(button => {

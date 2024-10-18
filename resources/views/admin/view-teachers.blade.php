@@ -93,7 +93,8 @@
                                                 <td>
                                                     <div class="btn-group-teacher btn-group-sm" role="group">
                                                         <a href="{{ route('edit-teacher', ['id'=>$teacher->id]) }}" class="btn btn-outline-secondary">Edit</a>
-                                                        <a href="{{ route('delete-teacher', ['id'=>$teacher->id]) }}" class="btn btn-outline-danger">Delete</a>
+                                                        <a href="{{ route('delete-teacher', ['id'=>$teacher->id]) }}" class="btn btn-outline-danger"
+                                                        onclick="return confirmDeleteStudent()">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -223,6 +224,12 @@ function filterTeachers() {
     tableBody.innerHTML = '';
     teacherRows.forEach(row => tableBody.appendChild(row));
 }
+
+
+    function confirmDeleteStudent() {
+        return confirm("Are you sure you want to delete this teacher?");
+    }
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

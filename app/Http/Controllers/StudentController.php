@@ -8,20 +8,18 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-       
         $blocks = User::where('user_type', 'student')
-                      ->select('block')
-                      ->distinct()
-                      ->get()
-                      ->pluck('block');
+                    ->select('block')
+                    ->distinct()
+                    ->get()
+                    ->pluck('block');
 
-     
-        $students = User::where('user_type', 'student')->get();
-
+        $students = User::where('user_type', 'student')->paginate(10); 
         return view('admin.view-students', compact('students', 'blocks'));
     }
+
 
     public function create()
     {
