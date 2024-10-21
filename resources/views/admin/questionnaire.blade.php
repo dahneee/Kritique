@@ -37,16 +37,16 @@
                 <div class="question-form card p-4">
                     <h5 class="mb-3" style="font-weight: bold;">Add Your Questions (Max 10):</h5>
                     <textarea id="newQuestionInput" class="form-control" placeholder="Type your question here" maxlength="200" rows="2"></textarea>
-                    <button type="button" class="btn-add-q" id="addQuestionBtn">Add Question</button>
+                    <button type="button" class="btn-add-q mt-3" id="addQuestionBtn">Add Question</button>
 
-                    <div class="list-group mt-3" id="questionList"></div>
+                    <div class="list-group my-3" id="questionList"></div>
 
                     <button type="button" class="btn-save" id="saveChangesBtn">Save Changes</button>
                 </div>
 
                 <div class="dynamic-ques mt-4" id="dynamicQuestions">
                     @forelse ($questions as $question)
-                    <div class="question-item card p-3 mb-3">
+                    <div class="question-item">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <span class="question-number me-3">{{ $loop->index + 1 }}.</span>
