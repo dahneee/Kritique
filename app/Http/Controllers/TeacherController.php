@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Log;
+use App\Models\Department;
 
 class TeacherController extends Controller
 {
     public function index()
     {
         $teachers = Teacher::all();
-        return view('admin.view-teachers', compact('teachers'));
+        $departments = Department::all();
+        return view('admin.view-teachers', compact('teachers', 'departments'));
     }
 
     public function create()
@@ -19,19 +22,35 @@ class TeacherController extends Controller
     }
 
     public function save(Request $request)
-    {
-        $validation = $request->validate([
-            'teacher_first_name' => 'required|string|max:255',
-            'teacher_middle_name' => 'nullable|string|max:255',
-            'teacher_last_name' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'email' => 'required|email|unique:teachers,email',
-        ]);
+{
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+        'teacher_first_name' => 'required|string|max:255',
+        'teacher_middle_name' => 'nullable|string|max:255',
+        'teacher_last_name' => 'required|string|max:255',
+        'department' => 'required|string|max:255',
+    ]);
 
-        Teacher::create($validation);
-        session()->flash('success', 'Teacher added successfully');
-        return redirect(route('view-teachers'));
+    try {
+        // Hash the password before saving
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        
+        // Create the teacher record
+        Teacher::create($validatedData);
+        
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Teacher added successfully']);
+    } catch (\Exception $e) {
+        // Log the exception message
+        Log::error('Failed to add teacher: ' . $e->getMessage());
+        
+        // Return the exception message as plain text for debugging
+        return response($e->getMessage(), 500);
     }
+}
+
 
     public function edit($id)
     {

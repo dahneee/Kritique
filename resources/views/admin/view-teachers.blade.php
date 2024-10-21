@@ -217,21 +217,21 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">First Name</label>
-                            <input type="text" id="addTeacherFirstName" name="first_name" class="form-control" placeholder="First Name">
+                            <input type="text" id="addTeacherFirstName" name="teacher_first_name" class="form-control" placeholder="First Name">
                             @error('first_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
                             <label class="form-label">Middle Name</label>
-                            <input type="text" id="addTeacherMiddleName" name="middle_name" class="form-control" placeholder="Middle Name">
+                            <input type="text" id="addTeacherMiddleName" name="teacher_middle_name" class="form-control" placeholder="Middle Name">
                             @error('middle_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
                             <label class="form-label">Last Name</label>
-                            <input type="text" id="addTeacherLastName" name="last_name" class="form-control" placeholder="Last Name">
+                            <input type="text" id="addTeacherLastName" name="teacher_last_name" class="form-control" placeholder="Last Name">
                             @error('last_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -239,15 +239,18 @@
                     </div>
 
                     <div class="row mb-3">
-                    
-                        <div class="col">
-                            <label class="form-label">Department</label>
-                            <input type="text" id="addTeacherDepartment" name="department" class="form-control" placeholder="Department">
-                            @error('department')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
+    <div class="col">
+        <label class="form-label">Department</label>
+        <select id="addTeacherDepartment" name="department" class="form-control">
+            @foreach($departments as $department)
+                <option value="{{ $department->department_id }}">{{ $department->department_name }}</option>
+            @endforeach
+        </select>
+        @error('department')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -338,8 +341,7 @@ document.querySelectorAll('.btn-outline-secondary').forEach(button => {
                 document.getElementById('addTeacherDepartment').value = '';
             });
 
-document.querySelector('.create-teacher').addEventListener('click', function() {
-
+            document.querySelector('.create-teacher').addEventListener('click', function() {
     document.getElementById('addTeacherForm').reset();
 });
 
@@ -389,30 +391,28 @@ document.getElementById("addTeacherForm").addEventListener("submit", function(e)
     fetch('/admin/teachers/save', {
         method: "POST",
         headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",  
+            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData)  
+        body: JSON.stringify(formData)
     })
     .then(response => {
         if (!response.ok) {
             return response.text().then(text => {
-                console.error('Response text:', text); 
-                throw new Error('Failed to create teacher: ' + text);
+                throw new Error(text);
             });
         }
         return response.json();
     })
     .then(data => {
         alert('Teacher created successfully');
-        window.location.reload();  
+        window.location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
         alert('An error occurred: ' + error.message);
     });
 });
-
 
 function confirmDeleteTeacher() {
     return confirm("Are you sure you want to delete this teacher?");
