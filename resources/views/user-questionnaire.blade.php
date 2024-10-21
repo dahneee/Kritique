@@ -21,6 +21,16 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <form action="{{ route('questionnaires-store') }}" method="POST">
             @csrf
@@ -44,38 +54,19 @@
             </div>
 
             @foreach($questions as $question)
-    <div class="mb-6 bg-purple-100 p-4 rounded-lg shadow-sm">
-        <label for="question_{{ $question->id }}" class="block mb-2 text-lg font-medium text-gray-800">{{ $question->text }}</label>
+                <div class="mb-6 bg-purple-100 p-4 rounded-lg shadow-sm">
+                    <label for="question_{{ $question->id }}" class="block mb-2 text-lg font-medium text-gray-800">{{ $question->text }}</label>
 
-        <div class="flex items-center space-x-4">
-            <div>
-                <input type="radio" id="answer_1_{{ $question->id }}" name="answers[{{ $question->id }}]" value="1" class="mr-2" required>
-                <label for="answer_1_{{ $question->id }}">Strongly Agree</label>
-            </div>
-
-            <div>
-                <input type="radio" id="answer_2_{{ $question->id }}" name="answers[{{ $question->id }}]" value="2" class="mr-2" required>
-                <label for="answer_2_{{ $question->id }}">Agree</label>
-            </div>
-
-            <div>
-                <input type="radio" id="answer_3_{{ $question->id }}" name="answers[{{ $question->id }}]" value="3" class="mr-2" required>
-                <label for="answer_3_{{ $question->id }}">Neutral</label>
-            </div>
-
-            <div>
-                <input type="radio" id="answer_4_{{ $question->id }}" name="answers[{{ $question->id }}]" value="4" class="mr-2" required>
-                <label for="answer_4_{{ $question->id }}">Disagree</label>
-            </div>
-
-            <div>
-                <input type="radio" id="answer_5_{{ $question->id }}" name="answers[{{ $question->id }}]" value="5" class="mr-2" required>
-                <label for="answer_5_{{ $question->id }}">Strongly Disagree</label>
-            </div>
-        </div>
-    </div>
-@endforeach
-
+                    <div class="flex items-center space-x-4">
+                        @foreach(['Strongly Agree' => 1, 'Agree' => 2, 'Neutral' => 3, 'Disagree' => 4, 'Strongly Disagree' => 5] as $label => $value)
+                            <div>
+                                <input type="radio" id="answer_{{ $value }}_{{ $question->id }}" name="answers[{{ $question->id }}]" value="{{ $value }}" class="mr-2" required>
+                                <label for="answer_{{ $value }}_{{ $question->id }}">{{ $label }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
 
             <div class="text-right">
                 <button type="submit" class="px-6 py-2 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700">
