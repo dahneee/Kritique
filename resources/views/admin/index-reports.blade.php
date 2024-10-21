@@ -60,20 +60,20 @@
                         </div>
                         <div class="col-md-6">
                             <ul class="list-group list-group-flush" id="responseList">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Strongly agree<span class="badge bg-primary rounded-pill">0%</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: rgba(255, 99, 132, 0.2);">
+                                    Strongly Agree <span class="badge" style="background-color: rgba(255, 99, 132, 1);" class="rounded-pill">0%</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Agree <span class="badge bg-secondary rounded-pill">0%</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: rgba(54, 162, 235, 0.2);">
+                                    Agree <span class="badge" style="background-color: rgba(54, 162, 235, 1);" class="rounded-pill">0%</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Neutral <span class="badge bg-warning rounded-pill">0%</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: rgba(255, 206, 86, 0.2);">
+                                    Neutral <span class="badge" style="background-color: rgba(255, 206, 86, 1);" class="rounded-pill">0%</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Disagree<span class="badge bg-danger rounded-pill">0%</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: rgba(75, 192, 192, 0.2);">
+                                    Disagree <span class="badge" style="background-color: rgba(75, 192, 192, 1);" class="rounded-pill">0%</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Strongly Disagree<span class="badge bg-danger rounded-pill">0%</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: rgba(153, 102, 255, 0.2);">
+                                    Strongly Disagree <span class="badge" style="background-color: rgba(153, 102, 255, 1);" class="rounded-pill">0%</span>
                                 </li>
                             </ul>
                         </div>
@@ -209,52 +209,55 @@ $(document).ready(function() {
     });
 
     // Handle selection of questions
-    $(document).on('click', '#questionDropdown .dropdown-item', function(event) {
-        event.preventDefault(); // Prevent default anchor behavior
-        var selectedQuestionId = $(this).data('id'); // Get the selected question ID
+$(document).on('click', '#questionDropdown .dropdown-item', function(event) {
+    event.preventDefault(); // Prevent default anchor behavior
+    var selectedQuestionId = $(this).data('id'); // Get the selected question ID
+    var selectedQuestionText = $(this).text(); // Get the selected question text
 
-        // Ensure a valid question is selected
-        if (!selectedQuestionId) {
-            return;
+    // Ensure a valid question is selected
+    if (!selectedQuestionId) {
+        return;
+    }
+
+    // Update the dropdown button text to show the selected question
+    $('#dropdownMenuButton').text(selectedQuestionText);
+
+    // Clear existing data
+    $('#responseList .list-group-item span').text('0%'); // Reset response percentages
+    $('#totalRespondents').text('Total Respondents: 0'); // Reset total respondents
+
+    // Make an AJAX request to fetch the answers for the selected question
+    $.ajax({
+        url: 'reports/get-answers/' + selectedQuestionId,
+        type: 'GET',
+        success: function(data) {
+            console.log(data); // Log the data to see its structure
+            let chartData = [0, 0, 0, 0, 0]; // Initialize chart data for responses
+            let totalResponses = data.answers.length; // Total responses for this specific question
+
+            // Count responses for the chart
+            data.answers.forEach(answer => {
+                if (answer.answer >= 1 && answer.answer <= 5) {
+                    chartData[answer.answer - 1]++; // Increment the respective answer count
+                }
+            });
+
+            // Update the chart with new data
+            updateChart(chartData);
+            $('#totalRespondents').text(`Total Respondents: ${totalResponses}`);
+
+            // Update the response list
+            $('#responseList .list-group-item').each(function(index) {
+                let percentage = totalResponses ? Math.round((chartData[index] / totalResponses) * 100) : 0; // Calculate percentage
+                $(this).find('span').text(percentage + '%'); // Update response percentage
+            });
+        },
+        error: function(xhr, status, error) {
+            $('#totalRespondents').text('Error loading answers.');
+            console.error("Error loading answers:", error); // Log the error for easier debugging
         }
-
-        // Clear existing data
-        $('#responseList .list-group-item span').text('0%'); // Reset response percentages
-        $('#totalRespondents').text('Total Respondents: 0'); // Reset total respondents
-
-        // Make an AJAX request to fetch the answers for the selected question
-        $.ajax({
-            url: 'reports/get-answers/' + selectedQuestionId,
-            type: 'GET',
-            success: function(data) {
-                console.log(data); // Log the data to see its structure
-                let chartData = [0, 0, 0, 0, 0]; // Initialize chart data for responses
-                let totalResponses = data.answers.length; // Total responses for this specific question
-
-                // Count responses for the chart
-                data.answers.forEach(answer => {
-                    if (answer.answer >= 1 && answer.answer <= 5) {
-                        chartData[answer.answer - 1]++; // Increment the respective answer count
-                    }
-                });
-
-                // Update the chart with new data
-                updateChart(chartData);
-                $('#totalRespondents').text(`Total Respondents: ${totalResponses}`);
-
-                // Update the response list
-                $('#responseList .list-group-item').each(function(index) {
-                    let percentage = totalResponses ? Math.round((chartData[index] / totalResponses) * 100) : 0; // Calculate percentage
-                    $(this).find('span').text(percentage + '%'); // Update response percentage
-                });
-            },
-            error: function(xhr, status, error) {
-                $('#totalRespondents').text('Error loading answers.');
-                console.error("Error loading answers:", error); // Log the error for easier debugging
-            }
-        });
     });
-
+});
     // Function to update the chart
     function updateChart(data) {
         trafficChart.data.datasets[0].data = data; // Update dataset with new data
