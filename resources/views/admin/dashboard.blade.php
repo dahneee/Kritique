@@ -125,13 +125,14 @@
                 label: 'Number of Students Who Answered',
                 data: studentCounts,
                 backgroundColor: [
-                    'rgba(123, 199, 148, 1)', 
-                    'rgba(255, 192, 203, 1)', 
-                    'rgba(173, 216, 230, 1)', 
-                    'rgba(255, 239, 150, 1)', 
-                    'rgba(155, 233, 239, 1)', 
-                    'rgba(195, 160, 240, 1)',
-                    'rgba(255, 210, 128, 1)', 
+                    '#FFB3BA', 
+                    '#FFDFBA', 
+                    '#FFFFBA', 
+                    '#BFFCC6', 
+                    '#B3E5FC', 
+                    '#D1C4E9',
+                    '#FFCCE6', 
+                    '#F0F4C3' 
                 ]
 
 
@@ -148,41 +149,58 @@
     });
 
     const ctx = document.getElementById('usersC').getContext('2d');
-    const combinedChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: departments,
-            datasets: [
-                {
-                    label: 'Students',
-                    data: studentsPerDepartment,
-                    backgroundColor: 'rgba(109, 207, 152, 0.7)', 
-                    borderColor: 'rgba(109, 207, 152, 1)', 
-                    borderWidth: 1
-                },
-                {
-                    label: 'Teachers',
-                    data: teacherCounts,
-                    backgroundColor: 'rgba(255, 182, 193, 0.7)', 
-                    borderColor: 'rgba(255, 182, 193, 1)', 
-                    borderWidth: 1
-                },
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
+const combinedChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: departments,
+        datasets: [
+            {
+                label: 'Students',
+                data: studentsPerDepartment,
+                backgroundColor: [
+                    '#A4D07B', 
+                    '#A4D07B', 
+                    '#A4D07B', 
+                    '#A4D07B', 
+                    '#A4D07B', 
+                    '#A4D07B', 
+                    '#A4D07B' 
+                ],
+
+                borderWidth: 1
             },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+            {
+    label: 'Teachers',
+    data: studentsPerDepartment,
+    backgroundColor: [
+        '#C9E6B1', 
+        '#C9E6B1', 
+        '#C9E6B1',
+        '#C9E6B1', 
+        '#C9E6B1', 
+        '#C9E6B1' 
+    ],
+
+    borderWidth: 1
+}
+
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+        },
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
+
 </script>
 </body>
 </html>
