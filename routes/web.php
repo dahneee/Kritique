@@ -39,10 +39,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/reports/student/{questionnaireId}', [ReportController::class, 'showStudentAnswers'])->name('reports.showStudentAnswers');
 
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
+
     Route::get('/admin/students/create', [StudentController::class, 'create'])->name('create-student');
+    
     Route::post('/admin/students/save', [StudentController::class, 'save'])->name('save-student');
+
     Route::get('/admin/students/edit/{id}', [StudentController::class, 'edit'])->name('edit-student');
     Route::put('/admin/students/update/{id}', [StudentController::class, 'update'])->name('update-student');
+
     Route::get('/admin/students/delete/{id}', [StudentController::class, 'delete'])->name('delete-student');
 
     Route::get('/admin/teachers', [TeacherController::class, 'index'])->name('view-teachers');

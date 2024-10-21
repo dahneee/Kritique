@@ -66,7 +66,8 @@
                                             @endforeach
                                         </select>
                                     </form>
-                                   <a href="javascript:void(0)" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New Student</a>
+                                   <a href="javascript:void(0)" class="btn btn-add create-student" data-bs-toggle="modal" 
+                                   data-bs-target="#addStudentModal" create-student>Add New Student</a>
 
 
                                     <a href="{{ route('export-users') }}" class="btn btn-add">Export Data</a>
@@ -103,7 +104,18 @@
                                                 <td>{{ $student->department }}</td>
                                                 <td>
                                                     <div class="btn-group-student btn-group-sm" role="group">
-                                                        <button class="btn btn-outline-secondary edit-student" data-id="{{ $student->id }}" data-student-id="{{ $student->student_id }}" data-student-email="{{ $student->email }}" data-student-first-name="{{ $student->first_name }}" data-student-middle-name="{{ $student->middle_name }}" data-student-last-name="{{ $student->last_name }}" data-student-block="{{ $student->block }}" data-student-department="{{ $student->department }}">Edit</button>
+                                                    <button class="btn btn-outline-secondary edit-student"
+                                                        data-id="{{ $student->id }}"
+                                                         data-student-id="{{ $student->student_id }}"
+                                                         data-student-email="{{ $student->email }}"
+                                                          data-student-first-name="{{ $student->first_name }}"
+                                                            data-student-middle-name="{{ $student->middle_name }}"
+                                                                data-student-last-name="{{ $student->last_name }}"
+                                                            data-student-block="{{ $student->block }}"
+                                                            data-student-department="{{ $student->department }}">
+                                                            Edit
+                                                        </button>
+
                                                         <a href="{{ route('delete-student', ['id' => $student->id]) }}" 
                                                         class="btn btn-outline-danger" 
                                                         onclick="return confirmDeleteStudent()">Delete</a>
@@ -235,25 +247,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form id="addStudentForm" method="POST">
-                    @csrf
-                        @method('PUT')
-                    <input type="hidden" id="createID" name="id">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Student ID</label>
-                            <input type="text" name="student_id" class="form-control" placeholder="Student ID">
-                            @error('student_id')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+            <form id="addStudentForm" method="POST" action="{{ route('save-student') }}">
+                @csrf
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Student ID</label>
+                        <input type="text" id="addStudentID" name="student_id" class="form-control" placeholder="Student ID">
+                        @error('student_id')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+                </div>
                 
 
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email">
+                            <input type="email" id="addStudentEmail" name="email" class="form-control" placeholder="Email">
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="addStudentPassword" name="password" class="form-control" placeholder="Password">
                             @error('email')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -263,21 +283,21 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">First Name</label>
-                            <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                            <input type="text" id="addStudentFirstName" name="first_name" class="form-control" placeholder="First Name">
                             @error('first_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
                             <label class="form-label">Middle Name</label>
-                            <input type="text" name="middle_name" class="form-control" placeholder="Middle Name">
+                            <input type="text" id="addStudentMiddleName" name="middle_name" class="form-control" placeholder="Middle Name">
                             @error('middle_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
                             <label class="form-label">Last Name</label>
-                            <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+                            <input type="text" id="addStudentLastName" name="last_name" class="form-control" placeholder="Last Name">
                             @error('last_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -287,14 +307,14 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">Block</label>
-                            <input type="text" name="block" class="form-control" placeholder="Block">
+                            <input type="text" id="addStudentBlock" name="block" class="form-control" placeholder="Block">
                             @error('block')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
                             <label class="form-label">Department</label>
-                            <input type="text" name="department" class="form-control" placeholder="Department">
+                            <input type="text" id="addStudentDepartment" name="department" class="form-control" placeholder="Department">
                             @error('department')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -392,8 +412,20 @@ function confirmDeleteStudent() {
                 editModal.show();
             });
         });
+        
 
-        document.getElementById("editStudentForm").addEventListener("submit", function(e) {
+    document.querySelector('.create-student').addEventListener('click', function() {
+    document.getElementById('addStudentID').value = '';
+    document.getElementById('addStudentEmail').value = '';
+    document.getElementById('addStudentFirstName').value = '';
+    document.getElementById('addStudentMiddleName').value = '';
+    document.getElementById('addStudentLastName').value = '';
+    document.getElementById('addStudentBlock').value = '';
+    document.getElementById('addStudentDepartment').value = '';
+});
+
+
+document.getElementById("editStudentForm").addEventListener("submit", function(e) {
             e.preventDefault();
 
             const studentId = document.getElementById("editID").value;
@@ -424,42 +456,48 @@ function confirmDeleteStudent() {
                 console.error("Error:", error);
             });
         });
-
-        document.getElementById("addStudentForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const studentId = document.getElementById("createID").value;
-
-    fetch(`/admin/students/create/${studentId}`, {
-    method: "POST", 
-    headers: {
-        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(Object.fromEntries(new FormData(this))),
-})
-
-
-    .then(response => {
         
+        document.getElementById("addStudentForm").addEventListener("submit", function(e) {
+    e.preventDefault();  
+
+    let formData = Object.fromEntries(new FormData(this));
+
+    fetch(`/admin/students/save`, {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}", 
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)  
+    })
+    .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+            return response.text().then(text => {
+                console.error('Response text:', text); 
+                throw new Error('Failed to create student: ' + text);
+            });
         }
         return response.json();
     })
     .then(data => {
-        if (data.success) {
-            alert("Student added successfully!");
-            location.reload();
-        } else {
-            alert("Failed to add student.");
-        }
+      
+        alert('Student created successfully');
+        window.location.reload();  
     })
     .catch(error => {
-        console.error("Error:", error);
+        console.error('Error:', error);
+        alert('An error occurred: ' + error.message);
     });
 });
 
+
+
+
+        
+
+
+
+        
 
        
     </script>

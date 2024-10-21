@@ -7,12 +7,12 @@
 }
 
 @keyframes fadeIn {
-from {
-    opacity: 0;
-}
-to {
-    opacity: 1;
-}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 h1 {
@@ -33,17 +33,14 @@ h1 {
     border-radius: 8px;
     float: right;
     cursor: pointer;
-    margin-top: 20px; 
-    font-size: 16px; 
+    margin-top: 20px;
+    font-size: 16px;
     transition: background-color 0.3s;
 }
 
 .btn-submit:hover {
     background-color: #407d0a;
 }
-
-
-
 
 .quesques {
     padding: 40px;
@@ -64,28 +61,29 @@ h1 {
 .modal-content {
     padding: 20px;
 }
-.mfb-s, 
-.mfb-sc, 
-.sub-save, 
-.add-ques-one, 
+
+.mfb-s,
+.mfb-sc,
+.sub-save,
+.add-ques-one,
 .add-ques-two {
     background-color: #A4D07B;
-    border: 1px solid rgba(0, 0, 0, 0); 
+    border: 1px solid rgba(0, 0, 0, 0);
     padding: 7px;
     color: white;
-    font-family: 'Poppins', sans-serif; 
+    font-family: 'Poppins', sans-serif;
     border-radius: 10px;
     font-size: 14px;
 }
 
-.mfb-s:hover, 
-.mfb-sc:hover, 
-.sub-save:hover, 
-.add-ques-one:hover, 
+.mfb-s:hover,
+.mfb-sc:hover,
+.sub-save:hover,
+.add-ques-one:hover,
 .add-ques-two:hover {
     background-color: white;
     color: #A4D07B;
-    border: 1px solid rgba(0, 0, 0, 0.18); 
+    border: 1px solid rgba(0, 0, 0, 0.18);
 }
 
 .mfb-s.clicked {
@@ -122,9 +120,10 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    cursor:text;
- }
-.radios{
+    cursor: text;
+}
+
+.radios {
     padding: 40px;
 }
 
@@ -142,43 +141,44 @@ h1 {
     border-radius: 15px;
     margin: 10px 0;
     box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff!important;
-    cursor:default;
+    background-color: #ffffff !important;
+    cursor: default;
     transition: background-color 0.3s;
     position: relative;
-    
 }
 
 .question-item.selected {
-    background-color: #cfe9b4!important;
+    background-color: #cfe9b4 !important;
 }
 
 .question-item {
     background-color: #407d0a;
 }
+
 .remove-question {
     position: absolute;
-    top: 5px; 
-    right: 5px; 
+    top: 5px;
+    right: 5px;
     background: none;
     border: none;
-    color: rgb(0, 0, 0); 
+    color: rgb(0, 0, 0);
     font-size: 15px;
     cursor: pointer;
 }
-.form-label{
+
+.form-label {
     margin-left: 45px;
     margin-right: 45px;
     margin-top: 20px;
     padding: 10px;
-    resize: none;  
-    overflow: hidden; 
-    box-sizing: border-box; 
+    resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
     word-wrap: break-word;
-    word-break: break-all; 
-    white-space: pre-wrap; 
+    word-break: break-all;
+    white-space: pre-wrap;
     overflow-wrap: break-word;
-    height: auto;  
+    height: auto;
 }
 
 .form-select {
@@ -203,40 +203,39 @@ h1 {
 }
 
 .shrug-icon {
-    font-size: 100px; 
+    font-size: 100px;
     color: #407d0a;
-    display: flex; 
+    display: flex;
     justify-content: center;
     margin-top: 90px;
     filter: grayscale(100%);
 }
 
-
-
 #newQuestionInput {
-    resize: none; 
-    overflow: hidden; 
-    box-sizing: border-box; 
+    resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
 }
-.ques-list{
-    resize: none; 
-    overflow: hidden; 
-    box-sizing: border-box; 
+
+.ques-list {
+    resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
     word-wrap: break-word;
     word-break: break-all;
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     overflow-wrap: break-word;
-    resize: none; 
-    height: auto; 
+    resize: none;
+    height: auto;
 }
 
 .form-check-input {
-    display: none; 
+    display: none;
 }
 
 .form-check-label {
     position: relative;
-    padding-left: 30px; 
+    padding-left: 30px;
     cursor: pointer;
     font-size: 1rem;
     color: #333;
@@ -249,21 +248,94 @@ h1 {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px; 
-    height: 18px; 
+    width: 18px;
+    height: 18px;
     border: 2px solid #025020;
-    border-radius: 50%; 
-    background-color: #fff; 
-    transition: background-color 0.3s ease, border-color 0.3s ease; 
+    border-radius: 50%;
+    background-color: #fff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-
-.form-check-input:checked + .form-check-label:before {
-    background-color: #4a8315; 
-    border-color: #0056b3; 
+.form-check-input:checked+.form-check-label:before {
+    background-color: #4a8315;
+    border-color: #0056b3;
 }
-
 
 .form-check-label:hover:before {
-    border-color: #0056b3; 
+    border-color: #0056b3;
+}
+.dynamic-ques {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-item {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-number {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+.question-text {
+    font-size: 1rem;
+}
+
+.question-controls {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.question-controls .btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 16px;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.shrug-icon {
+    font-size: 100px;
+    color: #6c757d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    filter: grayscale(100%);
+}
+
+.popup-notification {
+    position: fixed;
+    top: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336; 
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 9999; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
 }
