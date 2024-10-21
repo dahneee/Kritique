@@ -35,6 +35,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/questionnaire/{id}/update', [QuestionController::class, 'update'])->name('update-question');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('reports/get-questions/{teacherId}', [ReportController::class, 'getQuestionsByTeacher']);
     Route::get('/reports/teacher/{teacherId}', [ReportController::class, 'showTeacherEvaluations'])->name('reports.showTeacherEvaluations');
     Route::get('/reports/student/{questionnaireId}', [ReportController::class, 'showStudentAnswers'])->name('reports.showStudentAnswers');
 

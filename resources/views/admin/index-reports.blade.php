@@ -46,17 +46,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="card-title">Results Overview</h5>
                         <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                Questions
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#">Question 1</a></li>
-                                <li><a class="dropdown-item" href="#">Question 2</a></li>
-                                <li><a class="dropdown-item" href="#">Question 3</a></li>
-                                <li><a class="dropdown-item" href="#">Question 4</a></li>
-                                <li><a class="dropdown-item" href="#">Question 5</a></li>
-                            </ul>
-                        </div>
+    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        Questions
+    </button>
+    <ul class="dropdown-menu" id="questionDropdown" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="#">Please select a teacher</a></li>
+    </ul>
+</div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -228,6 +224,59 @@
   
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    // When a teacher is selected from the dropdown
+    $('#teacherDropdown').change(function () {
+        var teacherId = $(this).val();
+
+        // Clear existing questions from the dropdown
+        $('#questionDropdown').empty();
+
+        if (teacherId) {
+            // Make an AJAX request to fetch the questions and answers for the selected teacher
+            $.ajax({
+    url: 'reports/get-questions/' + teacherId,
+    type: 'GET',
+    success: function (data) {
+        if (data.questions.length > 0) {
+            $.each(data.questions, function (index, question) {
+                // Check if there's an answer for this question
+                var answerText = 'No answer yet';
+                var answeredBy = 'N/A';
+
+                $.each(data.questionnaires, function (i, questionnaire) {
+                    $.each(questionnaire.answers, function (j, answer) {
+                        if (answer.question_id == question.id) {
+                            answerText = answer.answer;
+                            answeredBy = questionnaire.student.first_name;
+                        }
+                    });
+                });
+
+                // Append each question (with or without an answer) to the dropdown
+                $('#questionDropdown').append(`
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            ${question.text} - Answer: ${answerText} (Answered by: ${answeredBy})
+                        </a>
+                    </li>
+                `);
+            });
+        } else {
+            $('#questionDropdown').append('<li><a class="dropdown-item" href="#">No questions found.</a></li>');
+        }
+    },
+    error: function () {
+        $('#questionDropdown').append('<li><a class="dropdown-item" href="#">Error loading questions.</a></li>');
+    }
+});
+        }
+    });
+});
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
