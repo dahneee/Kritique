@@ -19,7 +19,7 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function user()
+    public function student()
     {
         return $this->belongsTo(User::class);
     }

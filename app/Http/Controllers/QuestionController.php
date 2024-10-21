@@ -13,7 +13,6 @@ class QuestionController extends Controller
     }
 
     public function store(Request $request) {
-
         $validated = $request->validate([
             'questions' => 'required|array|max:10',
             'questions.*' => 'required|string|max:200',
@@ -43,7 +42,6 @@ class QuestionController extends Controller
         }
     }
 
-
     public function delete($id)
     {
         $question = Question::find($id);
@@ -53,5 +51,4 @@ class QuestionController extends Controller
         }
         return response()->json(['success' => false], 404);
     }
-
 }
