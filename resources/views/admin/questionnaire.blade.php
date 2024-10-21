@@ -28,7 +28,7 @@
 
 
         <div class="content-ques">
-            <header class="violet-header d-flex justify-content-between align-items-center p-3">
+            <header class="violet-header">
             <img src="/src/white.jpg" alt="Logo" class="header-logo">
 
 

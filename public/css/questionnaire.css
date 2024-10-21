@@ -4,7 +4,10 @@
     padding: 10px 40px;
     height: 200px;
     border-radius: 20px;
-    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .violet-header h3 {
@@ -179,9 +182,7 @@
     border-color: #c1c1c1;
 }
 .header-logo {
-    width: 100px;
-    height: auto;
-    margin-left: 600px;
+    height: 100%;
 }
 .add-text {
     font-size: 15px;
