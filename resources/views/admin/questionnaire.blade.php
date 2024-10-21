@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/css/nav.css">
         <link rel="stylesheet" href="/css/questionnaire.css">
 
-    
+
     </head>
 
     <body>
@@ -28,20 +28,24 @@
 
 
         <div class="content-ques">
-        <header class="violet-header d-flex justify-content-between align-items-center p-3">
-           
-            
-        </header>
+            <header class="violet-header d-flex justify-content-between align-items-center p-3">
+
+
+            </header>
+            <div class="questions-container">
             <div class="questions">
-          
+
                 <div class="question-form card p-4">
                     <h5 class="mb-3" style="font-weight: bold;">Add Your Questions (Max 10):</h5>
                     <textarea id="newQuestionInput" class="form-control" placeholder="Type your question here" maxlength="200" rows="2"></textarea>
-                    <button type="button" class="btn-add-q mt-3" id="addQuestionBtn">Add Question</button>
-
                     <div class="list-group my-3" id="questionList"></div>
 
-                    <button type="button" class="btn-save" id="saveChangesBtn">Save Changes</button>
+                    <div class="question-form-btns">
+                        <button type="button" class="btn-add-q margin-3" id="addQuestionBtn">Add Question</button>
+                        <button type="button" class="btn-save" id="saveChangesBtn">Save Changes</button>
+                    </div>
+
+
                 </div>
 
                 <div class="dynamic-ques mt-4" id="dynamicQuestions">
@@ -68,8 +72,9 @@
                 </div>
             </div>
         </div>
+        </div>
 
-        
+
         <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -88,7 +93,7 @@
             </div>
         </div>
 
-      
+
         <div id="exceedLimitPopup" class="popup-notification">
             You cannot add more than 10 questions.
         </div>
@@ -98,27 +103,29 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 function showExceedLimitPopup() {
                     const popup = $('#exceedLimitPopup');
                     popup.fadeIn(400);
 
-                    setTimeout(function () {
+                    setTimeout(function() {
                         popup.fadeOut(400);
                     }, 3000);
                 }
 
-                $('#addQuestionBtn').click(function () {
+                $('#addQuestionBtn').click(function() {
                     const questionText = $('#newQuestionInput').val().trim();
                     const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
 
                     if (questionText) {
                         if (currentQuestionCount < 10) {
                             $('#questionList').append(`
-                                <div class="list-group-item">
-                                    ${questionText}
+                                <div class="question-item-not-saved">
+                                    <p>${questionText}</p>
+                                    <div>
                                     <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
                                     <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
+                                    </div>
                                 </div>`);
                             $('#newQuestionInput').val('');
                         } else {
@@ -127,10 +134,10 @@
                     }
                 });
 
-                $('#saveChangesBtn').click(function () {
+                $('#saveChangesBtn').click(function() {
                     let questions = [];
-                    $('#questionList').children().each(function () {
-                        questions.push($(this).contents().filter(function () {
+                    $('#questionList').children().each(function() {
+                        questions.push($(this).contents().filter(function() {
                             return this.nodeType === 3;
                         }).text().trim());
                     });
@@ -142,19 +149,19 @@
                             "_token": "{{ csrf_token() }}",
                             "questions": questions
                         },
-                        success: function (response) {
+                        success: function(response) {
                             window.location.reload();
                         }
                     });
                 });
 
-                $('#questionList').on('click', '.remove-question', function () {
+                $('#questionList').on('click', '.remove-question', function() {
                     $(this).parent().remove();
                 });
 
-                $('#questionList').on('click', '.edit-question', function () {
+                $('#questionList').on('click', '.edit-question', function() {
                     const questionItem = $(this).parent();
-                    const questionText = questionItem.contents().filter(function () {
+                    const questionText = questionItem.contents().filter(function() {
                         return this.nodeType === 3;
                     }).text().trim();
 
@@ -162,7 +169,7 @@
                     questionItem.remove();
                 });
 
-                $('.delete-question').click(function () {
+                $('.delete-question').click(function() {
                     const id = $(this).data('id');
                     $.ajax({
                         url: '{{ route("delete-question", ":id") }}'.replace(':id', id),
@@ -170,14 +177,14 @@
                         data: {
                             "_token": "{{ csrf_token() }}"
                         },
-                        success: function (response) {
+                        success: function(response) {
                             if (response.success) {
                                 window.location.reload();
                             } else {
                                 alert('Failed to delete the question. Please try again.');
                             }
                         },
-                        error: function (xhr) {
+                        error: function(xhr) {
                             console.error(xhr.responseText);
                             alert('Failed to delete the question. Status: ' + xhr.status);
                         }
@@ -186,7 +193,7 @@
 
                 let editingQuestionId = null;
 
-                $('#dynamicQuestions').on('click', '.edit-question', function () {
+                $('#dynamicQuestions').on('click', '.edit-question', function() {
                     const questionText = $(this).data('text');
                     editingQuestionId = $(this).data('id');
 
@@ -194,7 +201,7 @@
                     $('#editQuestionModal').modal('show');
                 });
 
-                $('#saveEditQuestionBtn').click(function () {
+                $('#saveEditQuestionBtn').click(function() {
                     const updatedText = $('#editQuestionInput').val().trim();
 
                     if (updatedText) {
@@ -205,7 +212,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 "text": updatedText
                             },
-                            success: function (response) {
+                            success: function(response) {
                                 if (response.success) {
                                     $(`button[data-id="${editingQuestionId}"]`).closest('.question-item').find('.question-text').text(updatedText);
                                     $('#editQuestionModal').modal('hide');
@@ -213,7 +220,7 @@
                                     alert('Failed to update the question. Please try again.');
                                 }
                             },
-                            error: function (xhr) {
+                            error: function(xhr) {
                                 console.error(xhr.responseText);
                                 alert('Failed to update the question. Status: ' + xhr.status);
                             }

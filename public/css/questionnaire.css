@@ -72,7 +72,32 @@
     margin-right: auto;
     height: auto;
 }
-
+.question-form-btns {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.margin-3 {
+    margin-right: 15px;
+}
+.question-item-not-saved {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.question-item-not-saved p {
+    margin: 0;
+}
+#questionList {
+    width: 100%;
+}
 /* .dynamic-ques > * {
     aspect-ratio: 1 / 1;
     background-color: #040202;
