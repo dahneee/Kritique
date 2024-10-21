@@ -121,8 +121,8 @@ $('#addQuestionBtn').click(function () {
     if (questionText) {
         if (currentQuestionCount < 10) {
             $('#questionList').append(`
-                <div class="list-group-item">
-                    ${questionText}
+                <div class="question-item-not-saved">
+                    <p>${questionText}</p>
                     <div>
                     <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
                     <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
@@ -137,7 +137,7 @@ $('#addQuestionBtn').click(function () {
 });
 
 $('#questionList').on('click', '.remove-question', function() {
-    $(this).parent().remove();
+    $(this).closest('div.question-item-not-saved').remove();
     updateQuestionLimitText();  
 });
 
@@ -158,8 +158,8 @@ $('#questionList').on('click', '.remove-question', function() {
                     if (questionText) {
                         if (currentQuestionCount < 10) {
                             $('#questionList').append(`
-                                <div class="list-group-item">
-                                    ${questionText}
+                                <div class="question-item-not-saved">
+                                <p>${questionText}</p>
                                     <div>
                                     <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
                                     <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
@@ -174,9 +174,10 @@ $('#questionList').on('click', '.remove-question', function() {
                 $('#saveChangesBtn').click(function() {
                     let questions = [];
                     $('#questionList').children().each(function() {
-                        questions.push($(this).contents().filter(function() {
-                            return this.nodeType === 3;
-                        }).text().trim());
+                        const questionText = $(this).find('p').text().trim(); // Get text from the <p> tag
+                        if (questionText) { // Only add non-empty questions
+                            questions.push(questionText);
+                        }
                     });
 
                     $.ajax({
@@ -197,10 +198,8 @@ $('#questionList').on('click', '.remove-question', function() {
                 });
 
                 $('#questionList').on('click', '.edit-question', function() {
-                    const questionItem = $(this).parent();
-                    const questionText = questionItem.contents().filter(function() {
-                        return this.nodeType === 3;
-                    }).text().trim();
+                    const questionItem = $(this).closest('div.question-item-not-saved'); // Get the whole div containing the question
+                    const questionText = questionItem.find('p').text().trim();
 
                     $('#newQuestionInput').val(questionText);
                     questionItem.remove();

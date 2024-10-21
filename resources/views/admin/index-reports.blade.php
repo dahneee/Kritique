@@ -48,7 +48,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm mb-4 chart-container">
                         <div class="card-body">
-                            <canvas id="trafficChart" width="120" height="120"></canvas>
+                            <canvas id="trafficChart" width="100%" height="100%"></canvas>
                         </div>
                     </div>
                 </div>
@@ -57,8 +57,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Response Distribution</h5>
                             <div class="container question-dropdown">
-            <div class="dropdown">
-                <button class="btn-select- btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown secret-dropdown">
+                <button class="btn-select-q btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     Select Question
                 </button>
                 <ul class="dropdown-menu" id="questionDropdown" aria-labelledby="dropdownMenuButton">

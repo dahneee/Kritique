@@ -178,15 +178,15 @@
     background-color: #f1f1f1;
     border-color: #c1c1c1;
 }
-.header-logo{
+.header-logo {
     width: 100px;
     height: auto;
     margin-left: 600px;
 }
-.add-text{
+.add-text {
     font-size: 15px;
-    margin-right: 1130px;
-    margin-top: 20px;
+    width: 100%;
+    margin-top: 5px;
     color: #6c757d;
 }
 .btn-warning {

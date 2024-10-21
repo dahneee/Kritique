@@ -1,17 +1,15 @@
-
 .flex-container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
     margin-top: 1.5rem;
-    overflow-x: auto; 
-    gap: 1rem; 
+    overflow-x: auto;
+    gap: 1rem;
 }
 
-
 .custom-col {
-    flex: 0 0 calc(14.28% - 1rem); 
-    max-width: calc(14.28% - 1rem); 
+    flex: 0 0 calc(14.28% - 1rem);
+    max-width: calc(14.28% - 1rem);
     margin-bottom: 1rem;
     box-sizing: border-box;
     border-radius: 10px;
@@ -21,38 +19,40 @@
     color: #28a745;
 }
 .custom-col.active .card-custom {
-    border: 2px solid #007bff; 
-    box-shadow: 0 0.5rem 1rem rgba(0, 123, 255, 0.5); 
+    border: 2px solid #007bff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 123, 255, 0.5);
 }
-.btn-select-q{
-    background-color: #A4D07B  !important;
+.btn-select-q {
+    background-color: #a4d07b !important;
     color: rgb(255, 255, 255) !important;
-    text-decoration: none!important;
+    text-decoration: none !important;
     font-weight: 700 !important;
     font-family: Poppins, sans-serif;
     padding: 10px !important;
     border-radius: 20px;
+    text-align: right;
 }
-
+.secret-dropdown {
+    display: flex;
+    justify-content: end;
+}
 
 .card-custom {
     border: none;
     border-radius: 0.25rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     padding: 1rem;
-    min-height: 100px; 
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-
 
 .card-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 
 .badge-warning {
     background-color: #ffc107;
@@ -74,7 +74,6 @@
     color: #fff;
 }
 
-
 .card-title-container {
     font-size: 1rem;
     font-weight: bold;
@@ -83,17 +82,10 @@
 .fs-5 {
     font-size: 1.25rem;
 }
-    
-#trafficChart {
-    max-width: 400px; /* Adjust this value as needed */
-    max-height: 400px; /* Adjust this value as needed */
-    width: 100%; /* Makes the canvas responsive */
-    height: auto; /* Maintain aspect ratio */
-}
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #F7F4EF; /* Soft neutral white */
+    font-family: "Poppins", sans-serif;
+    background-color: #f7f4ef; /* Soft neutral white */
 }
 
 .content-admin {
@@ -103,7 +95,7 @@ body {
 
 .card {
     border-radius: 15px;
-    background-color: #F0E5CF; /* Beige */
+    background-color: #f0e5cf; /* Beige */
     border: none;
 }
 
@@ -144,22 +136,22 @@ body {
 
 /* Response list */
 .list-group-item {
-    background-color: #A4D07B !important; /* Remove high transparency */
+    background-color: #a4d07b !important; /* Remove high transparency */
 }
 
 .list-group-item:nth-child(1) {
-    background-color: #B1D490 !important; /* Darker pastel green */
+    background-color: #b1d490 !important; /* Darker pastel green */
 }
 
 .list-group-item:nth-child(2) {
-    background-color: #BED8A5 !important; /* Light brown */
+    background-color: #bed8a5 !important; /* Light brown */
 }
 
 .list-group-item:nth-child(3) {
-    background-color: #CBECC0 !important; /* Beige */
+    background-color: #cbecc0 !important; /* Beige */
 }
 
-.list-group-item:nth-child(4){
+.list-group-item:nth-child(4) {
     background-color: #e0ffd6 !important; /* White */
 }
 .list-group-item:nth-child(5) {
