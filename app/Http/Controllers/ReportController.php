@@ -10,7 +10,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $teachers = Teacher::has('questionnaires')->with('questionnaires')->get();
+        $teachers = Teacher::all();
 
         return view('admin.index-reports', compact('teachers'));
     }

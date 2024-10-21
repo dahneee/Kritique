@@ -23,35 +23,35 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('admin.create-student');
+        return view('create-student');
     }
-
+    
     public function save(Request $request)
-    {
-        $validation = $request->validate([
-            'student_id' => 'required|unique:users,student_id',
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'user_type' => 'required|in:student,admin',
-            'block' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-        ]);
+{
 
-        $validation['password'] = bcrypt($validation['password']);
+    $validation = $request->validate([
+        'student_id' => 'required|unique:users,student_id',
+        'first_name' => 'required|string|max:255',
+        'middle_name' => 'nullable|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'block' => 'required|string|max:255',
+        'department' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:8',
+    ]);
 
-        $data = User::create($validation);
+    
+    $validation['password'] = bcrypt($validation['password']);
 
-        if ($data) {
-            session()->flash('success', 'User added successfully');
-            return redirect(route('view-student'));
-        } else {
-            session()->flash('error', 'Some problem occurred');
-            return redirect(route('create-student'));
-        }
+    
+    $data = User::create($validation);
+
+    if ($data) {
+        return response()->json(['success' => 'User added successfully'], 201);
+    } else {
+        return response()->json(['error' => 'Some problem occurred'], 500);
     }
+}
 
     public function edit($id)
     {

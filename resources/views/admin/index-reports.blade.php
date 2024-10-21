@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/admin-dashboard.css">
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/report.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -46,12 +47,14 @@
                         <h5 class="card-title">Results Overview</h5>
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                Department
+                                Questions
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#">CITE</a></li>
-                                <li><a class="dropdown-item" href="#">CEA</a></li>
-                                <li><a class="dropdown-item" href="#">CMA</a></li>
+                                <li><a class="dropdown-item" href="#">Question 1</a></li>
+                                <li><a class="dropdown-item" href="#">Question 2</a></li>
+                                <li><a class="dropdown-item" href="#">Question 3</a></li>
+                                <li><a class="dropdown-item" href="#">Question 4</a></li>
+                                <li><a class="dropdown-item" href="#">Question 5</a></li>
                             </ul>
                         </div>
                     </div>
@@ -62,20 +65,21 @@
                         <div class="col-md-6">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Q1 <span class="badge bg-primary rounded-pill">45%</span>
+                                    Strongly agree<span class="badge bg-primary rounded-pill">45%</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Q2 <span class="badge bg-secondary rounded-pill">25%</span>
+                                Agree <span class="badge bg-secondary rounded-pill">25%</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Q3 <span class="badge bg-warning rounded-pill">15%</span>
+                                Neutral <span class="badge bg-warning rounded-pill">15%</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Q4 <span class="badge bg-danger rounded-pill">10%</span>
+                               Disagree<span class="badge bg-danger rounded-pill">10%</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Other <span class="badge bg-info rounded-pill">5%</span>
+                               Strongly Disagree<span class="badge bg-danger rounded-pill">10%</span>
                                 </li>
+                
                             </ul>
                         </div>
                     </div>
@@ -84,70 +88,79 @@
                     </div>
 
                    
-                    <div class="row mt-4">
-                        <div class="d-flex justify-content-around flex-wrap">
-                            <div class="col-md-2 col-6 mb-3 ">
-                                <div class="card shadow-sm p-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">CAS</h6>
-                                        </div>
-                                        <span class="badge bg-warning text-white fs-5">4</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6 mb-3">
-                                <div class="card shadow-sm p-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">CITE</h6>
-                                        </div>
-                                        <span class="badge bg-danger text-white fs-5">65</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6 mb-3">
-                                <div class="card shadow-sm p-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">CAHS</h6>
-                                        </div>
-                                        <span class="badge bg-danger text-white fs-5">65</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6 mb-3">
-                                <div class="card shadow-sm p-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">CMA</h6>
-                                        </div>
-                                        <span class="badge bg-primary text-white fs-5">5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6 mb-3">
-                                <div class="card shadow-sm p-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">CEA</h6>
-                                        </div>
-                                        <span class="badge bg-success text-white fs-5">5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6 mb-3">
-                                <div class="card shadow-sm p-3">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">CELA</h6>
-                                        </div>
-                                        <span class="badge bg-danger text-white fs-5">65</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- <div class="flex-container">
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CAS</h6>
+                </div>
+                <span class="badge badge-warning fs-5">4</span>
+            </div>
+        </div>
+    </div>
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CITE</h6>
+                </div>
+                <span class="badge badge-danger fs-5">65</span>
+            </div>
+        </div>
+    </div>
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CAHS</h6>
+                </div>
+                <span class="badge badge-danger fs-5">65</span>
+            </div>
+        </div>
+    </div>
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CMA</h6>
+                </div>
+                <span class="badge badge-primary fs-5">5</span>
+            </div>
+        </div>
+    </div>
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CEA</h6>
+                </div>
+                <span class="badge badge-success fs-5">5</span>
+            </div>
+        </div>
+    </div>
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CELA</h6>
+                </div>
+                <span class="badge badge-danger fs-5">65</span>
+            </div>
+        </div>
+    </div>
+    <div class="custom-col">
+        <div class="card-custom shadow-sm p-3">
+            <div class="card-container">
+                <div>
+                    <h6 class="card-title-container">CCJE</h6>
+                </div>
+                <span class="badge badge-danger fs-5">65</span>
+            </div>
+        </div>
+    </div>
+</div> -->
+
                   
                 </div>
             </div>
@@ -218,12 +231,25 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Initialize Chart.js for the traffic overview pie chart
+    document.addEventListener('DOMContentLoaded', function () {
+    const customCols = document.querySelectorAll('.custom-col');
+
+    customCols.forEach(function (col) {
+        col.addEventListener('click', function () {
+            customCols.forEach(function (col) {
+                col.classList.remove('active');
+            });
+
+            this.classList.add('active');
+        });
+    });
+});
+
     var ctx = document.getElementById('trafficChart').getContext('2d');
     var trafficChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Other'],
+            labels: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
             datasets: [{
                 label: 'Traffic',
                 data: [45, 25, 15, 10, 5],
