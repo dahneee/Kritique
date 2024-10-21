@@ -41,6 +41,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/reports/student/{questionnaireId}', [ReportController::class, 'showStudentAnswers'])->name('reports.showStudentAnswers');
 
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
+    
 
     Route::get('/admin/students/create', [StudentController::class, 'create'])->name('create-student');
     
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/teachers/create', [TeacherController::class, 'create'])->name('create-teacher');
     Route::post('/admin/teachers/save', [TeacherController::class, 'save'])->name('save-teacher');
     Route::get('/admin/teachers/edit/{id}', [TeacherController::class, 'edit'])->name('edit-teacher');
-    Route::put('/admin/teachers/edit/{id}', [TeacherController::class, 'update'])->name('update-teacher');
+    Route::put('/admin/teachers/update/{id}', [TeacherController::class, 'update'])->name('update-teacher');
     Route::get('/admin/teachers/delete/{id}', [TeacherController::class, 'delete'])->name('delete-teacher');
 
     Route::get('/export-users', [StudentController::class, 'exportToExcel'])->name('export-users');

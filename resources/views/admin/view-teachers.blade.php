@@ -63,7 +63,8 @@
                                         <option value="department">Sort: Department</option>
                                     </select>
                                 </form>
-                                <a href="{{ route('create-teacher') }}" class="btn btn-add">Add New Teacher</a>
+                                <a href="javascript:void(0)" class="btn btn-add create-teacher" data-bs-toggle="modal" 
+                                   data-bs-target="#addTeacherModal" create-teacher>Add New Teacher</a>
                             </div>
                             <hr />
                             @if(Session::has('success'))
@@ -95,7 +96,7 @@
                                                     <div class="btn-group-teacher btn-group-sm" role="group">
                                                         <a href="{{ route('edit-teacher', ['id'=>$teacher->id]) }}" class="btn btn-outline-secondary">Edit</a>
                                                         <a href="{{ route('delete-teacher', ['id'=>$teacher->id]) }}" class="btn btn-outline-danger"
-                                                        onclick="return confirmDeleteStudent()">Delete</a>
+                                                        onclick="return confirmDeleteTeacher()">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -116,15 +117,15 @@
 </div>
 
 <!-- Edit Teachers Modal -->
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+<div class="modal fade" id="editTeacherModal" tabindex="-1" aria-labelledby="editTeacherModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editStudentModalLabel">Edit Teacher</h5>
+                    <h5 class="modal-title" id="editTeacherModalLabel">Edit Teacher</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form id="editStudentForm" method="POST">
+                <form id="editTeacherForm" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -132,21 +133,21 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">First Name</label>
-                                <input type="text" id="editStudentFirstName" name="first_name" class="form-control" placeholder="First Name">
+                                <input type="text" id="editTeacherFirstName" name="first_name" class="form-control" placeholder="First Name">
                                 @error('first_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label class="form-label">Middle Name</label>
-                                <input type="text" id="editStudentMiddleName" name="middle_name" class="form-control" placeholder="Middle Name">
+                                <input type="text" id="editTeacherMiddleName" name="middle_name" class="form-control" placeholder="Middle Name">
                                 @error('middle_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label class="form-label">Last Name</label>
-                                <input type="text" id="editStudentLastName" name="last_name" class="form-control" placeholder="Last Name">
+                                <input type="text" id="editTeacherLastName" name="last_name" class="form-control" placeholder="Last Name">
                                 @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -156,7 +157,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Email</label>
-                                <input type="email" id="editStudentEmail" name="email" class="form-control" placeholder="Email">
+                                <input type="email" id="editTeacherEmail" name="email" class="form-control" placeholder="Email">
                                 @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -165,7 +166,7 @@
 
                             <div class="col">
                                 <label class="form-label">Department</label>
-                                <input type="text" id="editStudentDepartment" name="department" class="form-control" placeholder="Department">
+                                <input type="text" id="editTeacherDepartment" name="department" class="form-control" placeholder="Department">
                                 @error('department')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -181,6 +182,82 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTeacherModalLabel">Add New Teacher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form id="addTeacherForm" method="POST" action="{{ route('save-teacher') }}">
+                @csrf
+                
+            
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="addTeacherEmail" name="email" class="form-control" placeholder="Email">
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="addTeacherPassword" name="password" class="form-control" placeholder="Password">
+                            @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">First Name</label>
+                            <input type="text" id="addTeacherFirstName" name="first_name" class="form-control" placeholder="First Name">
+                            @error('first_name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" id="addTeacherMiddleName" name="middle_name" class="form-control" placeholder="Middle Name">
+                            @error('middle_name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" id="addTeacherLastName" name="last_name" class="form-control" placeholder="Last Name">
+                            @error('last_name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                    
+                        <div class="col">
+                            <label class="form-label">Department</label>
+                            <input type="text" id="addTeacherDepartment" name="department" class="form-control" placeholder="Department">
+                            @error('department')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Teacher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 let originalTeacherRows = [];
@@ -226,10 +303,118 @@ function filterTeachers() {
     teacherRows.forEach(row => tableBody.appendChild(row));
 }
 
+// 
+document.querySelectorAll('.btn-outline-secondary').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        
+        const id = this.getAttribute('href').split('/').pop(); 
+        const row = this.closest('tr');
+        
+        const email = row.querySelector('td:nth-child(1)').textContent;
+        const firstName = row.querySelector('td:nth-child(2)').textContent;
+        const middleName = row.querySelector('td:nth-child(3)').textContent;
+        const lastName = row.querySelector('td:nth-child(4)').textContent;
+        const department = row.querySelector('td:nth-child(5)').textContent;
 
-    function confirmDeleteStudent() {
-        return confirm("Are you sure you want to delete this teacher?");
-    }
+      
+        document.getElementById('editTeacherForm').action = `/admin/teachers/update/${id}`;  
+        document.getElementById('editTeacherEmail').value = email;
+        document.getElementById('editTeacherFirstName').value = firstName;
+        document.getElementById('editTeacherMiddleName').value = middleName;
+        document.getElementById('editTeacherLastName').value = lastName; 
+        document.getElementById('editTeacherDepartment').value = department;
+
+      
+        const editModal = new bootstrap.Modal(document.getElementById('editTeacherModal'));
+        editModal.show();
+    });
+});
+                document.querySelector('.create-teacher').addEventListener('click', function() {
+                document.getElementById('addTeacherEmail').value = '';
+                document.getElementById('addTeacherPassword').value = '';
+                document.getElementById('addTeacherFirstName').value = '';
+                document.getElementById('addTeacherMiddleName').value = '';
+                document.getElementById('addTeacherLastName').value = '';
+                document.getElementById('addTeacherDepartment').value = '';
+            });
+
+document.querySelector('.create-teacher').addEventListener('click', function() {
+
+    document.getElementById('addTeacherForm').reset();
+});
+
+
+document.getElementById("editTeacherForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const teacherId = this.action.split('/').pop();  
+
+    fetch(`/admin/teachers/update/${teacherId}`, {
+        method: "PUT", 
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(new FormData(this))), 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert("Teacher updated successfully!");
+            location.reload(); 
+        } else {
+            alert("Failed to update teacher.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+});
+
+
+document.getElementById("addTeacherForm").addEventListener("submit", function(e) {
+    e.preventDefault();  
+
+    let formData = Object.fromEntries(new FormData(this));
+
+    fetch('/admin/teachers/save', {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",  
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)  
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                console.error('Response text:', text); 
+                throw new Error('Failed to create teacher: ' + text);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert('Teacher created successfully');
+        window.location.reload();  
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred: ' + error.message);
+    });
+});
+
+
+function confirmDeleteTeacher() {
+    return confirm("Are you sure you want to delete this teacher?");
+}
 
 </script>
 

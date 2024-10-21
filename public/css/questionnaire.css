@@ -3,6 +3,8 @@
     color: white;
     padding: 10px 40px;
     height: 200px;
+    border-radius: 20px;
+    margin-bottom: 10px;
 }
 
 .violet-header h3 {
@@ -49,6 +51,7 @@
     align-items: center;
     justify-content: space-between;
     color: #a4d07b;
+    border-radius: 20px;
 }
 
 .question-form textarea {
@@ -175,7 +178,17 @@
     background-color: #f1f1f1;
     border-color: #c1c1c1;
 }
-
+.header-logo{
+    width: 100px;
+    height: auto;
+    margin-left: 600px;
+}
+.add-text{
+    font-size: 15px;
+    margin-right: 1130px;
+    margin-top: 20px;
+    color: #6c757d;
+}
 .btn-warning {
     background-color: #ffc107;
     border: none;
