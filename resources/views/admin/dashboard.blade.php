@@ -149,56 +149,40 @@
     });
 
     const ctx = document.getElementById('usersC').getContext('2d');
-const combinedChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: departments,
-        datasets: [
-            {
-                label: 'Students',
-                data: studentsPerDepartment,
-                backgroundColor: [
-                    '#A4D07B', 
-                    '#A4D07B', 
-                    '#A4D07B', 
-                    '#A4D07B', 
-                    '#A4D07B', 
-                    '#A4D07B', 
-                    '#A4D07B' 
-                ],
-
-                borderWidth: 1
-            },
-            {
-    label: 'Teachers',
-    data: studentsPerDepartment,
-    backgroundColor: [
-        '#C9E6B1', 
-        '#C9E6B1', 
-        '#C9E6B1',
-        '#C9E6B1', 
-        '#C9E6B1', 
-        '#C9E6B1' 
-    ],
-
-    borderWidth: 1
-}
-
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
+    const combinedChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: departments,
+            datasets: [
+                {
+                    label: 'Students',
+                    data: studentsPerDepartment,
+                    backgroundColor: 'rgba(164, 230, 123, 0.7)', 
+                    borderColor: 'rgba(164, 208, 123, 1)', 
+                    borderWidth: 1
+                },
+                {
+                    label: 'Teachers',
+                    data: teacherCounts,
+                    backgroundColor: 'rgba(201, 230, 177, 0.7)', 
+                    borderColor: 'rgba(201, 230, 177, 1)', 
+                    borderWidth: 1
+                },
+            ]
         },
-        scales: {
-            y: {
-                beginAtZero: true
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
 });
 
 </script>
