@@ -32,58 +32,74 @@ class ReportController extends Controller
     }
 
     public function getQuestionsByTeacher($teacherId)
-{
-    try {
-        // Fetch questions for the teacher
-        $questions = Question::with('answers')
-            ->whereHas('answers.questionnaire', function ($query) use ($teacherId) {
-                $query->where('teacher_id', $teacherId);
-            })->get();
+    {
+        try {
+            // Fetch questions for the teacher
+            $questions = Question::with('answers')
+                ->whereHas('answers.questionnaire', function ($query) use ($teacherId) {
+                    $query->where('teacher_id', $teacherId);
+                })->get();
 
-        $result = [];
-        foreach ($questions as $question) {
-            $respondentCount = $question->answers->count(); // Get the count of answers
-            $result[] = [
-                'id' => $question->id,
-                'text' => $question->text,
-                'respondent_count' => $respondentCount,
-            ];
+            $result = [];
+            foreach ($questions as $question) {
+                $respondentCount = $question->answers->count(); // Get the count of answers
+                $result[] = [
+                    'id' => $question->id,
+                    'text' => $question->text,
+                    'respondent_count' => $respondentCount,
+                ];
+            }
+
+            return response()->json(['questions' => $result]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching questions: ' . $e->getMessage());
+            return response()->json(['error' => 'Error fetching questions'], 500);
         }
-
-        return response()->json(['questions' => $result]);
-    } catch (\Exception $e) {
-        Log::error('Error fetching questions: ' . $e->getMessage());
-        return response()->json(['error' => 'Error fetching questions'], 500);
     }
-}
 
 
-public function getAnswersByQuestion($questionId)
-{
-    try {
-        Log::info('Fetching answers for question ID: ' . $questionId);
-        
-        // Fetch the question with its answers
-        $question = Question::with('answers.student')->findOrFail($questionId);
+    public function getAnswersByQuestion($questionId)
+    {
+        try {
+            Log::info('Fetching answers for question ID: ' . $questionId);
+            
+            // Fetch the question with its answers
+            $question = Question::with('answers.student')->findOrFail($questionId);
 
-        // Prepare the answers to return
-        $answers = [];
-        foreach ($question->answers as $answer) {
-            $answers[] = [
-                'student_id' => optional($answer->student)->id, // Use optional() to avoid errors if student is null
-                'answer' => $answer->answer,
-            ];
+            // Prepare the answers to return
+            $answers = [];
+            foreach ($question->answers as $answer) {
+                $answers[] = [
+                    'student_id' => optional($answer->student)->id, // Use optional() to avoid errors if student is null
+                    'answer' => $answer->answer,
+                ];
+            }
+
+            // Return question text and answers
+            return response()->json(['question' => $question->text, 'answers' => $answers]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching answers for question ID ' . $questionId . ': ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        // Return question text and answers
-        return response()->json(['question' => $question->text, 'answers' => $answers]);
-    } catch (\Exception $e) {
-        Log::error('Error fetching answers for question ID ' . $questionId . ': ' . $e->getMessage());
-        return response()->json(['error' => $e->getMessage()], 500);
     }
-}
 
+    public function getYearAndBlockCounts()
+    {
+        $totalStudents = \DB::table('users')->count();
 
+        $yearCounts = Questionnaire::with('student')
+            ->selectRaw('year, COUNT(*) as count')
+            ->join('users', 'questionnaires.student_id', '=', 'users.id')
+            ->groupBy('year')
+            ->get();
 
+        $blockCounts = Questionnaire::with('student')
+            ->selectRaw('block, COUNT(*) as count')
+            ->join('users', 'questionnaires.student_id', '=', 'users.id')
+            ->groupBy('block')
+            ->get();
+
+        return response()->json(['yearCounts' => $yearCounts, 'blockCounts' => $blockCounts, 'totalStudents' => $totalStudents]);
+    }
 
 }

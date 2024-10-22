@@ -9,6 +9,7 @@
     <!-- Fonts & Bootstrap -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/admin-dashboard.css">
     <link rel="stylesheet" href="/css/nav.css">
@@ -95,41 +96,23 @@
                 </div>
             </div>
 
-       
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm mb-4 chart-container">
+                        <div class="card-body">
+                            <h5 class="card-title">Year Statistics</h5>
+                            <div id="yearProgressBars" class="row"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card shadow-sm mb-4 chart-container">
                         <div class="card-body">
                             <h5 class="card-title">Block Statistics</h5>
-                            <div class="row">
-                                <div class="col-12 mb-3">
-                                    <div class="d-flex justify-content-between">
-                                        <span>Block 1</span>
-                                        <span>195</span>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <div class="d-flex justify-content-between">
-                                        <span>Block 2</span>
-                                        <span>355</span>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <div class="d-flex justify-content-between">
-                                        <span>Block 3</span>
-                                        <span>105</span>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id="blockProgressBars" class="row"></div>
                         </div>
                     </div>
                 </div>
@@ -287,16 +270,66 @@
                 } else {
                     trafficChart.data.datasets[0].borderColor = [
                         '#A4D07B', 
-        '#B1D490',
-        '#BED8A5', 
-        '#CBECC0', 
-        '#D9F0D2',
+                        '#B1D490',
+                        '#BED8A5', 
+                        '#CBECC0', 
+                        '#D9F0D2',
                     ]; 
                 }
 
                 trafficChart.update(); 
             }
         });
+
+ document.addEventListener('DOMContentLoaded', function() {
+    fetchEvaluationCounts();
+    });
+
+    function fetchEvaluationCounts() {
+        fetch('/reports/year-block')
+            .then(response => response.json())
+            .then(data => {
+                displayYearProgressBars(data.yearCounts, data.totalStudents);
+                displayBlockProgressBars(data.blockCounts, data.totalStudents);
+            })
+            .catch(error => console.error('Error fetching evaluation counts:', error));
+    }
+
+    function displayYearProgressBars(yearCounts, totalStudents) {
+        const yearProgressBarsContainer = document.getElementById('yearProgressBars');
+
+        yearCounts.forEach(yearCount => {
+            const progressBarHtml = `
+                <div class="col-12 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>${yearCount.year}</span>
+                        <span>${yearCount.count}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: ${(yearCount.count / totalStudents) * 100}%;" aria-valuenow="${yearCount.count}" aria-valuemin="0" aria-valuemax="${totalStudents}"></div>
+                    </div>
+                </div>`;
+            yearProgressBarsContainer.innerHTML += progressBarHtml;
+        });
+    }
+
+    function displayBlockProgressBars(blockCounts, totalStudents) {
+        const blockProgressBarsContainer = document.getElementById('blockProgressBars');
+
+        blockCounts.forEach(blockCount => {
+            const progressBarHtml = `
+                <div class="col-12 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>${blockCount.block}</span>
+                        <span>${blockCount.count}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: ${(blockCount.count / totalStudents) * 100}%;" aria-valuenow="${blockCount.count}" aria-valuemin="0" aria-valuemax="${totalStudents}"></div>
+                    </div>
+                </div>`;
+            blockProgressBarsContainer.innerHTML += progressBarHtml;
+        });
+    }
     </script>
 </body>
 
