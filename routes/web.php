@@ -8,6 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('user-dashboard');
+    return view('user-intro');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -67,6 +68,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/questionnaires/create', [QuestionnaireController::class, 'create'])->name('questionnaires-create');
+    Route::get('/student/intro', [HomeController::class, 'index'])->name('student-intro');
     Route::post('/questionnaires/store', [QuestionnaireController::class, 'store'])->name('questionnaires-store');
 });
 

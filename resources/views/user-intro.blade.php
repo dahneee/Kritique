@@ -28,7 +28,7 @@
 
         
         <div class="text-center mb-4">
-            <a href="#" class="bg-[#b2de89] hover:bg-[#6f9c45] text-white font-bold block min-w-[320px] px-4 py-2 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <a href="{{ route('questionnaires-create') }}" class="bg-[#b2de89] hover:bg-[#6f9c45] text-white font-bold block min-w-[320px] px-4 py-2 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                 Begin
             </a>
         </div>
