@@ -35,8 +35,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/questionnaire/{id}/update', [QuestionController::class, 'update'])->name('update-question');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('reports/get-questions/{teacherId}', [ReportController::class, 'getQuestionsByTeacher']);
-    Route::get('reports/get-answers/{questionId}', [ReportController::class, 'getAnswersByQuestion']);
+    Route::get('reports/get-questions/{teacherId}', [ReportController::class, 'getQuestionsByTeacher'])->name('reports.getQuestions');
+    Route::get('reports/get-answers/{teacherId}/{questionId}', [ReportController::class, 'getAnswersByQuestion'])->name('reports.getAnswers');
     Route::get('/reports/teacher/{teacherId}', [ReportController::class, 'showTeacherEvaluations'])->name('reports.showTeacherEvaluations');
     Route::get('/reports/student/{questionnaireId}', [ReportController::class, 'showStudentAnswers'])->name('reports.showStudentAnswers');
     Route::get('/reports/year-block', [ReportController::class, 'getYearAndBlockCounts']);

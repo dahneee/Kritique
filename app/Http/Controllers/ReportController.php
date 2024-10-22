@@ -31,22 +31,25 @@ class ReportController extends Controller
         return view('admin.student-answers', compact('questionnaire'));
     }
 
+    // Fetch questions assigned to a specific teacher and the number of respondents per question
     public function getQuestionsByTeacher($teacherId)
     {
         try {
-            // Fetch questions for the teacher
-            $questions = Question::with('answers')
-                ->whereHas('answers.questionnaire', function ($query) use ($teacherId) {
-                    $query->where('teacher_id', $teacherId);
-                })->get();
+            // Fetch questions linked to the teacher via questionnaires
+            $questions = Question::whereHas('answers.questionnaire', function ($query) use ($teacherId) {
+                $query->where('teacher_id', $teacherId);
+            })->withCount(['answers' => function ($query) use ($teacherId) {
+                $query->whereHas('questionnaire', function ($subQuery) use ($teacherId) {
+                    $subQuery->where('teacher_id', $teacherId);
+                });
+            }])->get();
 
             $result = [];
             foreach ($questions as $question) {
-                $respondentCount = $question->answers->count(); // Get the count of answers
                 $result[] = [
                     'id' => $question->id,
                     'text' => $question->text,
-                    'respondent_count' => $respondentCount,
+                    'respondent_count' => $question->answers_count,
                 ];
             }
 
@@ -57,14 +60,18 @@ class ReportController extends Controller
         }
     }
 
-
-    public function getAnswersByQuestion($questionId)
+    // Fetch answers for a given question filtered by teacher
+    public function getAnswersByQuestion($teacherId, $questionId)
     {
         try {
-            Log::info('Fetching answers for question ID: ' . $questionId);
-            
-            // Fetch the question with its answers
-            $question = Question::with('answers.student')->findOrFail($questionId);
+            Log::info('Fetching answers for question ID: ' . $questionId . ' and teacher ID: ' . $teacherId);
+
+            // Fetch the question with its answers, filtered by the teacher
+            $question = Question::with(['answers' => function ($query) use ($teacherId) {
+                $query->whereHas('questionnaire', function ($subQuery) use ($teacherId) {
+                    $subQuery->where('teacher_id', $teacherId);
+                });
+            }])->findOrFail($questionId);
 
             // Prepare the answers to return
             $answers = [];
@@ -82,6 +89,7 @@ class ReportController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function getYearAndBlockCounts()
     {
