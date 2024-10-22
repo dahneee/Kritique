@@ -7,6 +7,7 @@ use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -93,7 +94,7 @@ class ReportController extends Controller
 
     public function getYearAndBlockCounts()
     {
-        $totalStudents = \DB::table('users')->count();
+        $totalStudents = DB::table('users')->count();
 
         $yearCounts = Questionnaire::with('student')
             ->selectRaw('year, COUNT(*) as count')
