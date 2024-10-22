@@ -204,15 +204,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Password</label>
-                            <input type="password" id="addTeacherPassword" name="password" class="form-control" placeholder="Password">
-                            @error('password')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
+                    
 
                     <div class="row mb-3">
                         <div class="col">
@@ -334,7 +326,7 @@ document.querySelectorAll('.btn-outline-secondary').forEach(button => {
 
                 document.querySelector('.create-teacher').addEventListener('click', function() {
                 document.getElementById('addTeacherEmail').value = '';
-                document.getElementById('addTeacherPassword').value = '';
+              
                 document.getElementById('addTeacherFirstName').value = '';
                 document.getElementById('addTeacherMiddleName').value = '';
                 document.getElementById('addTeacherLastName').value = '';

@@ -15,17 +15,14 @@ class Teacher extends Model
         'teacher_middle_name', 
         'teacher_last_name', 
         'department',
-        'password'];
+];
 
-    protected $hidden = [
-            'password',
-            'remember_token',
-        ];
+    
 
     
         protected $casts = [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            
         ];
         
 

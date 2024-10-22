@@ -26,7 +26,6 @@ class TeacherController extends Controller
     // Validate the incoming request data
     $validatedData = $request->validate([
         'email' => 'required|email',
-        'password' => 'required|min:6',
         'teacher_first_name' => 'required|string|max:255',
         'teacher_middle_name' => 'nullable|string|max:255',
         'teacher_last_name' => 'required|string|max:255',
@@ -34,16 +33,15 @@ class TeacherController extends Controller
     ]);
 
     try {
-        // Hash the password before saving
-        $validatedData['password'] = bcrypt($validatedData['password']);
+       
         
-        // Create the teacher record
+      
         Teacher::create($validatedData);
         
-        // Return a success response
+        
         return response()->json(['success' => true, 'message' => 'Teacher added successfully']);
     } catch (\Exception $e) {
-        // Log the exception message
+       
         Log::error('Failed to add teacher: ' . $e->getMessage());
         
         // Return the exception message as plain text for debugging
