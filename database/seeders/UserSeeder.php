@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
 
         $departments = Department::all();
         $blocks = Block::all();
+        $years = ['First', 'Second', 'Third', 'Fourth'];
 
         $adminUser = [
             'first_name' => 'admin',
@@ -40,8 +41,9 @@ class UserSeeder extends Seeder
                 'last_name' => $faker->lastName,
                 'email' => $faker->unique()->email,
                 'password' => Hash::make('password123'),
-                'block' => $blocks->random()->block_id, // Assign random block
-                'department' => $departments->random()->department_id, // Assign random department
+                'block' => $blocks->random()->block_id, 
+                'year' => $faker->randomElement($years),
+                'department' => $departments->random()->department_id,  
                 'user_type' => 'student',
             ]);
         }

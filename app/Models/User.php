@@ -23,6 +23,7 @@ class User extends Authenticatable
         'last_name',
         'user_type',
         'block',
+        'year',
         'department',
         'email',
         'password',

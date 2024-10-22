@@ -11,44 +11,44 @@ class BlockSeeder extends Seeder
     {
         $blocks = [
             [
-                'block_id' => 'BSIT3-01',
-                'name' => 'BSIT3-01',
+                'block_id' => 'Block 1',
+                'name' => 'Block 1',
             ],
             [
-                'block_id' => 'BSIT3-02',
-                'name' => 'BSIT3-02',
+                'block_id' => 'Block 2',
+                'name' => 'Block 2',
             ],
             [
-                'block_id' => 'BSIT3-03',
-                'name' => 'BSIT3-03',
+                'block_id' => 'Block 3',
+                'name' => 'Block 3',
             ],
             [
-                'block_id' => 'BSIT3-04',
-                'name' => 'BSIT3-04',
+                'block_id' => 'Block 4',
+                'name' => 'Block 4',
             ],
             [
-                'block_id' => 'BSIT3-05',
-                'name' => 'BSIT3-05',
+                'block_id' => 'Block 5',
+                'name' => 'Block 5',
             ],
             [
-                'block_id' => 'BSIT3-06',
-                'name' => 'BSIT3-06',
+                'block_id' => 'Block 6',
+                'name' => 'Block 6',
             ],
             [
-                'block_id' => 'BSIT3-07',
-                'name' => 'BSIT3-07',
+                'block_id' => 'Block 7',
+                'name' => 'Block 7',
             ],
             [
-                'block_id' => 'BSIT3-08',
-                'name' => 'BSIT3-08',
+                'block_id' => 'Block 8',
+                'name' => 'Block 8',
             ],
             [
-                'block_id' => 'BSIT3-09',
-                'name' => 'BSIT3-09',
+                'block_id' => 'Block 9',
+                'name' => 'Block 9',
             ],
             [
-                'block_id' => 'BSIT3-10',
-                'name' => 'BSIT3-10',
+                'block_id' => 'Block 10',
+                'name' => 'Block 10',
             ],
         ];
 

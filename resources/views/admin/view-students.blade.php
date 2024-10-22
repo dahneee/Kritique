@@ -88,6 +88,7 @@
                                                 <th>Middle Name</th>
                                                 <th>Last Name</th>
                                                 <th>Block</th>
+                                                <th>Year</th>
                                                 <th>Department</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -101,6 +102,7 @@
                                                 <td>{{ $student->middle_name }}</td>
                                                 <td>{{ $student->last_name }}</td>
                                                 <td>{{ $student->block }}</td>
+                                                <td>{{ $student->year }}</td>
                                                 <td>{{ $student->department }}</td>
                                                 <td>
                                                     <div class="btn-group-student btn-group-sm" role="group">
@@ -112,6 +114,7 @@
                                                             data-student-middle-name="{{ $student->middle_name }}"
                                                                 data-student-last-name="{{ $student->last_name }}"
                                                             data-student-block="{{ $student->block }}"
+                                                            data-student-year="{{ $student->year }}"
                                                             data-student-department="{{ $student->department }}">
                                                             Edit
                                                         </button>
@@ -220,6 +223,13 @@
                                 @enderror
                             </div>
                             <div class="col">
+                                <label class="form-label">Year</label>
+                                <input type="text" id="editStudentYear" name="year" class="form-control" placeholder="Year">
+                                @error('year')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col">
                                 <label class="form-label">Department</label>
                                 <input type="text" id="editStudentDepartment" name="department" class="form-control" placeholder="Department">
                                 @error('department')
@@ -313,6 +323,13 @@
                             @enderror
                         </div>
                         <div class="col">
+                            <label class="form-label">Year</label>
+                            <input type="text" id="addStudentYear" name="year" class="form-control" placeholder="Year">
+                            @error('year')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
                             <label class="form-label">Department</label>
                             <input type="text" id="addStudentDepartment" name="department" class="form-control" placeholder="Department">
                             @error('department')
@@ -397,6 +414,7 @@ function confirmDeleteStudent() {
                 const middleName = this.getAttribute('data-student-middle-name');
                 const lastName = this.getAttribute('data-student-last-name');
                 const block = this.getAttribute('data-student-block');
+                const year = this.getAttribute('data-student-year');
                 const department = this.getAttribute('data-student-department');
 
                 document.getElementById('editID').value = id;
@@ -406,6 +424,7 @@ function confirmDeleteStudent() {
                 document.getElementById('editStudentMiddleName').value = middleName;
                 document.getElementById('editStudentLastName').value = lastName;
                 document.getElementById('editStudentBlock').value = block;
+                document.getElementById('editStudentYear').value = year;
                 document.getElementById('editStudentDepartment').value = department;
 
                 const editModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
@@ -421,6 +440,7 @@ function confirmDeleteStudent() {
     document.getElementById('addStudentMiddleName').value = '';
     document.getElementById('addStudentLastName').value = '';
     document.getElementById('addStudentBlock').value = '';
+    document.getElementById('addStudentYear').value = '';
     document.getElementById('addStudentDepartment').value = '';
 });
 

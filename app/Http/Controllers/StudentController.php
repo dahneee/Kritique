@@ -20,38 +20,35 @@ class StudentController extends Controller
         return view('admin.view-students', compact('students', 'blocks'));
     }
 
-
     public function create()
     {
         return view('create-student');
     }
     
     public function save(Request $request)
-{
+    {
+        $validation = $request->validate([
+            'student_id' => 'required|unique:users,student_id',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'block' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'year' => 'required|in:First,Second,Third,Fourth',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+        ]);
 
-    $validation = $request->validate([
-        'student_id' => 'required|unique:users,student_id',
-        'first_name' => 'required|string|max:255',
-        'middle_name' => 'nullable|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'block' => 'required|string|max:255',
-        'department' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|string|min:8',
-    ]);
+        $validation['password'] = bcrypt($validation['password']);
 
-    
-    $validation['password'] = bcrypt($validation['password']);
+        $data = User::create($validation);
 
-    
-    $data = User::create($validation);
-
-    if ($data) {
-        return response()->json(['success' => 'User added successfully'], 201);
-    } else {
-        return response()->json(['error' => 'Some problem occurred'], 500);
+        if ($data) {
+            return response()->json(['success' => 'User added successfully'], 201);
+        } else {
+            return response()->json(['error' => 'Some problem occurred'], 500);
+        }
     }
-}
 
     public function edit($id)
     {
@@ -61,7 +58,6 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
-        
         $students = User::findOrFail($id);
     
         $validation = $request->validate([
@@ -72,9 +68,10 @@ class StudentController extends Controller
             'user_type' => 'required|in:student,admin',
             'block' => 'required|string|max:255',
             'department' => 'required|string|max:255',
+            'year' => 'required|in:First,Second,Third,Fourth', 
             'email' => 'required|email|unique:users,email,' . $id, 
         ]);
-    
+
         $students->student_id = $validation['student_id'];
         $students->first_name = $validation['first_name'];
         $students->middle_name = $validation['middle_name'];
@@ -82,6 +79,7 @@ class StudentController extends Controller
         $students->user_type = $validation['user_type'];
         $students->block = $validation['block'];
         $students->department = $validation['department'];
+        $students->year = $validation['year']; 
         $students->email = $validation['email'];
     
         $data = $students->save();
@@ -92,7 +90,6 @@ class StudentController extends Controller
             return response()->json(['success' => false, 'message' => 'Some problem occurred']);
         }
     }
-    
 
     public function delete($id)
     {
@@ -118,8 +115,9 @@ class StudentController extends Controller
         $sheet->setCellValue('E1', 'Last Name');
         $sheet->setCellValue('F1', 'Block');
         $sheet->setCellValue('G1', 'Department');
-        $sheet->setCellValue('H1', 'User Type');
-        $sheet->setCellValue('I1', 'Email');
+        $sheet->setCellValue('H1', 'Year'); 
+        $sheet->setCellValue('I1', 'User Type');
+        $sheet->setCellValue('J1', 'Email');
 
         $users = User::with(['department', 'block'])->get();
         $row = 2; 
@@ -130,10 +128,11 @@ class StudentController extends Controller
             $sheet->setCellValue('C' . $row, $user->first_name);
             $sheet->setCellValue('D' . $row, $user->middle_name);
             $sheet->setCellValue('E' . $row, $user->last_name);
-            $sheet->setCellValue('F' . $row, $user->block); 
-            $sheet->setCellValue('G' . $row, $user->department); 
-            $sheet->setCellValue('H' . $row, $user->user_type);
-            $sheet->setCellValue('I' . $row, $user->email);
+            $sheet->setCellValue('F' . $row, $user->block);
+            $sheet->setCellValue('G' . $row, $user->department);
+            $sheet->setCellValue('H' . $row, $user->year); 
+            $sheet->setCellValue('I' . $row, $user->user_type);
+            $sheet->setCellValue('J' . $row, $user->email);
             $row++;
         }
 
@@ -143,5 +142,4 @@ class StudentController extends Controller
 
         return response()->download($fileName)->deleteFileAfterSend(true);
     }
-    
 }
