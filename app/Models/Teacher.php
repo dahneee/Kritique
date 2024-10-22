@@ -14,11 +14,21 @@ class Teacher extends Model
         'teacher_first_name', 
         'teacher_middle_name', 
         'teacher_last_name', 
-        'department'];
+        'department',
+];
+
+    
+
+    
+        protected $casts = [
+            'email_verified_at' => 'datetime',
+            
+        ];
+        
 
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'department', 'department_id');
     }
 
     public function subjects()

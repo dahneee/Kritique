@@ -1,17 +1,15 @@
-
 .flex-container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
     margin-top: 1.5rem;
-    overflow-x: auto; 
-    gap: 1rem; 
+    overflow-x: auto;
+    gap: 1rem;
 }
 
-
 .custom-col {
-    flex: 0 0 calc(14.28% - 1rem); 
-    max-width: calc(14.28% - 1rem); 
+    flex: 0 0 calc(14.28% - 1rem);
+    max-width: calc(14.28% - 1rem);
     margin-bottom: 1rem;
     box-sizing: border-box;
     border-radius: 10px;
@@ -21,29 +19,40 @@
     color: #28a745;
 }
 .custom-col.active .card-custom {
-    border: 2px solid #007bff; 
-    box-shadow: 0 0.5rem 1rem rgba(0, 123, 255, 0.5); 
+    border: 2px solid #007bff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 123, 255, 0.5);
 }
-
+.btn-select-q {
+    background-color: #a4d07b !important;
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    font-family: Poppins, sans-serif;
+    padding: 10px !important;
+    border-radius: 20px;
+    text-align: right;
+}
+.secret-dropdown {
+    display: flex;
+    justify-content: end;
+}
 
 .card-custom {
     border: none;
     border-radius: 0.25rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     padding: 1rem;
-    min-height: 100px; 
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-
 
 .card-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 
 .badge-warning {
     background-color: #ffc107;
@@ -65,7 +74,6 @@
     color: #fff;
 }
 
-
 .card-title-container {
     font-size: 1rem;
     font-weight: bold;
@@ -74,4 +82,78 @@
 .fs-5 {
     font-size: 1.25rem;
 }
-    
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f7f4ef; /* Soft neutral white */
+}
+
+.content-admin {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 15px;
+    background-color: #f0e5cf; /* Beige */
+    border: none;
+}
+
+.greet {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.dropdown-menu a {
+    color: #333;
+}
+
+.progress-bar {
+    transition: width 1.5s ease;
+}
+
+.question-dropdown {
+    margin-bottom: 20px;
+}
+
+/* Darker pastel green and adjusted colors */
+.btn-primary {
+    background-color: #98cfa7; /* Darker pastel green */
+    border-color: #98cfa7;
+}
+
+.progress-bar.bg-info {
+    background-color: #98cfa7; /* Darker pastel green */
+}
+
+.progress-bar.bg-danger {
+    background-color: #e8b5a3; /* Pastel light brown */
+}
+
+.progress-bar.bg-success {
+    background-color: #98cfa7; /* Darker pastel green */
+}
+
+/* Response list */
+.list-group-item {
+    background-color: #a4d07b !important; /* Remove high transparency */
+}
+
+.list-group-item:nth-child(1) {
+    background-color: #b1d490 !important; /* Darker pastel green */
+}
+
+.list-group-item:nth-child(2) {
+    background-color: #bed8a5 !important; /* Light brown */
+}
+
+.list-group-item:nth-child(3) {
+    background-color: #cbecc0 !important; /* Beige */
+}
+
+.list-group-item:nth-child(4) {
+    background-color: #e0ffd6 !important; /* White */
+}
+.list-group-item:nth-child(5) {
+    background-color: white !important; /* White */
+}

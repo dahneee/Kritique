@@ -28,7 +28,8 @@
 
 
         <div class="content-ques">
-            <header class="violet-header d-flex justify-content-between align-items-center p-3">
+            <header class="violet-header">
+            <img src="/src/white.jpg" alt="Logo" class="header-logo">
 
 
             </header>
@@ -36,8 +37,9 @@
             <div class="questions">
 
                 <div class="question-form card p-4">
-                    <h5 class="mb-3" style="font-weight: bold;">Add Your Questions (Max 10):</h5>
+                   
                     <textarea id="newQuestionInput" class="form-control" placeholder="Type your question here" maxlength="200" rows="2"></textarea>
+                    <h5 class="add-text">Add Your Questions (Max 10):</h5>
                     <div class="list-group my-3" id="questionList"></div>
 
                     <div class="question-form-btns">
@@ -103,6 +105,42 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
+            function updateQuestionLimitText() {
+    const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
+    const remainingQuestions = 10 - currentQuestionCount;
+    $('.add-text').text(`Add Your Questions (Max ${remainingQuestions}):`);
+}
+
+
+updateQuestionLimitText();
+
+$('#addQuestionBtn').click(function () {
+    const questionText = $('#newQuestionInput').val().trim();
+    const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
+
+    if (questionText) {
+        if (currentQuestionCount < 10) {
+            $('#questionList').append(`
+                <div class="question-item-not-saved">
+                    <p>${questionText}</p>
+                    <div>
+                    <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
+                    <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
+                </div>`);
+
+            $('#newQuestionInput').val('');
+            updateQuestionLimitText(); 
+        } else {
+            showExceedLimitPopup();
+        }
+    }
+});
+
+$('#questionList').on('click', '.remove-question', function() {
+    $(this).closest('div.question-item-not-saved').remove();
+    updateQuestionLimitText();  
+});
+
             $(document).ready(function() {
                 function showExceedLimitPopup() {
                     const popup = $('#exceedLimitPopup');
@@ -113,7 +151,7 @@
                     }, 3000);
                 }
 
-                $('#addQuestionBtn').click(function() {
+                $('#addQuestionBtn').click(function () {
                     const questionText = $('#newQuestionInput').val().trim();
                     const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
 
@@ -121,25 +159,25 @@
                         if (currentQuestionCount < 10) {
                             $('#questionList').append(`
                                 <div class="question-item-not-saved">
-                                    <p>${questionText}</p>
+                                <p>${questionText}</p>
                                     <div>
                                     <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
                                     <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
-                                    </div>
                                 </div>`);
                             $('#newQuestionInput').val('');
                         } else {
                             showExceedLimitPopup();
                         }
                     }
-                });
+                }); 
 
                 $('#saveChangesBtn').click(function() {
                     let questions = [];
                     $('#questionList').children().each(function() {
-                        questions.push($(this).contents().filter(function() {
-                            return this.nodeType === 3;
-                        }).text().trim());
+                        const questionText = $(this).find('p').text().trim(); // Get text from the <p> tag
+                        if (questionText) { // Only add non-empty questions
+                            questions.push(questionText);
+                        }
                     });
 
                     $.ajax({
@@ -160,10 +198,8 @@
                 });
 
                 $('#questionList').on('click', '.edit-question', function() {
-                    const questionItem = $(this).parent();
-                    const questionText = questionItem.contents().filter(function() {
-                        return this.nodeType === 3;
-                    }).text().trim();
+                    const questionItem = $(this).closest('div.question-item-not-saved'); // Get the whole div containing the question
+                    const questionText = questionItem.find('p').text().trim();
 
                     $('#newQuestionInput').val(questionText);
                     questionItem.remove();
