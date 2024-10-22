@@ -1,4 +1,6 @@
 <x-app-layout>
+    <!-- Add Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,14 +56,12 @@
         </div>
     </nav>
 
-
     <div class="flex justify-center pb-0 mt-4">
         <a href="#questions" class="text-[#A4D07A] font-semibold border-b-4 border-[#A4D07A] pb-1">
             {{ __('Questions') }}
         </a>
     </div>
 
-    
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -83,7 +83,7 @@
             @csrf
             <div class="mb-6">
                 <label for="teacher_id" class="block mb-2 text-sm font-medium text-gray-900">Select Teacher to Evaluate:</label>
-                <select id="teacher_id" name="teacher_id" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                <select id="teacher_id" name="teacher_id" class="w-full p-2 border border-gray-300 rounded-lg searchable-dropdown" required>
                     @foreach($teachers as $teacher)
                         <option value="{{ $teacher->id }}">{{ $teacher->teacher_first_name }} {{ $teacher->teacher_last_name }}</option>
                     @endforeach
@@ -92,7 +92,7 @@
 
             <div class="mb-6">
                 <label for="subject_id" class="block mb-2 text-sm font-medium text-gray-900">Select Subject:</label>
-                <select id="subject_id" name="subject_id" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                <select id="subject_id" name="subject_id" class="w-full p-2 border border-gray-300 rounded-lg searchable-dropdown" required>
                     @foreach($subjects as $subject)
                         <option value="{{ $subject->subject_id }}">{{ $subject->subject_name }}</option>
                     @endforeach
@@ -121,4 +121,19 @@
         </form>
     </div>
 
+    <!-- Add jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Add Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Initialize Select2 -->
+    <script>
+        $(document).ready(function() {
+            $('.searchable-dropdown').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+        });
+    </script>
 </x-app-layout>
