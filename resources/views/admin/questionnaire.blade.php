@@ -207,25 +207,28 @@ $('#questionList').on('click', '.remove-question', function() {
 
                 $('.delete-question').click(function() {
                     const id = $(this).data('id');
-                    $.ajax({
-                        url: '{{ route("delete-question", ":id") }}'.replace(':id', id),
-                        type: 'DELETE',
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                window.location.reload();
-                            } else {
-                                alert('Failed to delete the question. Please try again.');
+                    if (confirm('Are you sure you want to delete this question?')) {
+                        $.ajax({
+                            url: '{{ route("delete-question", ":id") }}'.replace(':id', id),
+                            type: 'DELETE',
+                            data: {
+                                "_token": "{{ csrf_token() }}"
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    window.location.reload();
+                                } else {
+                                    alert('Failed to delete the question. Please try again.');
+                                }
+                            },
+                            error: function(xhr) {
+                                console.error(xhr.responseText);
+                                alert('Failed to delete the question. Status: ' + xhr.status);
                             }
-                        },
-                        error: function(xhr) {
-                            console.error(xhr.responseText);
-                            alert('Failed to delete the question. Status: ' + xhr.status);
-                        }
-                    });
+                        });
+                    }
                 });
+
 
                 let editingQuestionId = null;
 
