@@ -360,8 +360,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Student</button>
+                        <button type="button" class="btn btn-secondary close-student" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary add-student-modal">Add Student</button>
                     </div>
                 </form>
             </div>
