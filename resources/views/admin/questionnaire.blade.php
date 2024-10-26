@@ -58,9 +58,8 @@
     </nav>
             <header class="violet-header">
             <img src="/src/white.jpg" alt="Logo" class="header-logo">
-
-
             </header>
+            
             <div class="questions-container">
             <div class="questions">
 

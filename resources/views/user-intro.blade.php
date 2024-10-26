@@ -1,3 +1,5 @@
+<title>Kritique</title>
+
 <x-app-layout>
 
     <div class="flex flex-col justify-center items-center min-h-screen" style="background-color: #edf7ee; overflow: hidden; padding-bottom: 60px;"> <!-- Increased padding-bottom -->

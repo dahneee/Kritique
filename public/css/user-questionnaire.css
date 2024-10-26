@@ -1,0 +1,180 @@
+
+.content {
+    margin-left: 80px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.content-admin {
+    margin: 0 auto;
+    margin-left: 300px;
+    max-width: 80%;
+    padding: 20px;
+}
+
+.violet-header {
+    background-color: #a4d07b;
+    color: white;
+    padding: 10px 40px;
+    height: 100px;
+    margin: 10px auto;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 52.5%; /* Adjust to align with content */
+}
+
+
+.violet-header h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.violet-header .btn {
+    color: #a4d07b;
+    background-color: white;
+    border: 1px solid #a4d07b;
+    border-radius: 5px;
+    padding: 8px 26px;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+.violet-header .btn:hover {
+    background-color: #a4d07b;
+    color: white;
+}
+
+.header-logo {
+    height: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.create-btn {
+    background-color: #A4D07B !important;
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none;
+    font-weight: 700 !important;
+    font-family: Poppins, sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-btn:hover {
+    background-color: white !important; 
+    color: #A4D07B !important;
+    border: 1px solid #dbdbdb !important;
+}
+
+.create-btn:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: white;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.metric-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.metric-card h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem; 
+}
+
+.metric-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #A4D07B;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.metric-card:hover .icon {
+    transform: scale(1.1);
+    color: #00b150;
+}
+
+.chart-container, .metric-small {
+    min-height: 300px; 
+}
+
+.metric-small {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.btn-icon:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+
+
+.dropdown-menu {
+    min-width: 150px;
+}
+
+.dropdown-menu a {
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu a:hover {
+    color: #06581f;
+}
+
+.table {
+    background-color: #A4D07B; 
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
