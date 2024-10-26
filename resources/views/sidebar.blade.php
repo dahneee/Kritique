@@ -19,7 +19,7 @@
         <i class="fas fa-question-circle fa-2x"></i>
     </a>
 
-    <a href="{{ route('view-student') }}" class="sidebar-link text-center {{ request()->routeIs('view-student') ? 'active' : '' }}" style="color: white !important;">
+    <a href="{{ route('view-student') }}" class="sidebar-link text-center {{ (request()->routeIs('view-student') || request()->routeIs('view-teachers') ) ? 'active' : '' }}" style="color: white !important;">
         <i class="fas fa-table fa-2x"></i>
     </a>
 
