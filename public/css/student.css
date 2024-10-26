@@ -7,7 +7,18 @@
     max-width: 90%;
     padding: 20px;
     font-family: Poppins, sans-serif;
+    animation: fadeIn 1s ease-in-out;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 
 .content-student{
     margin: 0 auto;
@@ -15,6 +26,7 @@
     max-width: 80%;
     padding: 20px;
     padding-top: 10px;
+    
 }
 .content-teacher{
     margin: 0 auto;
@@ -44,13 +56,13 @@
     color: #A4D07B!important;
     font-weight: bold;
     border-color: #A4D07B;
-    border-bottom: 2px solid #A4D07B; /* Optional for a more distinct active look */
+    border-bottom: 2px solid #A4D07B; 
     font-family: Poppins, sans-serif;
 }
 
-/* Hover effect */
+
 .nav-tabs .nav-link:hover {
-    color: #86b065;
+    color: #86b065!important;
     
 }
 @keyframes fadeIn {
@@ -117,20 +129,33 @@
     font-weight: 400 !important;
 }
 
+.btn-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; 
+    width: 100%;
+}
 
-.btn-add {
-    background-color: #A4D07B  !important;
-    color: rgb(255, 255, 255) !important;
+.btn-add,
+.btn-export {
+    background-color: #ffffff !important;
+    color: #A4D07B !important;
     text-decoration: none;
     font-weight: 700 !important;
     font-family: Poppins, sans-serif;
     padding: 10px !important;
-    
+    border: 1px solid #dbdbdb !important;
 }
 
+
 .btn-add:hover {
-    background-color: white !important; 
-    color: #A4D07B  !important;
+    background-color: #A4D07B !important; 
+    color: #ffffff  !important;
+    border: 1px solid #dbdbdb !important;
+}
+.btn-export:hover {
+    background-color: #A4D07B !important; 
+    color: #ffffff  !important;
     border: 1px solid #dbdbdb !important;
 }
 
@@ -140,28 +165,66 @@
     align-items: center;      
     justify-content: center;  
 }
+
 .input-group {
     display: flex;
     align-items: center;
-    width: 100%;
-    margin-right: 7px;
-  }
-  
-  .input-group .form-control {
-    border-right: 0;
-    border-radius: 0.25rem 0 0 0.25rem;
-  }
-  
-  .input-group .input-group-text {
+    border: 1px solid #dbdbdb;
+    border-radius: 8px; 
+    overflow: hidden;
+    width: auto;
+    margin-right: 10px; 
+}
+
+.sort-search {
+    border: none;
+    outline: none;
+    font-family: Poppins, sans-serif;
+    font-weight: bold !important;
+    color: #A4D07B !important; 
+    padding: 8px 12px;
+    border-radius: 0;
+    width: 100%; 
+    max-width: 500px; 
+    flex-grow: 1; 
+}
+
+
+.input-group-text {
     background-color: #ffffff;
-    border-left: 0;
-    border-radius: 0 0.25rem 0.25rem 0;
-    cursor: pointer;
-  }
-  
-  .input-group .input-group-text i {
-    color: #00000093;
-  }
+    border: none;
+    color: #A4D07B;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort-sort,
+.sort-block {
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    font-family: Poppins, sans-serif;
+    font-weight: bold!important;
+    color: #A4D07B!important;
+    padding: 8px 12px;
+    outline: none;
+    background-color: #ffffff;
+    margin-right: 10px; 
+    width: auto; 
+    appearance: none; 
+}
+
+
+.sort-sort::after,
+.sort-block::after {
+    content: '▼';
+    font-size: 10px;
+    color: #A4D07B;
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+}
 
 .custom-modal .modal-body {
     max-height: 400px; 

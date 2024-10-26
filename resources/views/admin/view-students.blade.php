@@ -71,26 +71,29 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <form class="d-flex align-items-center" id="filterForm">
                                         <div class="input-group">
-                                            <input class="form-control" id="searchInput" type="search" placeholder="Search" aria-label="Search" oninput="filterStudents()">
+                                            <input class="form-control sort-search" id="searchInput" type="search" placeholder="Search" aria-label="Search" oninput="filterStudents()">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <i class="fas fa-search"></i>
                                             </span>
                                         </div>
-                                        <select class="form-select me-2" id="sortSelect" onchange="filterStudents()">
-                                            <option value="student_id">Sort: Student ID</option>
-                                            <option value="name">Sort: Name</option>
-                                            <option value="department">Sort: Department</option>
+                                        <select class="form-select sort-sort me-2" id="sortSelect" onchange="filterStudents()">
+                                            <option value="student_id">Student ID</option>
+                                            <option value="name">Name</option>
+                                            <option value="department">Department</option>
                                         </select>
-                                        <select class="form-select me-2" id="blockSelect" onchange="filterStudents()">
+                                        <select class="form-select sort-block me-2" id="blockSelect" onchange="filterStudents()">
                                             <option value="">All Blocks</option>
                                             @foreach ($blocks as $block)
                                                 <option value="{{ $block }}">{{ $block }}</option>
                                             @endforeach
                                         </select>
                                     </form>
+                                    <div class="btn-container">
                                     <a href="javascript:void(0)" class="btn btn-add create-student" data-bs-toggle="modal" 
                                        data-bs-target="#addStudentModal">Add New Student</a>
-                                    <a href="{{ route('export-users') }}" class="btn btn-add">Export Data</a>
+                                    <a href="{{ route('export-users') }}" class="btn btn-export">Export Data</a>
+                                    </div>
+                                
                                 </div>
                                 <hr />
                                 @if(Session::has('success'))
