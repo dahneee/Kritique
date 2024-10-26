@@ -30,12 +30,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/subjects', [SubjectController::class, 'index'])->name('admin.subjects');
 
-    Route::get('/admin/questionnaire', [QuestionController::class, 'index'])->name('show-questions');
+    Route::get('/admin/questionnaire', [QuestionController::class, 'index'])->name('questionnaire');
     Route::post('/admin/questionnaire/store', [QuestionController::class, 'store'])->name('save-questions');
     Route::delete('/admin/questionnaire/{id}/delete', [QuestionController::class, 'delete'])->name('delete-question');
     Route::put('/admin/questionnaire/{id}/update', [QuestionController::class, 'update'])->name('update-question');
 
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports');
     Route::get('reports/get-questions/{teacherId}', [ReportController::class, 'getQuestionsByTeacher'])->name('reports.getQuestions');
     Route::get('reports/get-answers/{teacherId}/{questionId}', [ReportController::class, 'getAnswersByQuestion'])->name('reports.getAnswers');
     Route::get('/reports/teacher/{teacherId}', [ReportController::class, 'showTeacherEvaluations'])->name('reports.showTeacherEvaluations');

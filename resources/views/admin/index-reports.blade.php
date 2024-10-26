@@ -25,7 +25,7 @@
         <nav class="navbar-admin navbar-light mb-4">
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <h3 class="greet">Hello, <span class="name-greet">{{ Auth::user()->first_name }}</span>. <span class="space">How are you feeling today?</span></h3>
+                    <h3 class="greet">Hello, <span class="name-greet" style='color:green;'>{{ Auth::user()->first_name }}</span>. <span class="space">How are you feeling today?</span></h3>
                     <div class="mb-3">
                         <select class="form-select" aria-label="Select Teacher" id="teacherDropdown">
                             <option selected disabled>Select a teacher</option>

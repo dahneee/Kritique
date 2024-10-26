@@ -14,30 +14,52 @@
 </head>
 <body>
     @include('sidebar')
-    <nav class="navbar navbar-expand-lg shadow-sm mb-4">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" style="color: #A4D07B !important; font-weight: 600;">CRUD Table</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link-students active" aria-current="page" href="{{ route('view-student') }}">
-                            <i class="fas fa-user-graduate"></i>
-                            Student
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link-teachers" href="{{ route('view-teachers') }}">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            Teachers
-                        </a>
-                    </li>
-                </ul>
+
+    <div class="content-student">
+        <nav class="navbar-admin navbar-light">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <h3 class="greet">Hello, <span class="name-greet">{{ Auth::user()->first_name }}</span>. <span class="space">How are you feeling today?</span></h3>
+
+                    <div class="dropdown">
+                        <div class="circle-image" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/src/default.png" alt="Profile Image">
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    {{ __('Profile') }}
+                                </a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">
+                                        {{ __('Log Out') }}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
+
+    <div class="container-tabs">
+        <ul class="nav nav-tabs stud">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('view-student') ? 'active' : '' }} stud" href="{{ route('view-student') }}">
+                    <i class="fas fa-user-graduate"></i> Student
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('view-teachers') ? 'active' : '' }}" href="{{ route('view-teachers') }}">
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <div class="trans-content">
         <div class="row justify-content-center">
@@ -66,10 +88,8 @@
                                             @endforeach
                                         </select>
                                     </form>
-                                   <a href="javascript:void(0)" class="btn btn-add create-student" data-bs-toggle="modal" 
-                                   data-bs-target="#addStudentModal" create-student>Add New Student</a>
-
-
+                                    <a href="javascript:void(0)" class="btn btn-add create-student" data-bs-toggle="modal" 
+                                       data-bs-target="#addStudentModal">Add New Student</a>
                                     <a href="{{ route('export-users') }}" class="btn btn-add">Export Data</a>
                                 </div>
                                 <hr />
@@ -142,8 +162,6 @@
             </div>
         </div>
     </div>
-
- 
     <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -349,8 +367,6 @@
 </div>
 
 
-    
-
     <script>
 
 let originalStudentRows = [];
@@ -509,15 +525,6 @@ document.getElementById("editStudentForm").addEventListener("submit", function(e
         alert('An error occurred: ' + error.message);
     });
 });
-
-
-
-
-        
-
-
-
-        
 
        
     </script>

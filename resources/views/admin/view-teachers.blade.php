@@ -9,37 +9,62 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/student.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="icon" href="/src/logow.png">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 @include('sidebar')
-<nav class="navbar navbar-expand-lg shadow-sm mb-4">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="color: #A4D07B !important; font-weight: 600;">CRUD Table</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link-students" aria-current="page" href="{{ route('view-student') }}">
-                        <i class="fas fa-user-graduate"></i>
-                        Student
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link-teachers active" href="{{ route('view-teachers') }}">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                        Teachers
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div class="content-teacher">
+        <nav class="navbar-admin navbar-light">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <h3 class="greet">Hello, <span class="name-greet">{{ Auth::user()->first_name }}</span>. <span class="space">How are you feeling today?</span></h3>
+
+                    <div class="dropdown">
+                        <div class="circle-image" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/src/default.png" alt="Profile Image">
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    {{ __('Profile') }}
+                                </a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">
+                                        {{ __('Log Out') }}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
-</nav>
+</div>?
+
+
+<div class="container-tabs">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('view-student') ? 'active' : '' }}" href="{{ route('view-student') }}">
+                <i class="fas fa-user-graduate"></i> Student
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('view-teachers') ? 'active' : '' }}" href="{{ route('view-teachers') }}">
+                <i class="fas fa-chalkboard-teacher"></i> Teachers
+            </a>
+        </li>
+    </ul>
+</div>
+
+
 
 <div class="trans-content">
     <div class="row justify-content-center">
@@ -64,7 +89,7 @@
                                     </select>
                                 </form>
                                 <a href="javascript:void(0)" class="btn btn-add create-teacher" data-bs-toggle="modal" 
-                                   data-bs-target="#addTeacherModal" create-teacher>Add New Teacher</a>
+                                   data-bs-target="#addTeacherModal">Add New Teacher</a>
                             </div>
                             <hr />
                             @if(Session::has('success'))
@@ -107,6 +132,7 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                                 {{ $teachers->links('vendor.pagination.bootstrap-5') }}
                             </div>
                         </div>
                     </div>
@@ -116,7 +142,7 @@
     </div>
 </div>
 
-<!-- Edit Teachers Modal -->
+
 <div class="modal fade" id="editTeacherModal" tabindex="-1" aria-labelledby="editTeacherModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -125,10 +151,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form id="editTeacherForm" method="POST" action="{{ route('update-teacher', $teacher->id) }}">
-    @csrf
-    <input type="hidden" name="_method" value="PUT">
-    <input type="hidden" id="editID" name="id">
+                <form id="editTeacherForm" method="POST" action="{{ route('update-teacher', $teacher->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="editID" name="id">
 
                     <div class="row mb-3">
                         <div class="col">
@@ -182,7 +208,8 @@
     </div>
 </div>
 
-    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true">
+<!-- Add Teacher Modal -->
+<div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -190,10 +217,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form id="addTeacherForm" method="POST" action="{{ route('save-teacher') }}">
-                @csrf
-                
-            
+                <form id="addTeacherForm" method="POST" action="{{ route('save-teacher') }}">
+                    @csrf
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">Email</label>
@@ -203,8 +228,6 @@
                             @enderror
                         </div>
                     </div>
-
-                    
 
                     <div class="row mb-3">
                         <div class="col">
@@ -231,18 +254,18 @@
                     </div>
 
                     <div class="row mb-3">
-    <div class="col">
-        <label class="form-label">Department</label>
-        <select id="addTeacherDepartment" name="department" class="form-control">
-            @foreach($departments as $department)
-                <option value="{{ $department->department_id }}">{{ $department->department_name }}</option>
-            @endforeach
-        </select>
-        @error('department')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-</div>
+                        <div class="col">
+                            <label class="form-label">Department</label>
+                            <select id="addTeacherDepartment" name="department" class="form-control">
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->department_id }}">{{ $department->department_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('department')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -254,6 +277,10 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+</body>
 <script>
 let originalTeacherRows = [];
 
@@ -412,8 +439,4 @@ function confirmDeleteTeacher() {
 
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-
-</body>
 </html>

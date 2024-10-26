@@ -1,13 +1,58 @@
 
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
 .trans-content {
-    /* transition: margin-left 0.3s; */
-    margin-left: 50px;
-    width: 100%;
-    transition: margin-left 0.3s;
-    animation: fadeIn 0.5s ease-in-out;
+    margin: 0 auto;
+    margin-left: 200px;
+    max-width: 90%;
+    padding: 20px;
+    font-family: Poppins, sans-serif;
 }
 
+.content-student{
+    margin: 0 auto;
+    margin-left: 300px;
+    max-width: 80%;
+    padding: 20px;
+    padding-top: 10px;
+}
+.content-teacher{
+    margin: 0 auto;
+    margin-left: 300px;
+    max-width: 80%;
+    padding: 20px;
+    padding-bottom: 0;
+}
+.container-tabs{
+    margin: 0 auto;
+    margin-left: 300px;
+    max-width: 80%;
+    padding: 40px;
+    padding-bottom: 0;
+    padding-top: 0;
+
+}
+.nav-tabs .nav-link {
+    color: #A4D07B;
+    font-family: Poppins, sans-serif;
+    font-weight: bold;
+    
+}
+
+
+.nav-tabs .nav-link.active {
+    color: #A4D07B!important;
+    font-weight: bold;
+    border-color: #A4D07B;
+    border-bottom: 2px solid #A4D07B; /* Optional for a more distinct active look */
+    font-family: Poppins, sans-serif;
+}
+
+/* Hover effect */
+.nav-tabs .nav-link:hover {
+    color: #86b065;
+    
+}
 @keyframes fadeIn {
     from {
         opacity: 0;

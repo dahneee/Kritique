@@ -28,6 +28,34 @@
 
 
         <div class="content-ques">
+        <nav class="navbar-admin navbar-light">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h3 class="greet">Hello, <span class="name-greet">{{ Auth::user()->first_name }}</span>. <span class="space">How are you feeling today?</span></h3>
+
+                <div class="dropdown">
+                    <div class="circle-image" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/src/default.png" alt="Profile Image">
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                {{ __('Profile') }}
+                            </a>
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="dropdown-item" type="submit">
+                                    {{ __('Log Out') }}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
             <header class="violet-header">
             <img src="/src/white.jpg" alt="Logo" class="header-logo">
 

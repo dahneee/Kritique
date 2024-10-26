@@ -11,7 +11,7 @@ class TeacherController extends Controller
 {
     public function index()
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::orderBy('created_at', 'asc')->paginate(10); 
         $departments = Department::all();
         return view('admin.view-teachers', compact('teachers', 'departments'));
     }
@@ -20,6 +20,7 @@ class TeacherController extends Controller
     {
         return view('admin.create-teacher');
     }
+    
 
     public function save(Request $request)
 {
