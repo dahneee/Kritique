@@ -88,7 +88,7 @@
                                             @endforeach
                                         </select>
                                     </form>
-                                    <div class="btn-container">
+                                    <div class="btn-container" style="width: 40%;">
                                     <a href="javascript:void(0)" class="btn btn-add create-student" data-bs-toggle="modal" 
                                        data-bs-target="#addStudentModal">Add New Student</a>
                                     <a href="{{ route('export-users') }}" class="btn btn-export">Export Data</a>
