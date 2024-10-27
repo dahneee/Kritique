@@ -92,6 +92,7 @@
 
                             </ul>
                             <p id="totalRespondents" class="mt-3"><strong>Total Respondents: </strong> 0</p>
+                            <img src="src/hey.png" alt="Kritique" class="hey-img">
                         </div>
                     </div>
                 </div>
