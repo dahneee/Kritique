@@ -27,7 +27,7 @@
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h3 class="greet">Hello, <span class="name-greet" style='color:green;'>{{ Auth::user()->first_name }}</span>. <span class="space">How are you feeling today?</span></h3>
                     <div class="mb-3">
-                        <select class="form-select" aria-label="Select Teacher" id="teacherDropdown">
+                        <select class="form-select sel-te" aria-label="Select Teacher" id="teacherDropdown">
                             <option selected disabled>Select a teacher</option>
                             @if($teachers->isEmpty())
                             <option>No teachers available for evaluation.</option>
@@ -104,7 +104,7 @@
             <div class="card-body">
                 <h5 class="card-title">Year Statistics</h5>
                 <div class="dropdown mb-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="departmentDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary btn-dep dropdown-toggle" type="button" id="departmentDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
                         Select Department
                     </button>
                     <ul class="dropdown-menu" id="departmentDropdownMenu" aria-labelledby="departmentDropdownButton"></ul>
