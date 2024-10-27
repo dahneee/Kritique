@@ -273,10 +273,10 @@
 <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
                 <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div> -->
             <div class="modal-body">
             <form id="addStudentForm" method="POST" action="{{ route('save-student') }}">
                 @csrf

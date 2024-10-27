@@ -83,9 +83,9 @@
                                     </div>
 
                                     <select class="form-select me-2 sort-sort" id="sortSelect" onchange="filterTeachers()">
-                                        <option value="teacher_id">Sort: Teacher ID</option>
-                                        <option value="name">Sort: Name</option>
-                                        <option value="department">Sort: Department</option>
+                                        <option value="teacher_id">Email</option>
+                                        <option value="name">Name</option>
+                                        <option value="department">Department</option>
                                     </select>
                                 </form>
                                 <a href="javascript:void(0)" class="btn btn-add create-teacher" data-bs-toggle="modal" 

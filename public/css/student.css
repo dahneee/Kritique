@@ -197,6 +197,7 @@
     padding: 10px !important;
     border: 1px solid #dbdbdb !important;
     border-radius: 8px;
+    font-family: Poppins, sans-serif;
 }
 .add-student-modal:hover {
     background-color: #ffffff !important; 
