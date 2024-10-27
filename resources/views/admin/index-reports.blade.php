@@ -48,14 +48,14 @@
         <div class="content container">
             <div class="row mb-4">
                 <div class="col-lg-6">
-                    <div class="card shadow-sm mb-4 chart-container">
+                    <div class="card shadow-sm mb-4 chart-container" style="height: 100%;">
                         <div class="card-body">
                             <canvas id="trafficChart" width="100%" height="100%"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="card shadow-sm mb-4">
+                    <div class="card shadow-sm mb-4" style="height: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Response Distribution</h5>
                             <div class="container question-dropdown">
