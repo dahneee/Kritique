@@ -277,3 +277,16 @@
 .custom-modal .modal-body::-webkit-scrollbar-thumb:hover {
     background: #88C7A2;
 }
+.pagination .page-link {
+    color: #A4D07B !important; 
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #A4D07B !important; 
+    border-color: #A4D07B !important;
+}
+.pagination .page-item.active .page-link {
+    background-color: #A4D07B !important; 
+    border-color: #A4D07B !important; 
+    color: #ffffff !important; 
+}
