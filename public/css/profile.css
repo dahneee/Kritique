@@ -1,0 +1,64 @@
+.navbar-admin {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 35px;
+    z-index: 1;
+    transition: left 0.3s;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(21, 110, 51);
+    width: 100%;
+    
+}
+.greet {
+    font-size: 20px !important;
+    font-weight: 300 !important;
+    font-family: Poppins, sans-serif;
+    margin-top: 5px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+.greet {
+    font-size: 20px !important;
+    font-weight: 300 !important;
+    font-family: Poppins, sans-serif;
+    margin-top: 5px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.circle-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.circle-image img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.name-greet {
+    font-weight: 600;
+}
+
+.space {
+    margin-left: 10px;
+}
+
