@@ -43,6 +43,6 @@ class Teacher extends Model
 
     public function questionnaires()
     {
-        return $this->hasMany(Questionnaire::class);
+        return $this->hasMany(Questionnaire::class, 'teacher_id');
     }
 }

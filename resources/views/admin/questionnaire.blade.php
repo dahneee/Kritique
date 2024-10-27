@@ -65,8 +65,15 @@
 
                 <div class="question-form card p-4">
                    
-                    <textarea id="newQuestionInput" class="form-control" placeholder="Type your question here" maxlength="200" rows="2"></textarea>
-                    <h5 class="add-text">Add Your Questions (Max 10):</h5>
+                <div style="position: relative; display: inline-block; width: 100%;">
+    <textarea id="newQuestionInput" class="form-control" placeholder="Type your question here" maxlength="200" rows="2" style="resize: none; width: 100%;" oninput="updateCharacterCount()"></textarea>
+    <span id="charCount" style="position: absolute; top: 5px; right: 10px; color: #4a7c59; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">
+       
+    </span>
+</div>
+<h5 class="add-text">Add Your Questions (Max 10):</h5>
+
+
                     <div class="list-group my-3" id="questionList"></div>
 
                     <div class="question-form-btns">
@@ -288,6 +295,12 @@
                 }
             });
         });
+        function updateCharacterCount() {
+        const input = document.getElementById('newQuestionInput');
+        const charCount = input.value.length;
+        const maxChars = input.getAttribute('maxlength');
+        document.getElementById('charCount').textContent = `${charCount}/${maxChars}`;
+    }
     </script>
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/reports/year-block', [ReportController::class, 'getYearAndBlockCounts']);
     Route::get('/reports/year-statistics/{department}', [ReportController::class, 'getYearStatistics']);
 
+    Route::get('/teacher-list', [AnswerController::class, 'index'])->name('answers.index');
+    Route::get('/answers/teacher/{teacherId}', [AnswerController::class, 'showTeacherEvaluations'])->name('answers.showTeacherEvaluations');
+    Route::get('/answers/student/{questionnaireId}', [AnswerController::class, 'showStudentAnswers'])->name('answers.showStudentAnswers');
 
 
     Route::get('/admin/students', [StudentController::class, 'index'])->name('view-student');
