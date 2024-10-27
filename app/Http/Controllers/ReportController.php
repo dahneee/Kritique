@@ -65,19 +65,22 @@ class ReportController extends Controller
     {
         try {
             Log::info('Fetching answers for question ID: ' . $questionId . ' and teacher ID: ' . $teacherId);
-        
-            $questionnaires = Questionnaire::with(['student', 'answers' => function ($query) use ($questionId) {
+    
+            // Eager load student with their block and answers
+            $questionnaires = Questionnaire::with(['student.block', 'answers' => function ($query) use ($questionId) {
                 $query->where('question_id', $questionId);
             }])->where('teacher_id', $teacherId)->get();
     
             $answers = [];
             $departments = [];
             $yearCounts = []; // Array to hold counts by year
+            $blockCounts = array_fill(1, 10, 0); // Initialize counts for Block 1 to Block 10
     
             foreach ($questionnaires as $questionnaire) {
                 foreach ($questionnaire->answers as $answer) {
                     $student = $questionnaire->student;
                     $year = $student->year; // Assuming year is a property of student
+                    $block = $student->block; // Get block ID from the block relationship
                     $department = $student->department;
     
                     // Populate answers array
@@ -86,7 +89,7 @@ class ReportController extends Controller
                         'first_name' => $student->first_name,
                         'last_name' => $student->last_name,
                         'year' => $year,
-                        'block' => $student->block,
+                        'block' => $block,
                         'department' => $department,
                         'answer' => $answer->answer,
                     ];
@@ -97,18 +100,25 @@ class ReportController extends Controller
                         $yearCounts[$year] = 0;
                     }
                     $yearCounts[$year]++;
+                    
+                    // Count block occurrences using string as key
+                if (!isset($blockCounts[$block])) {
+                    $blockCounts[$block] = 0;
                 }
+                $blockCounts[$block]++;
             }
+        }
     
             // Log the student details fetched
             Log::info('Fetched student answers:', ['answers' => $answers]);
     
-            // Return the data including year counts
+            // Return the data including year and block counts
             return response()->json([
                 'question' => $questionId,
                 'answers' => $answers,
                 'departments' => array_keys($departments),
                 'yearCounts' => $yearCounts, // Send year counts
+                'blockCounts' => $blockCounts, // Send block counts
             ]);
         } catch (\Exception $e) {
             Log::error('Error fetching answers for question ID ' . $questionId . ': ' . $e->getMessage());

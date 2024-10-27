@@ -281,22 +281,23 @@ $(document).ready(function () {
         }
     });
 
-    // Department dropdown item click event
-    $(document).on('click', '#departmentDropdownMenu .dropdown-item', function (event) {
-        event.preventDefault();
-        const selectedDepartmentName = $(this).text();
-        $('#departmentDropdownButton').text(selectedDepartmentName);
-        
-        // Use the previously fetched data
-        if (fetchedData) {
-            populateYearProgressBars(fetchedData.yearCounts);
-        } else {
-            alert('No data available for the selected question or teacher.');
-        }
-    });
+// Department dropdown item click event
+$(document).on('click', '#departmentDropdownMenu .dropdown-item', function (event) {
+    event.preventDefault();
+    const selectedDepartmentName = $(this).text();
+    $('#departmentDropdownButton').text(selectedDepartmentName);
+    
+    // Use the previously fetched data
+    if (fetchedData) {
+        populateYearProgressBars(fetchedData.yearCounts);
+        populateBlockProgressBars(fetchedData.blockCounts); // Call to populate block progress bars
+    } else {
+        alert('No data available for the selected question or teacher.');
+    }
+});
 
-    // Function to populate year progress bars
-    function populateYearProgressBars(selectedDepartmentName) {
+// Function to populate year progress bars
+function populateYearProgressBars() {
     if (!fetchedData) {
         console.error("No fetched data available.");
         return;
@@ -308,36 +309,94 @@ $(document).ready(function () {
     updateProgressBars(fetchedData.yearCounts); // Call the function to update progress bars with actual counts
 }
 
-    // Function to update progress bars with actual counts
-    function updateProgressBars(yearData) {
-        // Clear previous year progress bars
-        $('#yearProgressBars').empty();
+// Function to update progress bars with actual counts
+function updateProgressBars(yearData) {
+    // Clear previous year progress bars
+    $('#yearProgressBars').empty();
 
-        if (Object.keys(yearData).length === 0) {
-            $('#yearProgressBars').append('<p>No data available for the selected year.</p>');
-            return;
-        }
+    // Use direct year labels as they appear in your data
+    const years = ['First', 'Second', 'Third', 'Fourth'];
 
-        // Iterate through yearData to create progress bars
-        Object.keys(yearData).forEach(year => {
-            const count = yearData[year];
+    // Create a row for the progress bars
+    const progressRow = $('<div class="row"></div>');
 
-            // Create a progress bar for each year
-            const progressBar = `
-                <div class="col-3 mb-2">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${count * 10}%;"
-                             aria-valuenow="${count}" aria-valuemin="0" aria-valuemax="100">
-                            ${count}
-                        </div>
+    years.forEach((year) => {
+        const count = yearData[year] || 0;
+
+        // Calculate the percentage based on the total number of responses
+        const percentage = Math.min(count, 100);
+
+        // Create a progress bar for each year
+        const progressBar = `
+            <div class="col mb-4">
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar" role="progressbar" style="width: ${percentage}%;"
+                         aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100">
+                        ${count}
                     </div>
-                    <div class="text-center">${year}</div>
                 </div>
-            `;
-            
-            $('#yearProgressBars').append(progressBar); // Append progress bar to the row
-        });
+                <div class="text-center">${year} Year</div>
+            </div>
+        `;
+        
+        // Append the progress bar to the progress row
+        progressRow.append(progressBar);
+    });
+
+    // Append the entire row of progress bars to the container
+    $('#yearProgressBars').append(progressRow);
+}
+
+function populateBlockProgressBars(blockData) {
+    if (!blockData) {
+        console.error("No block data available.");
+        return;
     }
+
+    console.log("Using fetched data for block progress bars:", blockData);
+    
+    updateBlockProgressBars(blockData); // Call the function to update block progress bars with actual counts
+}
+
+// Function to update block progress bars with actual counts
+function updateBlockProgressBars(blockData) {
+    // Clear previous block progress bars
+    $('#blockProgressBars').empty();
+
+    // Create a row for the progress bars
+    const progressRow = $('<div class="row"></div>');
+
+    // Assume blockData is an object where keys are block names and values are counts
+    const blocks = ["Block 1", "Block 2", "Block 3", "Block 4", "Block 5", "Block 6", "Block 7", "Block 8", "Block 9", "Block 10"];
+    
+    blocks.forEach((block) => {
+        const count = blockData[block] || 0; // Get the count based on block name
+
+        // Calculate the percentage based on the total number of responses
+        const percentage = Math.min(count, 100);
+
+        // Create a progress bar for each block
+        const progressBar = `
+            <div class="col mb-4">
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar" role="progressbar" style="width: ${percentage}%;"
+                         aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100">
+                        ${count}
+                    </div>
+                </div>
+                <div class="text-center">${block}</div> <!-- Display block name -->
+            </div>
+        `;
+        
+        // Append the progress bar to the progress row
+        progressRow.append(progressBar);
+    });
+
+    // Append the entire row of progress bars to the container
+    $('#blockProgressBars').append(progressRow);
+}
+
+
 });
 </script>
 
