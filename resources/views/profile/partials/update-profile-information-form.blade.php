@@ -1,5 +1,4 @@
-
-<section style="background-color: #f0f7f4; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1);">
+<section style="background-color: #f0f7f4; border-radius: 10px; padding: 20px;">
     <header style="text-align: center; margin-bottom: 20px;">
         <h2 class="text-lg font-medium" style="color: #4a7c59; font-family: 'Poppins', sans-serif;">
             {{ __('Profile Information') }}
@@ -19,28 +18,29 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" style="color: #4a7c59; font-family: 'Poppins', sans-serif;" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" style="background-color: #e6f3ea; border: 1px solid #a4d4b4; border-radius: 8px; color: #4a7c59;" :value="old('name', $user->first_name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" style="color: #d9534f;" />
-        </div>
+    <label for="name" class="input-label">Name</label>
+    <input id="name" name="first_name" type="text" class="input-field" value="{{ old('first_name', $user->first_name) }}" readonly />
+    <x-input-error class="error-message mt-2" :messages="$errors->get('first_name')" />
+</div>
+
 
         <div>
-            <x-input-label for="email" :value="__('Email')" style="color: #4a7c59; font-family: 'Poppins', sans-serif;" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" style="background-color: #e6f3ea; border: 1px solid #a4d4b4; border-radius: 8px; color: #4a7c59;" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" style="color: #d9534f;" />
+            <label for="email" class="input-label">Email</label>
+            <input id="email" name="email" type="email" class="input-field" value="{{ old('email', $user->email) }}" readonly />
+            <x-input-error class="error-message mt-2" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2" style="color: #678f6f; font-family: 'Poppins', sans-serif;">
+                    <p class="verification-text mt-2">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm hover:text-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" style="color: #a4d4b4;">
+                        <button form="send-verification" class="button-link">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm" style="color: #4caf50; font-family: 'Poppins', sans-serif;">
+                        <p class="saved-message mt-2">
                             {{ __('A new verification link has been sent to your email address.') }}
                         </p>
                     @endif
@@ -48,60 +48,109 @@
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button style="background-color: #6bbf59; border-radius: 8px; font-family: 'Poppins', sans-serif; color: white; padding: 8px 16px; box-shadow: 0 2px 4px rgba(0, 128, 0, 0.3);">{{ __('Save') }}</x-primary-button>
+        <!-- <div class="flex items-center gap-4">
+            <button type="submit" class="button-primary">{{ __('Save') }}</button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm"
-                    style="color: #4caf50; font-family: 'Poppins', sans-serif;"
-                >{{ __('Saved.') }}</p>
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="saved-message">
+                    {{ __('Saved.') }}
+                </p>
             @endif
-        </div>
+        </div> -->
     </form>
 </section>
 
 <style>
- 
-    .input-label, .input-field {
+   
+    * {
         font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
     }
 
-    .input-label {
+
+    section {
+        background-color: transparent!important;
+        border-radius: 10px;
+        padding: 20px;
+        /* box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1); */
+        max-width: 800px!important;
+        margin: auto;
+    }
+
+    header h2 {
         color: #4a7c59;
     }
 
+    header p {
+        color: #678f6f;
+    }
+
+  
+    .input-label {
+        display: block;
+        color: #4a7c59;
+        margin-bottom: 5px;
+    }
+
+   
     .input-field {
         background-color: #e6f3ea;
         border: 1px solid #a4d4b4;
         border-radius: 8px;
         color: #4a7c59;
+        padding: 10px;
+        width: 100%;
+        font-size: 1rem;
     }
 
+ 
     .error-message {
         color: #d9534f;
+        font-size: 0.875rem;
     }
 
+   
     .verification-text {
         color: #678f6f;
-        font-family: 'Poppins', sans-serif;
+        font-size: 0.875rem;
     }
 
+    .button-link {
+        color: #a4d4b4;
+        text-decoration: underline;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.875rem;
+        padding: 0;
+    }
+
+    
     .button-primary {
         background-color: #6bbf59;
-        border-radius: 8px;
-        font-family: 'Poppins', sans-serif;
         color: white;
-        padding: 8px 16px;
+        padding: 10px 16px;
+        border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 128, 0, 0.3);
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
     }
 
+    .button-primary:hover {
+        background-color: #5aa94d;
+    }
+
+    
     .saved-message {
         color: #4caf50;
-        font-family: 'Poppins', sans-serif;
+        font-size: 0.875rem;
+    }
+
+    @media (max-width: 600px) {
+        .flex.items-center.gap-4 {
+            flex-direction: column;
+            gap: 1rem;
+        }
     }
 </style>
