@@ -99,29 +99,31 @@
 
        
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card shadow-sm mb-4 chart-container">
-                        <div class="card-body">
-                            <h5 class="card-title">Year Statistics</h5>
-                            <div id="yearProgressBars" class="row"></div>
-                        </div>
-                    </div>
+    <div class="col-lg-12">
+        <div class="card shadow-sm mb-4 chart-container">
+            <div class="card-body">
+                <h5 class="card-title">Year Statistics</h5>
+                <div class="dropdown mb-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="departmentDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Department
+                    </button>
+                    <ul class="dropdown-menu" id="departmentDropdownMenu" aria-labelledby="departmentDropdownButton"></ul>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card shadow-sm mb-4 chart-container">
-                        <div class="card-body">
-                            <h5 class="card-title">Block Statistics</h5>
-                            <div id="blockProgressBars" class="row"></div>
-                        </div>
-                    </div>
-                </div>
+                <div id="yearProgressBars" class="row"></div>
             </div>
         </div>
-
     </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow-sm mb-4 chart-container">
+            <div class="card-body">
+                <h5 class="card-title">Block Statistics</h5>
+                <div id="blockProgressBars" class="row"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
  
@@ -130,204 +132,216 @@
 
 
     <script>
-        $(document).ready(function () {
-            const ctx = document.getElementById('trafficChart').getContext('2d');
-            const trafficChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-                    datasets: [{
-                        label: 'Responses',
-                        data: [0, 0, 0, 0, 0],
-                        backgroundColor: [
-                                '#A4D07B', 
-                                '#B1D490', 
-                                '#BED8A5', 
-                                '#CBECC0',
-                                '#ffff',
-                        ],
-                       
-                        borderWidth: 2
-                    }]
+        let fetchedData = null;
+$(document).ready(function () {
+    const ctx = document.getElementById('trafficChart').getContext('2d');
+    const trafficChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                label: 'Responses',
+                data: [0, 0, 0, 0, 0],
+                backgroundColor: [
+                    '#A4D07B', 
+                    '#B1D490', 
+                    '#BED8A5', 
+                    '#CBECC0',
+                    '#ffff',
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: {
+                duration: 2000, 
+                easing: 'easeInOutBounce'
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
                 },
-                options: {
-                    responsive: true,
-                    animation: {
-                        duration: 2000, 
-                        easing: 'easeInOutBounce'
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    let label = tooltipItem.label || '';
-                                    if (tooltipItem.parsed > 0) {
-                                        label += ': ' + tooltipItem.parsed;
-                                    }
-                                    return label;
-                                }
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            let label = tooltipItem.label || '';
+                            if (tooltipItem.parsed > 0) {
+                                label += ': ' + tooltipItem.parsed;
                             }
+                            return label;
                         }
                     }
                 }
-            });
-
-          
-            $('#teacherDropdown').change(function () {
-                var teacherId = $(this).val(); 
-                
-                // Clear existing questions
-                $('#questionDropdown').empty();
-                $('#questionDropdown').append('<li><a class="dropdown-item" href="#">Please select a question</a></li>'); // Placeholder
-
-                if (teacherId) {
-                
-                    $.ajax({
-                        url: 'reports/get-questions/' + teacherId,
-                        type: 'GET',
-                        success: function (data) {
-                            console.log(data); 
-                            if (data.questions && data.questions.length > 0) {
-                                data.questions.forEach(function (question) {
-                                    $('#questionDropdown').append('<li><a class="dropdown-item" data-id="' + question.id + '" href="#">' + question.text + '</a></li>');
-                                });
-                            } else {
-                                $('#questionDropdown').append('<li><a class="dropdown-item" href="#">No questions available.</a></li>');
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error loading questions:", error);
-                        }
-                    });
-                }
-            });
-
-           
-            $(document).on('click', '#questionDropdown .dropdown-item', function (event) {
-    event.preventDefault();
-    var selectedQuestionId = $(this).data('id');
-    var selectedQuestionText = $(this).text();
-    var selectedTeacherId = $('#teacherDropdown').val(); // Get the selected teacher ID
-
-    if (!selectedQuestionId || !selectedTeacherId) {
-        return;
-    }
-
-    $('#dropdownMenuButton').text(selectedQuestionText);
-    $('#responseList .list-group-item span').text('0%');
-    $('#totalRespondents').text('Total Respondents: 0');
-
-    $.ajax({
-        url: `reports/get-answers/${selectedTeacherId}/${selectedQuestionId}`, // Pass both teacherId and questionId
-        type: 'GET',
-        success: function (data) {
-            let chartData = [0, 0, 0, 0, 0];
-            let totalResponses = data.answers.length;  // Filtered by teacher and question
-
-            data.answers.forEach(answer => {
-                if (answer.answer >= 1 && answer.answer <= 5) {
-                    chartData[answer.answer - 1]++;
-                }
-            });
-
-            updateChart(chartData);
-            $('#totalRespondents').text(`Total Respondents: ${totalResponses}`);
-
-            $('#responseList .list-group-item').each(function (index) {
-                let percentage = totalResponses ? Math.round((chartData[index] / totalResponses) * 100) : 0;
-                $(this).find('span').text(percentage + '%');
-            });
-        },
-        error: function (xhr, status, error) {
-            $('#totalRespondents').text('Error loading answers.');
-            console.error("Error loading answers:", error);
+            }
         }
     });
-});
 
+    // Teacher dropdown change event
+    $('#teacherDropdown').change(function () {
+        var teacherId = $(this).val(); 
+        $('#questionDropdown').empty();
+        $('#questionDropdown').append('<li><a class="dropdown-item" href="#">Please select a question</a></li>'); 
 
+        if (teacherId) {
+            $.ajax({
+                url: 'reports/get-questions/' + teacherId,
+                type: 'GET',
+                success: function (data) {
+                    console.log(data); 
+                    if (data.questions && data.questions.length > 0) {
+                        data.questions.forEach(function (question) {
+                            $('#questionDropdown').append('<li><a class="dropdown-item" data-id="' + question.id + '" href="#">' + question.text + '</a></li>');
+                        });
+                    } else {
+                        $('#questionDropdown').append('<li><a class="dropdown-item" href="#">No questions available.</a></li>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading questions:", error);
+                }
+            });
+        }
+    });
 
-       
-            function updateChart(data) {
-                trafficChart.data.datasets[0].data = data; 
+    // Question dropdown item click event
+    $(document).on('click', '#questionDropdown .dropdown-item', function (event) {
+        event.preventDefault();
+        var selectedQuestionId = $(this).data('id');
+        var selectedQuestionText = $(this).text();
+        var selectedTeacherId = $('#teacherDropdown').val(); 
 
-              
-                trafficChart.options.elements.arc.borderWidth = 2; 
+        if (!selectedQuestionId || !selectedTeacherId) {
+            return;
+        }
 
-              
-                const allZero = data.every(value => value === 0);
+        $('#dropdownMenuButton').text(selectedQuestionText);
+        $('#responseList .list-group-item span').text('0%');
+        $('#totalRespondents').text('Total Respondents: 0');
 
-                if (allZero) {
-                 
-                    trafficChart.data.datasets[0].borderColor = 'rgba(0, 0, 0, 0.2)'; 
-                    trafficChart.data.datasets[0].backgroundColor = ['rgba(255, 255, 255, 0.5)']; 
+        $.ajax({
+            url: `reports/get-answers/${selectedTeacherId}/${selectedQuestionId}`, 
+            type: 'GET',
+            success: function (data) {
+                console.log("Fetched data:", data); 
+                fetchedData = data; 
+                let chartData = [0, 0, 0, 0, 0];  
+                let totalResponses = data.answers.length; 
+
+                const departmentDropdown = $('#departmentDropdownMenu'); 
+                departmentDropdown.empty(); 
+                if (data.departments && data.departments.length > 0) {
+                    data.departments.forEach(function (department) {
+                        departmentDropdown.append('<li><a class="dropdown-item" href="#" data-name="' + department + '">' + department + '</a></li>');
+                    });
                 } else {
-                    trafficChart.data.datasets[0].borderColor = [
-                        '#A4D07B', 
-        '#B1D490',
-        '#BED8A5', 
-        '#CBECC0', 
-        '#D9F0D2',
-                    ]; 
+                    departmentDropdown.append('<li><a class="dropdown-item" href="#">No departments available.</a></li>');
                 }
 
-                trafficChart.update(); 
+                data.answers.forEach(answer => {
+                    if (answer.answer >= 1 && answer.answer <= 5) {
+                        chartData[answer.answer - 1]++;
+                    }
+                });
+
+                updateChart(chartData);
+                $('#totalRespondents').text(`Total Respondents: ${totalResponses}`);
+                
+                $('#responseList .list-group-item').each(function (index) {
+                    let percentage = totalResponses ? Math.round((chartData[index] / totalResponses) * 100) : 0;
+                    $(this).find('span').text(percentage + '%');
+                });
+            },
+            error: function (xhr, status, error) {
+                $('#totalRespondents').text('Error loading answers.');
+                console.error("Error loading answers:", error);
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-    fetchEvaluationCounts();
+        // Update chart function
+        function updateChart(data) {
+            trafficChart.data.datasets[0].data = data; 
+            trafficChart.options.elements.arc.borderWidth = 2; 
+
+            const allZero = data.every(value => value === 0);
+            if (allZero) {
+                trafficChart.data.datasets[0].borderColor = 'rgba(0, 0, 0, 0.2)'; 
+                trafficChart.data.datasets[0].backgroundColor = ['rgba(255, 255, 255, 0.5)']; 
+            } else {
+                trafficChart.data.datasets[0].borderColor = [
+                    '#A4D07B', 
+                    '#B1D490',
+                    '#BED8A5', 
+                    '#CBECC0', 
+                    '#D9F0D2',
+                ]; 
+            }
+
+            trafficChart.update(); 
+        }
     });
 
-    function fetchEvaluationCounts() {
-        fetch('/reports/year-block')
-            .then(response => response.json())
-            .then(data => {
-                displayYearProgressBars(data.yearCounts, data.totalStudents);
-                displayBlockProgressBars(data.blockCounts, data.totalStudents);
-            })
-            .catch(error => console.error('Error fetching evaluation counts:', error));
+    // Department dropdown item click event
+    $(document).on('click', '#departmentDropdownMenu .dropdown-item', function (event) {
+        event.preventDefault();
+        const selectedDepartmentName = $(this).text();
+        $('#departmentDropdownButton').text(selectedDepartmentName);
+        
+        // Use the previously fetched data
+        if (fetchedData) {
+            populateYearProgressBars(fetchedData.yearCounts);
+        } else {
+            alert('No data available for the selected question or teacher.');
+        }
+    });
+
+    // Function to populate year progress bars
+    function populateYearProgressBars(selectedDepartmentName) {
+    if (!fetchedData) {
+        console.error("No fetched data available.");
+        return;
     }
 
-    function displayYearProgressBars(yearCounts, totalStudents) {
-        const yearProgressBarsContainer = document.getElementById('yearProgressBars');
+    console.log("Using fetched data for year progress bars:", fetchedData);
 
-        yearCounts.forEach(yearCount => {
-            const progressBarHtml = `
-                <div class="col-12 mb-3">
-                    <div class="d-flex justify-content-between">
-                        <span>${yearCount.year}</span>
-                        <span>${yearCount.count}</span>
-                    </div>
+    // Here we can directly use fetchedData.yearCounts
+    updateProgressBars(fetchedData.yearCounts); // Call the function to update progress bars with actual counts
+}
+
+    // Function to update progress bars with actual counts
+    function updateProgressBars(yearData) {
+        // Clear previous year progress bars
+        $('#yearProgressBars').empty();
+
+        if (Object.keys(yearData).length === 0) {
+            $('#yearProgressBars').append('<p>No data available for the selected year.</p>');
+            return;
+        }
+
+        // Iterate through yearData to create progress bars
+        Object.keys(yearData).forEach(year => {
+            const count = yearData[year];
+
+            // Create a progress bar for each year
+            const progressBar = `
+                <div class="col-3 mb-2">
                     <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: ${(yearCount.count / totalStudents) * 100}%;" aria-valuenow="${yearCount.count}" aria-valuemin="0" aria-valuemax="${totalStudents}"></div>
+                        <div class="progress-bar" role="progressbar" style="width: ${count * 10}%;"
+                             aria-valuenow="${count}" aria-valuemin="0" aria-valuemax="100">
+                            ${count}
+                        </div>
                     </div>
-                </div>`;
-            yearProgressBarsContainer.innerHTML += progressBarHtml;
+                    <div class="text-center">${year}</div>
+                </div>
+            `;
+            
+            $('#yearProgressBars').append(progressBar); // Append progress bar to the row
         });
     }
+});
+</script>
 
-    function displayBlockProgressBars(blockCounts, totalStudents) {
-        const blockProgressBarsContainer = document.getElementById('blockProgressBars');
 
-        blockCounts.forEach(blockCount => {
-            const progressBarHtml = `
-                <div class="col-12 mb-3">
-                    <div class="d-flex justify-content-between">
-                        <span>${blockCount.block}</span>
-                        <span>${blockCount.count}</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: ${(blockCount.count / totalStudents) * 100}%;" aria-valuenow="${blockCount.count}" aria-valuemin="0" aria-valuemax="${totalStudents}"></div>
-                    </div>
-                </div>`;
-            blockProgressBarsContainer.innerHTML += progressBarHtml;
-        });
-    }
-    </script>
 </body>
 
 </html>

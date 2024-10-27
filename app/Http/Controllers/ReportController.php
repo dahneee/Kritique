@@ -61,54 +61,102 @@ class ReportController extends Controller
         }
     }
 
-    // Fetch answers for a given question filtered by teacher
     public function getAnswersByQuestion($teacherId, $questionId)
     {
         try {
             Log::info('Fetching answers for question ID: ' . $questionId . ' and teacher ID: ' . $teacherId);
-
-            // Fetch the question with its answers, filtered by the teacher
-            $question = Question::with(['answers' => function ($query) use ($teacherId) {
-                $query->whereHas('questionnaire', function ($subQuery) use ($teacherId) {
-                    $subQuery->where('teacher_id', $teacherId);
-                });
-            }])->findOrFail($questionId);
-
-            // Prepare the answers to return
+        
+            $questionnaires = Questionnaire::with(['student', 'answers' => function ($query) use ($questionId) {
+                $query->where('question_id', $questionId);
+            }])->where('teacher_id', $teacherId)->get();
+    
             $answers = [];
-            foreach ($question->answers as $answer) {
-                $answers[] = [
-                    'student_id' => optional($answer->student)->id, // Use optional() to avoid errors if student is null
-                    'answer' => $answer->answer,
-                ];
+            $departments = [];
+            $yearCounts = []; // Array to hold counts by year
+    
+            foreach ($questionnaires as $questionnaire) {
+                foreach ($questionnaire->answers as $answer) {
+                    $student = $questionnaire->student;
+                    $year = $student->year; // Assuming year is a property of student
+                    $department = $student->department;
+    
+                    // Populate answers array
+                    $answers[] = [
+                        'student_id' => $student->id,
+                        'first_name' => $student->first_name,
+                        'last_name' => $student->last_name,
+                        'year' => $year,
+                        'block' => $student->block,
+                        'department' => $department,
+                        'answer' => $answer->answer,
+                    ];
+                    $departments[$department] = true;
+    
+                    // Count year occurrences for the selected department
+                    if (!isset($yearCounts[$year])) {
+                        $yearCounts[$year] = 0;
+                    }
+                    $yearCounts[$year]++;
+                }
             }
-
-            // Return question text and answers
-            return response()->json(['question' => $question->text, 'answers' => $answers]);
+    
+            // Log the student details fetched
+            Log::info('Fetched student answers:', ['answers' => $answers]);
+    
+            // Return the data including year counts
+            return response()->json([
+                'question' => $questionId,
+                'answers' => $answers,
+                'departments' => array_keys($departments),
+                'yearCounts' => $yearCounts, // Send year counts
+            ]);
         } catch (\Exception $e) {
             Log::error('Error fetching answers for question ID ' . $questionId . ': ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    
+    public function getYearStatistics(Request $request, $department)
+{
+    $teacherId = $request->input('teacher_id'); 
+    $questionId = $request->input('question_id'); 
 
-
-    public function getYearAndBlockCounts()
-    {
-        $totalStudents = DB::table('users')->count();
-
-        $yearCounts = Questionnaire::with('student')
-            ->selectRaw('year, COUNT(*) as count')
-            ->join('users', 'questionnaires.student_id', '=', 'users.id')
-            ->groupBy('year')
+    try {
+        // Fetch questionnaires filtered by teacher and department string
+        $questionnaires = Questionnaire::with(['student'])
+            ->where('teacher_id', $teacherId)
+            ->whereHas('student', function ($query) use ($department) {
+                $query->where('department', $department); // Filter by department string
+            })
             ->get();
 
-        $blockCounts = Questionnaire::with('student')
-            ->selectRaw('block, COUNT(*) as count')
-            ->join('users', 'questionnaires.student_id', '=', 'users.id')
-            ->groupBy('block')
-            ->get();
+        // Initialize an array to hold counts per year
+        $yearStatistics = [];
 
-        return response()->json(['yearCounts' => $yearCounts, 'blockCounts' => $blockCounts, 'totalStudents' => $totalStudents]);
+        // Loop through each questionnaire to count responses by year
+        foreach ($questionnaires as $questionnaire) {
+            $student = $questionnaire->student; // Get the student related to the questionnaire
+            if ($student) {
+                $year = $student->year; // Get the year of the student
+
+                // Initialize the year count if it doesn't exist
+                if (!isset($yearStatistics[$year])) {
+                    $yearStatistics[$year] = 0;
+                }
+
+                // Count responses based on the selected question
+                if ($questionnaire->answers()->where('question_id', $questionId)->exists()) {
+                    $yearStatistics[$year]++;
+                }
+            }
+        }
+
+        // Prepare the response with statistics
+        return response()->json(['years' => $yearStatistics]);
+    } catch (\Exception $e) {
+        Log::error('Error fetching year statistics: ' . $e->getMessage());
+        return response()->json(['error' => 'Error fetching year statistics'], 500);
     }
+}
 
 }
