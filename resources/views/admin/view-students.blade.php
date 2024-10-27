@@ -302,14 +302,33 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Password</label>
-                            <input type="password" id="addStudentPassword" name="password" class="form-control" placeholder="Password">
-                            @error('email')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
+    <div class="col">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+            <input type="password" id="addStudentPassword" name="password" class="form-control" placeholder="Password" oninput="validatePassword()">
+            <span class="input-group-text" onclick="togglePasswordVisibility('addStudentPassword', 'togglePasswordIcon')">
+                <i id="togglePasswordIcon" class="fas fa-eye"></i>
+            </span>
+        </div>
+        <span id="passwordWarning" class="text-danger d-none">Password must be at least 8 characters long.</span>
+        @error('password')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <label class="form-label">Confirm Password</label>
+        <div class="input-group">
+            <input type="password" id="confirmPassword" name="confirm_password" class="form-control" placeholder="Confirm Password" oninput="validatePasswordMatch()">
+            <span class="input-group-text" onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPasswordIcon')">
+                <i id="toggleConfirmPasswordIcon" class="fas fa-eye"></i>
+            </span>
+        </div>
+        <span id="confirmPasswordWarning" class="text-danger d-none">Passwords do not match.</span>
+    </div>
+</div>
 
                     <div class="row mb-3">
                         <div class="col">
@@ -371,6 +390,56 @@
 
 
     <script>
+ function validatePassword() {
+            const passwordInput = document.getElementById('addStudentPassword');
+            const warningMessage = document.getElementById('passwordWarning');
+
+            // Define validation criteria
+            if (passwordInput.value.length < 8) {
+                warningMessage.classList.remove('d-none');
+            } else {
+                warningMessage.classList.add('d-none');
+            }
+        }
+
+      
+        document.getElementById("addStudentForm").addEventListener("submit", function(event) {
+            const passwordInput = document.getElementById('addStudentPassword');
+            const warningMessage = document.getElementById('passwordWarning');
+
+            
+            if (passwordInput.value.length < 8) {
+                event.preventDefault(); 
+                warningMessage.classList.remove('d-none'); 
+                alert("Please ensure the password is at least 8 characters long."); 
+            }
+        });
+        function validatePasswordMatch() {
+            const passwordInput = document.getElementById('addStudentPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const confirmWarningMessage = document.getElementById('confirmPasswordWarning');
+
+            
+            if (confirmPasswordInput.value !== passwordInput.value) {
+                confirmWarningMessage.classList.remove('d-none');
+            } else {
+                confirmWarningMessage.classList.add('d-none');
+            }
+        }
+        function togglePasswordVisibility(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(iconId);
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
 
 let originalStudentRows = [];
 document.addEventListener('DOMContentLoaded', function() {

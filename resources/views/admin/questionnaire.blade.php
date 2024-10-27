@@ -121,182 +121,177 @@
                 </div>
             </div>
         </div>
+        
 
 
-        <div id="exceedLimitPopup" class="popup-notification">
-            You cannot add more than 10 questions.
-        </div>
 
-        <!-- JavaScript for handling questions -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script>
-            function updateQuestionLimitText() {
-    const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
-    const remainingQuestions = 10 - currentQuestionCount;
-    $('.add-text').text(`Add Your Questions (Max ${remainingQuestions}):`);
-}
+        <div id="exceedLimitPopup" class="popup-notification d-none"></div>
+        <p id="maxQuestionsWarning" class="text-danger d-none">You've reached the maximum number of questions allowed.</p>
 
+        
 
-updateQuestionLimitText();
+    <script>
+       function updateQuestionLimitText() {
+    const maxQuestions = 10;
+    const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .question-item-not-saved').length;
+    const remainingQuestions = Math.max(maxQuestions - currentQuestionCount, 0);
 
-$('#addQuestionBtn').click(function () {
-    const questionText = $('#newQuestionInput').val().trim();
-    const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
+    console.log("Current Question Count:", currentQuestionCount); 
+    console.log("Remaining Questions:", remainingQuestions); 
 
-    if (questionText) {
-        if (currentQuestionCount < 10) {
-            $('#questionList').append(`
-                <div class="question-item-not-saved">
-                    <p>${questionText}</p>
-                    <div>
-                    <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
-                    <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
-                </div>`);
-
-            $('#newQuestionInput').val('');
-            updateQuestionLimitText(); 
-        } else {
-            showExceedLimitPopup();
-        }
+  
+    if (currentQuestionCount >= 10) {
+        $('.add-text').text("Limit reached");
+    } else {
+        $('.add-text').text(`Add Your Questions (Max ${remainingQuestions}):`);
     }
-});
+          
+            if (remainingQuestions === 0) {
+                showExceedLimitPopup("You've reached the maximum number of questions allowed.");
+            }
+        }
 
-$('#questionList').on('click', '.remove-question', function() {
-    $(this).closest('div.question-item-not-saved').remove();
-    updateQuestionLimitText();  
-});
+        function showExceedLimitPopup(message) {
+            const popup = $('#exceedLimitPopup');
+            popup.text(message); 
+            popup.removeClass('d-none').fadeIn(400);
 
-            $(document).ready(function() {
-                function showExceedLimitPopup() {
-                    const popup = $('#exceedLimitPopup');
-                    popup.fadeIn(400);
+        
+            setTimeout(() => popup.fadeOut(400), 3000);
+        }
 
-                    setTimeout(function() {
-                        popup.fadeOut(400);
-                    }, 3000);
+        $(document).ready(function() {
+            updateQuestionLimitText();
+
+            $('#addQuestionBtn').click(function () {
+                const questionText = $('#newQuestionInput').val().trim();
+                const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .question-item-not-saved').length;
+
+                if (currentQuestionCount >= 10) {
+                
+                    showExceedLimitPopup("You've added 10 questions already.");
+                    return; 
+                } else if (currentQuestionCount === 10) {
+                    maxQuestionsWarning("You've reached the maximum number of questions allowed.");
                 }
 
-                $('#addQuestionBtn').click(function () {
-                    const questionText = $('#newQuestionInput').val().trim();
-                    const currentQuestionCount = $('#dynamicQuestions .question-item').length + $('#questionList .list-group-item').length;
+                if (questionText) {
+                    $('#questionList').append(`
+                        <div class="question-item-not-saved">
+                            <p>${questionText}</p>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
+                                <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
+                            </div>
+                        </div>`);
+                    $('#newQuestionInput').val(''); 
+                    updateQuestionLimitText();      
+                }
+            });
 
+            $('#questionList').on('click', '.remove-question', function() {
+                $(this).closest('div.question-item-not-saved').remove();
+                updateQuestionLimitText();
+            });
+
+            $('#questionList').on('click', '.edit-question', function() {
+                const questionItem = $(this).closest('.question-item-not-saved');
+                const questionText = questionItem.find('p').text().trim();
+                $('#newQuestionInput').val(questionText);
+                questionItem.remove();
+                updateQuestionLimitText();
+            });
+
+            $('#saveChangesBtn').click(function() {
+                let questions = [];
+                $('#questionList').children().each(function() {
+                    const questionText = $(this).find('p').text().trim();
                     if (questionText) {
-                        if (currentQuestionCount < 10) {
-                            $('#questionList').append(`
-                                <div class="question-item-not-saved">
-                                <p>${questionText}</p>
-                                    <div>
-                                    <button type="button" class="btn btn-sm btn-danger float-right remove-question">&times;</button>
-                                    <button type="button" class="btn btn-sm btn-warning float-right edit-question" style="margin-right: 5px;">Edit</button>
-                                </div>`);
-                            $('#newQuestionInput').val('');
-                        } else {
-                            showExceedLimitPopup();
-                        }
-                    }
-                }); 
-
-                $('#saveChangesBtn').click(function() {
-                    let questions = [];
-                    $('#questionList').children().each(function() {
-                        const questionText = $(this).find('p').text().trim(); // Get text from the <p> tag
-                        if (questionText) { // Only add non-empty questions
-                            questions.push(questionText);
-                        }
-                    });
-
-                    $.ajax({
-                        url: '{{ route("save-questions") }}',
-                        type: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "questions": questions
-                        },
-                        success: function(response) {
-                            window.location.reload();
-                        }
-                    });
-                });
-
-                $('#questionList').on('click', '.remove-question', function() {
-                    $(this).parent().remove();
-                });
-
-                $('#questionList').on('click', '.edit-question', function() {
-                    const questionItem = $(this).closest('div.question-item-not-saved'); // Get the whole div containing the question
-                    const questionText = questionItem.find('p').text().trim();
-
-                    $('#newQuestionInput').val(questionText);
-                    questionItem.remove();
-                });
-
-                $('.delete-question').click(function() {
-                    const id = $(this).data('id');
-                    if (confirm('Are you sure you want to delete this question?')) {
-                        $.ajax({
-                            url: '{{ route("delete-question", ":id") }}'.replace(':id', id),
-                            type: 'DELETE',
-                            data: {
-                                "_token": "{{ csrf_token() }}"
-                            },
-                            success: function(response) {
-                                if (response.success) {
-                                    window.location.reload();
-                                } else {
-                                    alert('Failed to delete the question. Please try again.');
-                                }
-                            },
-                            error: function(xhr) {
-                                console.error(xhr.responseText);
-                                alert('Failed to delete the question. Status: ' + xhr.status);
-                            }
-                        });
+                        questions.push(questionText);
                     }
                 });
 
-
-                let editingQuestionId = null;
-
-                $('#dynamicQuestions').on('click', '.edit-question', function() {
-                    const questionText = $(this).data('text');
-                    editingQuestionId = $(this).data('id');
-
-                    $('#editQuestionInput').val(questionText);
-                    $('#editQuestionModal').modal('show');
-                });
-
-                $('#saveEditQuestionBtn').click(function() {
-                    const updatedText = $('#editQuestionInput').val().trim();
-
-                    if (updatedText) {
-                        $.ajax({
-                            url: '{{ route("update-question", ":id") }}'.replace(':id', editingQuestionId),
-                            type: 'PUT',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "text": updatedText
-                            },
-                            success: function(response) {
-                                if (response.success) {
-                                    $(`button[data-id="${editingQuestionId}"]`).closest('.question-item').find('.question-text').text(updatedText);
-                                    $('#editQuestionModal').modal('hide');
-                                } else {
-                                    alert('Failed to update the question. Please try again.');
-                                }
-                            },
-                            error: function(xhr) {
-                                console.error(xhr.responseText);
-                                alert('Failed to update the question. Status: ' + xhr.status);
-                            }
-                        });
-                    } else {
-                        alert('The question cannot be empty.');
+                $.ajax({
+                    url: '{{ route("save-questions") }}',
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "questions": questions
+                    },
+                    success: function(response) {
+                        window.location.reload();
                     }
                 });
             });
-        </script>
+
+            $('.delete-question').click(function() {
+                const id = $(this).data('id');
+                if (confirm('Are you sure you want to delete this question?')) {
+                    $.ajax({
+                        url: '{{ route("delete-question", ":id") }}'.replace(':id', id),
+                        type: 'DELETE',
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                window.location.reload();
+                            } else {
+                                alert('Failed to delete the question. Please try again.');
+                            }
+                        },
+                        error: function(xhr) {
+                            console.error(xhr.responseText);
+                            alert('Failed to delete the question. Status: ' + xhr.status);
+                        }
+                    });
+                }
+            });
+
+            let editingQuestionId = null;
+
+            $('#dynamicQuestions').on('click', '.edit-question', function() {
+                const questionText = $(this).closest('.question-item').find('.question-text').text().trim();
+                editingQuestionId = $(this).data('id');
+                $('#editQuestionInput').val(questionText);
+                $('#editQuestionModal').modal('show');
+            });
+
+            $('#saveEditQuestionBtn').click(function() {
+                const updatedText = $('#editQuestionInput').val().trim();
+                if (updatedText) {
+                    $.ajax({
+                        url: '{{ route("update-question", ":id") }}'.replace(':id', editingQuestionId),
+                        type: 'PUT',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "text": updatedText
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $(`button[data-id="${editingQuestionId}"]`).closest('.question-item').find('.question-text').text(updatedText);
+                                $('#editQuestionModal').modal('hide');
+                            } else {
+                                alert('Failed to update the question. Please try again.');
+                            }
+                        },
+                        error: function(xhr) {
+                            console.error(xhr.responseText);
+                            alert('Failed to update the question. Status: ' + xhr.status);
+                        }
+                    });
+                } else {
+                    alert('The question cannot be empty.');
+                }
+            });
+        });
+    </script>
+
+
+
     </body>
 
     </html>
