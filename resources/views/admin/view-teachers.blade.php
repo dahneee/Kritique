@@ -142,7 +142,7 @@
     </div>
 </div>
 
-
+<!-- EDIT TEACHER -->
 <div class="modal fade" id="editTeacherModal" tabindex="-1" aria-labelledby="editTeacherModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -189,15 +189,21 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="col">
                         <label class="form-label">Department</label>
-                        <input type="text" id="editTeacherDepartment" name="department" class="form-control" placeholder="Department">
+                        <select id="editTeacherDepartment" name="department" class="form-select"> <!-- Changed from form-control to form-select -->
+                            <option value="" disabled selected>Select Department</option> <!-- Added default option for better UX -->
+                            @foreach($departments as $department)
+                                <option value="{{ $department->department_id }}" 
+                                    {{ old('department', $teachers->department ?? '') == $department->department_id ? 'selected' : '' }}>
+                                    {{ $department->department_id }}
+                                </option>
+                            @endforeach
+                        </select>
                         @error('department')
-                        <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Update Teacher</button>
@@ -256,13 +262,14 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">Department</label>
-                            <select id="addTeacherDepartment" name="department" class="form-control">
+                            <select id="addTeacherDepartment" name="department" class="form-select"> <!-- Changed from form-control to form-select -->
+                                <option value="" disabled selected>Select Department</option> <!-- Added default option for better UX -->
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->department_id }}">{{ $department->department_name }}</option>
+                                    <option value="{{ $department->department_id }}">{{ $department->department_id }}</option>
                                 @endforeach
                             </select>
                             @error('department')
-                            <span class="text-danger">{{ $message }}</span>
+                                <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>

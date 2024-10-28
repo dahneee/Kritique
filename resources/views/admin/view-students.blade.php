@@ -165,6 +165,8 @@
             </div>
         </div>
     </div>
+
+    <!-- EDIT STUDENT -->
     <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -236,27 +238,50 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Block</label>
-                                <input type="text" id="editStudentBlock" name="block" class="form-control" placeholder="Block">
-                                @error('block')
+                        <div class="col">
+                            <label class="form-label">Block</label>
+                            <select id="editStudentBlock" name="block" class="form-select">
+                                <option value="" disabled selected>Select Block</option>
+                                @foreach ($allBlocks as $eachBlock)
+                                    <option value="{{ $eachBlock->block_id }}" {{ $student->block_id == $eachBlock->block_id ? 'selected' : '' }}>
+                                        {{ $eachBlock->block_id }} 
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('block')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Year</label>
+                            <select id="editStudentYear" name="year" class="form-select">
+                                <option value="" disabled>Select Year</option>
+                                @foreach(['First', 'Second', 'Third', 'Fourth'] as $year)
+                                    <option value="{{ $year }}" {{ $student->year == $year ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('year')
                                 <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Year</label>
-                                <input type="text" id="editStudentYear" name="year" class="form-control" placeholder="Year">
-                                @error('year')
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Department</label>
+                            <select id="editStudentDepartment" name="department" class="form-select">
+                                <option value="" disabled selected>Select Department</option>
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->department_id }}" 
+                                        {{ old('department', $student->department ?? '') == $department->department_id ? 'selected' : '' }}>
+                                        {{ $department->department_id }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('department')
                                 <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Department</label>
-                                <input type="text" id="editStudentDepartment" name="department" class="form-control" placeholder="Department">
-                                @error('department')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                            @enderror
+                        </div>
+                    </div>
                         </div>
 
                         <div class="modal-footer">
@@ -269,7 +294,7 @@
         </div>
     </div>
 
-
+<!-- ADD STUDENT -->
 <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -302,33 +327,33 @@
                     </div>
 
                     <div class="row mb-3">
-    <div class="col">
-        <label class="form-label">Password</label>
-        <div class="input-group">
-            <input type="password" id="addStudentPassword" name="password" class="form-control" placeholder="Password" oninput="validatePassword()">
-            <span class="input-group-text" onclick="togglePasswordVisibility('addStudentPassword', 'togglePasswordIcon')">
-                <i id="togglePasswordIcon" class="fas fa-eye"></i>
-            </span>
-        </div>
-        <span id="passwordWarning" class="text-danger d-none">Password must be at least 8 characters long.</span>
-        @error('password')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-</div>
+                        <div class="col">
+                                <label class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" id="addStudentPassword" name="password" class="form-control" placeholder="Password" oninput="validatePassword()">
+                                    <span class="input-group-text" onclick="togglePasswordVisibility('addStudentPassword', 'togglePasswordIcon')">
+                                        <i id="togglePasswordIcon" class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                                <span id="passwordWarning" class="text-danger d-none">Password must be at least 8 characters long.</span>
+                                @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
-<div class="row mb-3">
-    <div class="col">
-        <label class="form-label">Confirm Password</label>
-        <div class="input-group">
-            <input type="password" id="confirmPassword" name="confirm_password" class="form-control" placeholder="Confirm Password" oninput="validatePasswordMatch()">
-            <span class="input-group-text" onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPasswordIcon')">
-                <i id="toggleConfirmPasswordIcon" class="fas fa-eye"></i>
-            </span>
-        </div>
-        <span id="confirmPasswordWarning" class="text-danger d-none">Passwords do not match.</span>
-    </div>
-</div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <input type="password" id="confirmPassword" name="confirm_password" class="form-control" placeholder="Confirm Password" oninput="validatePasswordMatch()">
+                                    <span class="input-group-text" onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPasswordIcon')">
+                                        <i id="toggleConfirmPasswordIcon" class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                                <span id="confirmPasswordWarning" class="text-danger d-none">Passwords do not match.</span>
+                            </div>
+                        </div>
 
                     <div class="row mb-3">
                         <div class="col">
@@ -355,27 +380,47 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Block</label>
-                            <input type="text" id="addStudentBlock" name="block" class="form-control" placeholder="Block">
-                            @error('block')
+                    <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Block</label>
+                        <select id="addStudentBlock" name="block" class="form-select">
+                            <option value="" disabled selected>Select Block</option>
+                            @foreach ($allBlocks as $eachBlock)
+                                <option value="{{ $eachBlock->block_id }}">{{ $eachBlock->block_id }}</option>
+                            @endforeach
+                        </select>
+                        @error('block')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label">Year</label>
+                        <select id="addStudentYear" name="year" class="form-select"> <!-- Changed from form-control to form-select -->
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="First">First</option>
+                            <option value="Second">Second</option>
+                            <option value="Third">Third</option>
+                            <option value="Fourth">Fourth</option>
+                        </select>
+                        @error('year')
                             <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col">
-                            <label class="form-label">Year</label>
-                            <input type="text" id="addStudentYear" name="year" class="form-control" placeholder="Year">
-                            @error('year')
+                        @enderror
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label">Department</label>
+                        <select id="addStudentDepartment" name="department" class="form-select"> <!-- Changed from form-control to form-select -->
+                            <option value="" disabled selected>Select Department</option>
+                            @foreach($departments as $department)
+                                <option value="{{ $department->department_id }}">{{ $department->department_id }}</option>
+                            @endforeach
+                        </select>
+                        @error('department')
                             <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col">
-                            <label class="form-label">Department</label>
-                            <input type="text" id="addStudentDepartment" name="department" class="form-control" placeholder="Department">
-                            @error('department')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @enderror
+                    </div>
+                </div>
                     </div>
 
                     <div class="modal-footer">

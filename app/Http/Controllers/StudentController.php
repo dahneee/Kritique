@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use App\Models\Department;
+use App\Models\Block;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -16,8 +18,15 @@ class StudentController extends Controller
                     ->get()
                     ->pluck('block');
 
-        $students = User::where('user_type', 'student')->paginate(10); 
-        return view('admin.view-students', compact('students', 'blocks'));
+        $departments = Department::all();
+
+        $allBlocks = Block::all();
+
+        $students = User::where('user_type', 'student')
+                        ->orderBy('created_at', 'desc') 
+                        ->paginate(10); 
+
+        return view('admin.view-students', compact('students', 'blocks', 'departments', 'allBlocks'));
     }
 
     public function create()
