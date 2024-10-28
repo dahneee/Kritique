@@ -24,7 +24,6 @@ class TeacherController extends Controller
 
     public function save(Request $request)
 {
-    // Validate the incoming request data
     $validatedData = $request->validate([
         'email' => 'required|email',
         'teacher_first_name' => 'required|string|max:255',

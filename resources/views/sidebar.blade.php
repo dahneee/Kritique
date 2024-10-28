@@ -26,6 +26,10 @@
     <a href="{{ route('reports') }}" class="sidebar-link text-center {{ request()->is('reports') ? 'active' : '' }}" style="color: white !important;">
         <i class="fas fa-chart-pie fa-2x"></i>
     </a>
+    
+    <a href="{{ route('answers.index') }}" class="sidebar-link text-center {{ request()->is('answers.index') ? 'active' : '' }}" style="color: white !important;">
+    <i class="fas fa-message fa-2x"></i>
+    </a>
 
     <div class="text-center mb-3">
         <a href="#" class="sidebar-link text-center {{ request()->is('logout') ? 'active' : '' }}" id="logout-link" style="color: white !important;">
